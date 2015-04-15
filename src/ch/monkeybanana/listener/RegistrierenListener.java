@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.model.User;
 
 public class RegistrierenListener implements ActionListener{
@@ -44,8 +45,7 @@ public class RegistrierenListener implements ActionListener{
 		newUser.setPasswort(passwort1);
 		newUser.setPasswort(passwort2);
 		newUser.setPasswort(email);
-		
-		System.out.println(newUser);
+
 	}
 
 	//Getter
