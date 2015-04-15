@@ -6,8 +6,8 @@ import ch.monkeybanana.view.RegistrierenView;
 public class LoginTest {
 
 	public static void main(String[] args) {
-//		new LoginView();
-		new RegistrierenView();
+	new LoginView();
+//new RegistrierenView();
 	}
 
 }

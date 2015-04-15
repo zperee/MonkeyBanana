@@ -2,10 +2,14 @@ package ch.monkeybanana.view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
+import ch.monkeybanana.listener.RegistrierenListener;
 
 /**
  * Dies ist unser GUI für die Registration
@@ -14,7 +18,7 @@ import javax.swing.JButton;
  * Copyright Berufsbildungscenter MonkeyBanana 2015
  */
 
-public class RegistrierenView extends JFrame{
+public class RegistrierenView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -39,7 +43,6 @@ public class RegistrierenView extends JFrame{
 	public RegistrierenView() {
 		this.setTitle("Registration MonkeyBanana");
 		this.setBounds(500, 400, 419, 238);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 		this.setVisible(true);
 		this.setResizable(false);
@@ -74,6 +77,7 @@ public class RegistrierenView extends JFrame{
 		this.add(passwordConfirm);
 						
 		registrierenButton.setBounds(251, 154, 106, 23);
+		registrierenButton.addActionListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		this.add(registrierenButton);
 	}
 }
