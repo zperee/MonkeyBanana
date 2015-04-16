@@ -54,6 +54,8 @@ public class LoginListener implements ActionListener {
 			
 			loginUser.setPasswort(passwort);
 			loginUser.setUsername(user);
+			
+			MBController.getInstance().login(loginUser);
 //		}	
 		}
 		else if (button.equals("registrieren")){

@@ -10,6 +10,12 @@ import ch.monkeybanana.util.CryptUtils;
 
 import com.mysql.jdbc.SQLError;
 
+/**
+ * Hier ist die Kommunikation zwischen View und Datenbank implementiert
+ * @author Dominic Pfister, Elia Perenzin
+ * MBController.java
+ * Copyright Berufsbildungscenter MonkeyBanana 2015
+ */
 public class MBController {
 	private static MBController instance = new MBController();
 	private final static UserDao USER_DAO = new UserJDBCDao();
@@ -24,7 +30,11 @@ public class MBController {
 		return MBController.instance;
 	}
 
-
+	/**
+	 * Hier wird ueberprueft ob die eingaben des Users gueltig sind und wenn dies zutrifft wird er in die DB eingetragen
+	 * @author Elia Perenzin
+	 * @param User
+	 */
 	public void registrieren (User newUser){
 		List<User> dbUsers = null;
 		boolean userAlreadyExists = true;
@@ -63,7 +73,6 @@ public class MBController {
 								break;
 								}
 							}
-							
 						}
 						catch (SQLException e) {
 							e.printStackTrace();
@@ -75,6 +84,46 @@ public class MBController {
 				System.out.println("Passw\u00f6rter stimmen nicht \u00fcberein");
 			}
 		}
+	}
+	
+	public boolean login(User user){
+		List <User> dbUsers=null;
+		boolean login = false;
+		
+		if(user.getUsername().isEmpty()){
+			System.out.println("Bitte Username ausf\u00fcllen");
+		}
+		else{
+			if(user.getPasswort().isEmpty()){
+				System.out.println("Bitte Passwort ausf\u00fcllen");
+			}
+			else{
+				user.setPasswort(CryptUtils.base64encode(user.getPasswort()));
+				
+				try {
+					dbUsers = USER_DAO.findAllUsers();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				for (User dbUser : dbUsers){
+					if (user.getUsername().equals(dbUser.getUsername())){
+						if (user.getPasswort().equals(dbUser.getPasswort())){
+							System.out.println("Sie haben sich erfolgreich angemeldet");
+							login = true;
+						}
+						else{
+							System.out.println("Username und/oder Passwort stimmen nicht");
+						}
+					}
+					else{
+						System.out.println("Username und/oder Passwort stimmen nicht");
+					}
+				}
+			}
+		}
+		return login;	
 	}
 	
 }
