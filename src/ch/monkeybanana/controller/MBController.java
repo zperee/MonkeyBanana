@@ -1,11 +1,14 @@
 package ch.monkeybanana.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.dao.UserDao;
 import ch.monkeybanana.dao.UserJDBCDao;
 import ch.monkeybanana.model.User;
+import ch.monkeybanana.util.CryptUtils;
+
+import com.mysql.jdbc.SQLError;
 
 public class MBController {
 	private static MBController instance = new MBController();
@@ -21,14 +24,9 @@ public class MBController {
 		return MBController.instance;
 	}
 	
-	public void registrieren(User user){
-		
-			try {
-				USER_DAO.registrieren(user);
-			}
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
-	}
+	public static boolean userAlreadyExists;
+
+	
+	
 }
+ 

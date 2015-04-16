@@ -33,7 +33,7 @@ public class UserJDBCDao extends Database implements UserDao {
 
 		while (rs.next()) {
 			User user = new User();
-			user.setUsername(rs.getString("Username"));
+			user.setUsername(rs.getString("ID_User"));
 			user.setPasswort(rs.getString("Passwort"));
 			p.add(user);
 		}

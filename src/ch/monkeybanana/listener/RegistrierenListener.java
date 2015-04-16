@@ -44,8 +44,9 @@ public class RegistrierenListener implements ActionListener{
 		newUser.setUsername(user);
 		newUser.setPasswort(passwort1);
 		newUser.setPasswort(passwort2);
-		newUser.setPasswort(email);
+		newUser.setEmail(email);
 
+		
 	}
 
 	//Getter
