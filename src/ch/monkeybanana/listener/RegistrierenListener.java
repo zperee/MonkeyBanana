@@ -43,10 +43,10 @@ public class RegistrierenListener implements ActionListener{
 		
 		newUser.setUsername(user);
 		newUser.setPasswort(passwort1);
-		newUser.setPasswort(passwort2);
+		newUser.setPasswort2(passwort2);
 		newUser.setEmail(email);
 
-		
+		MBController.getInstance().registrieren(newUser);
 	}
 
 	//Getter

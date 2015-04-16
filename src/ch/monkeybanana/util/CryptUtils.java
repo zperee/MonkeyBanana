@@ -27,7 +27,7 @@ public class CryptUtils {
 	 * @return String mit Passwort verschluesselt
 	 * @throws Exception
 	 */
-	public static String base64encode (String passwort) throws Exception{
+	public static String base64encode (String passwort) {
 		try{
 			//Passwort wird codiert
 			return enc.encode(passwort.getBytes(DEFAULT_CODING));
@@ -44,7 +44,7 @@ public class CryptUtils {
 	 * @return String mit Passwort unverschluesselt
 	 * @throws Exception
 	 */
-	public static String base64decode (String passwort) throws Exception{
+	public static String base64decode (String passwort) {
 		try{
 			//Passwort wird decodiert
 			return new String (dec.decodeBuffer(passwort), DEFAULT_CODING);
