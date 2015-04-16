@@ -2,6 +2,7 @@ package ch.monkeybanana.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import ch.monkeybanana.dao.UserDao;
 import ch.monkeybanana.dao.UserJDBCDao;
@@ -12,14 +13,14 @@ import com.mysql.jdbc.SQLError;
 
 /**
  * Hier ist die Kommunikation zwischen View und Datenbank implementiert
- * @author Dominic Pfister, Elia Perenzin
- * MBController.java
- * Copyright Berufsbildungscenter MonkeyBanana 2015
+ * 
+ * @author Dominic Pfister, Elia Perenzin MBController.java Copyright
+ *         Berufsbildungscenter MonkeyBanana 2015
  */
 public class MBController {
 	private static MBController instance = new MBController();
 	private final static UserDao USER_DAO = new UserJDBCDao();
-	
+
 	/**
 	 * Konstruktor der Klasse GMCController nur Privat
 	 */
@@ -35,96 +36,114 @@ public class MBController {
 	 * @author Elia Perenzin
 	 * @param User
 	 */
-	public void registrieren (User newUser){
+	public void registrieren(User newUser) {
 		List<User> dbUsers = null;
 		boolean userAlreadyExists = true;
-		
-		if(newUser.getPasswort().isEmpty()){
+		final Pattern pattern = Pattern
+				.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+
+		if (newUser.getPasswort().isEmpty()) {
 			System.out.println("Passwort muss ausgef\u00fcllt sein");
 		}
-		else{
+		else {
 			newUser.setPasswort(CryptUtils.base64encode(newUser.getPasswort()));
 			newUser.setPasswort2(CryptUtils.base64encode(newUser.getPasswort2()));
-			
-			if(newUser.getPasswort().equals(newUser.getPasswort2())){
-				if(newUser.getUsername().isEmpty()){
+
+			if (newUser.getPasswort().equals(newUser.getPasswort2())) {
+				if (newUser.getUsername().isEmpty()) {
 					System.out.println("Username muss ausgef\u00fcllt sein");
 				}
-				else{
-					if(newUser.getEmail().isEmpty()){
+				else {
+					if (newUser.getEmail().isEmpty()) {
 						System.out.println("Email muss ausgef\u00fcllt sein");
 					}
-					else{
-						try {
-							dbUsers = USER_DAO.findAllUsers();
-							
-							for (User dbUser : dbUsers){
-								if (newUser.getUsername().equals(dbUser.getUsername())){
-									System.out.println("Username ist bereits vergeben");
-									break;
+					else {
+						if (!pattern.matcher(newUser.getEmail()).matches()) {
+							System.out
+									.println("Keine gültige Email eingegeben");
+						}
+						else {
+							try {
+								dbUsers = USER_DAO.findAllUsers();
+
+								for (User dbUser : dbUsers) {
+									if (newUser.getUsername().equals(
+											dbUser.getUsername())) {
+										System.out
+												.println("Username ist bereits vergeben");
+										userAlreadyExists = true;
+										break;
+									}
+									else {
+										userAlreadyExists = false;
+									}
 								}
-								else{
-									userAlreadyExists = false;
-								}
-								
-								if (userAlreadyExists == false){
-								USER_DAO.registrieren(newUser);
-								System.out.println("Sie wurden erfolgreich eingetragen");
-								break;
+								if (userAlreadyExists == false) {
+									USER_DAO.registrieren(newUser);
+									System.out
+											.println("Sie wurden erfolgreich eingetragen");
 								}
 							}
-						}
-						catch (SQLException e) {
-							e.printStackTrace();
+							catch (SQLException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
 			}
-			else{
-				System.out.println("Passw\u00f6rter stimmen nicht \u00fcberein");
+			else {
+				System.out
+						.println("Passw\u00f6rter stimmen nicht \u00fcberein");
 			}
 		}
 	}
-	
-	public boolean login(User user){
-		List <User> dbUsers=null;
+
+	/**
+	 * Hier wird das Login durchgefuehrt, wenn dies zutrifft gibt es einen boolean mit true zuruck
+	 * @param user
+	 * @return boolean login
+	 */
+	public boolean login(User user) {
+		List<User> dbUsers = null;
 		boolean login = false;
-		
-		if(user.getUsername().isEmpty()){
+
+		if (user.getUsername().isEmpty()) {
 			System.out.println("Bitte Username ausf\u00fcllen");
 		}
-		else{
-			if(user.getPasswort().isEmpty()){
+		else {
+			if (user.getPasswort().isEmpty()) {
 				System.out.println("Bitte Passwort ausf\u00fcllen");
 			}
-			else{
+			else {
 				user.setPasswort(CryptUtils.base64encode(user.getPasswort()));
-				
+
 				try {
 					dbUsers = USER_DAO.findAllUsers();
 				}
 				catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
-				for (User dbUser : dbUsers){
-					if (user.getUsername().equals(dbUser.getUsername())){
-						if (user.getPasswort().equals(dbUser.getPasswort())){
-							System.out.println("Sie haben sich erfolgreich angemeldet");
+
+				for (User dbUser : dbUsers) {
+					if (user.getUsername().equals(dbUser.getUsername())) {
+						if (user.getPasswort().equals(dbUser.getPasswort())) {
+							System.out
+									.println("Sie haben sich erfolgreich angemeldet");
 							login = true;
 						}
-						else{
-							System.out.println("Username und/oder Passwort stimmen nicht");
+						else {
+							System.out
+									.println("Username und/oder Passwort stimmen nicht");
 						}
 					}
-					else{
-						System.out.println("Username und/oder Passwort stimmen nicht");
+					else {
+						System.out
+								.println("Username und/oder Passwort stimmen nicht");
 					}
 				}
 			}
 		}
-		return login;	
+		return login;
 	}
-	
+
 }
- 

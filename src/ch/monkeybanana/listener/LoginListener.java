@@ -45,7 +45,6 @@ public class LoginListener implements ActionListener {
 	 * @author Elia Perenzin
 	 */
 	public void actionPerformed(ActionEvent e) {
-//		try{
 		if (button.equals("login")){
 			User loginUser = new User();
 			
@@ -56,7 +55,6 @@ public class LoginListener implements ActionListener {
 			loginUser.setUsername(user);
 			
 			MBController.getInstance().login(loginUser);
-//		}	
 		}
 		else if (button.equals("registrieren")){
 			new RegistrierenView();
