@@ -44,7 +44,6 @@ public class RegistrierenView extends JFrame {
 		this.setTitle("Registration MonkeyBanana");
 		this.setBounds(500, 400, 419, 238);
 		this.getContentPane().setLayout(null);
-		this.setVisible(true);
 		this.setResizable(false);
 		
 		titelLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -79,5 +78,8 @@ public class RegistrierenView extends JFrame {
 		registrierenButton.setBounds(251, 154, 106, 23);
 		registrierenButton.addActionListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		this.add(registrierenButton);
+		
+		this.setVisible(true);
+
 	}
 }

@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.model.User;
+import ch.monkeybanana.rmi.Client;
 import ch.monkeybanana.view.RegistrierenView;
 
 /**
@@ -54,7 +55,7 @@ public class LoginListener implements ActionListener {
 			loginUser.setPasswort(passwort);
 			loginUser.setUsername(user);
 			
-			MBController.getInstance().login(loginUser);
+			Client.getInstance().login(loginUser);
 		}
 		else if (button.equals("registrieren")){
 			new RegistrierenView();

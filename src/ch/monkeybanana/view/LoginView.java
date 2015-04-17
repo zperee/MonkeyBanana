@@ -12,9 +12,9 @@ import java.awt.Font;
 
 /**
  * Dies ist unser GUI für die Anmeldung
- * 
- * @author Dominic Pfister, Elia Perenzin LoginView.java Copyright
- *         Berufsbildungscenter MonkeyBanana 2015
+ * @author Dominic Pfister, Elia Perenzin 
+ * LoginView.java Copyright
+ * Berufsbildungscenter MonkeyBanana 2015
  */
 
 public class LoginView extends JFrame {
@@ -41,7 +41,6 @@ public class LoginView extends JFrame {
 		this.setBounds(500, 400, 419, 238);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
-		this.setVisible(true);
 		this.setResizable(false);
 
 		titelLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -70,5 +69,8 @@ public class LoginView extends JFrame {
 		loginbButton.addActionListener(new LoginListener(username, password,
 				"login"));
 		this.add(loginbButton);
+		
+		this.setVisible(true);
+
 	}
 }

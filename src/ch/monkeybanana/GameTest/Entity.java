@@ -80,17 +80,17 @@ public class Entity extends JPanel implements ActionListener {
 			g2d.drawImage(kist1.getImage(), kist1.getX(), kist1.getY(), this);
 
 			// Hitbox for crate
-//			g2d.drawRect(kist1.getX(), kist1.getY(),
-//					kist1.getImage().getWidth(null), kist1.getImage()
-//							.getHeight(null));
+			g2d.drawRect(kist1.getX(), kist1.getY(),
+					kist1.getImage().getWidth(null), kist1.getImage()
+							.getHeight(null));
 
 		}
 		g2d.drawImage(player.getImage(), player.getX(), player.getY(), this);
 		
 		//Hitbox for player
-//		g2d.drawRect(player.getX(), player.getY() + 15,
-//				player.getImage().getWidth(null), 
-//				player.getImage().getHeight(null) - 15);
+		g2d.drawRect(player.getX(), player.getY() + 15,
+				player.getImage().getWidth(null), 
+				player.getImage().getHeight(null) - 15);
 		
 		Toolkit.getDefaultToolkit().sync();
 		g.dispose();
@@ -119,7 +119,7 @@ public class Entity extends JPanel implements ActionListener {
 					player.setY((int) rect.getMinY() - player.getImage().getHeight(null));
 				} else if (recPlayer.getMinY() >= (rect.getMaxY() - 4)) {
 					player.setY((int) rect.getMaxY() - 15);
-				} else if (recPlayer.getMaxX() <= rect.getMinX() + 4) {
+				} else if (recPlayer.getMaxX() <= rect.getMinX() + 3) {
 					player.setX((int) rect.getMinX() - player.getImage().getWidth(null));
 				} else if (recPlayer.getMinX() >= rect.getMaxX() - 4) {
 					player.setX((int) rect.getMaxX());

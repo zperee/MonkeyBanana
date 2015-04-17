@@ -42,7 +42,6 @@ public class Player {
 	public void move() {
 		x += vX;
 		y += vY;
-		System.out.println(y);
 	}
 	
 	public Rectangle playerBounds() {

@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 
 import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.model.User;
+import ch.monkeybanana.rmi.Client;
 
 public class RegistrierenListener implements ActionListener{
 
@@ -46,7 +47,7 @@ public class RegistrierenListener implements ActionListener{
 		newUser.setPasswort2(passwort2);
 		newUser.setEmail(email);
 
-		MBController.getInstance().registrieren(newUser);
+		Client.getInstance().registrieren(newUser);
 	}
 
 	//Getter

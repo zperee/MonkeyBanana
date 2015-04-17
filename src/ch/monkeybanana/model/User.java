@@ -1,5 +1,7 @@
 package ch.monkeybanana.model;
 
+import java.io.Serializable;
+
 /**
  * Diese Klasse wird benoetigt um einen User zu erstellen. Sie enthaelt alle Infromationen ueber den User
  * @author Dominic Pfister, Elia Perenzin
@@ -7,7 +9,7 @@ package ch.monkeybanana.model;
  * Copyright Berufsbildungscenter MonkeyBanana 2015
  */
 
-public class User {
+public class User implements Serializable{
 	
 	//Instanzvariablen
 	private String username = null;
