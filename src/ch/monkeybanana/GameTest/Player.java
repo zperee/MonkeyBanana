@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 
 public class Player {
 	
-	public static final int SPEED = 4;
+	public static final int SPEED = 2;
 	private int vX, vY;
 //	private boolean up, down, left, right;
 	private int x, y;
@@ -23,10 +23,10 @@ public class Player {
 
 	public int setY;
 
-	public Player() {
-		image =  new ImageIcon("images/monkey.png").getImage();
-		x = 40;
-		y = 60;
+	public Player(int x, int y) {
+		image =  new ImageIcon("images/pokemon.png").getImage();
+		this.setY(y + 15);
+		this.setX(x);
 	}
 
 	/**
@@ -42,10 +42,13 @@ public class Player {
 	public void move() {
 		x += vX;
 		y += vY;
+		System.out.println(y);
 	}
 	
 	public Rectangle playerBounds() {
-		return new Rectangle(this.getX(), this.getY(), image.getWidth(null), image.getHeight(null));
+		int height = this.getImage().getHeight(null) - 15;
+		int playerY = this.getY() + 15;
+		return new Rectangle(this.getX(), playerY, image.getWidth(null), height);
 	}
 
 
