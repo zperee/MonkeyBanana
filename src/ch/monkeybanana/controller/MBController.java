@@ -43,7 +43,7 @@ public class MBController {
 	public void registrieren(User newUser) {
 		try{
 			USER_DAO.registrieren(newUser);
-			System.out.println("WOOOW DA hat sich einer registriert! ");
+			System.out.println("WOOOW da hat sich einer registriert! ");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -56,11 +56,6 @@ public class MBController {
 	 * @param user {@link User}
 	 */
 	public void login(User user) {
-		try {
-			USER_DAO.findAllUsers();
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+			System.out.println(user.getUsername() + " hat den Server betreten.");
 	}
 }

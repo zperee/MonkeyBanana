@@ -14,6 +14,7 @@ public class LoginTest {
 	public static void main(String[] args) {
 
 	new LoginView();
+	System.out.println("dini mueter");
 //NEW REGISTRIERENVIEW();
 	
 //	User user = new User();

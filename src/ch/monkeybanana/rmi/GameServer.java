@@ -1,18 +1,15 @@
-package ch.monkeybanana.listener;
+package ch.monkeybanana.rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-
-import ch.monkeybanana.rmi.Validator;
-import ch.monkeybanana.rmi.ValidatorImpl;
 
 public class GameServer {
 
 	public static void main(String[] args) {
 		try {
 
-			Registry reg = LocateRegistry.createRegistry(1251);
+			Registry reg = LocateRegistry.createRegistry(1257);
 			Validator aValidator = new ValidatorImpl();
 
 			reg.rebind("validator", aValidator);

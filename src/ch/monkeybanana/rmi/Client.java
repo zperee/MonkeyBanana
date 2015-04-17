@@ -30,8 +30,8 @@ public class Client {
 
 	private Client() {
 
-		this.setIp("192.168.3.169");
-		this.setPort(1251);
+		this.setIp("localhost");
+		this.setPort(1257);
 
 		try {
 			Remote remote = Naming.lookup("rmi://" + ip + ":" + port
@@ -134,7 +134,7 @@ public class Client {
 	 * @param user {@link User}
 	 * @return login Boolean
 	 */
-	public boolean login(User user) {
+	public void login(User user) {
 		List<User> dbUsers = null;
 		boolean login = false;
 
@@ -169,7 +169,6 @@ public class Client {
 				}
 			}
 		}
-		return login;
 	}
 
 	// Getter
