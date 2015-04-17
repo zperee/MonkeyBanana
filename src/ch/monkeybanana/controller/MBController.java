@@ -13,7 +13,6 @@ import com.mysql.jdbc.SQLError;
 
 /**
  * Hier ist die Kommunikation zwischen View und Datenbank implementiert
- * 
  * @author Dominic Pfister, Elia Perenzin MBController.java Copyright
  *         Berufsbildungscenter MonkeyBanana 2015
  */
@@ -32,7 +31,8 @@ public class MBController {
 	}
 
 	/**
-	 * Hier wird ueberprueft ob die eingaben des Users gueltig sind und wenn dies zutrifft wird er in die DB eingetragen
+	 * Hier wird ueberprueft ob die eingaben des Users gueltig sind und wenn
+	 * dies zutrifft wird er in die DB eingetragen
 	 * @author Elia Perenzin
 	 * @param User
 	 */
@@ -99,7 +99,8 @@ public class MBController {
 	}
 
 	/**
-	 * Hier wird das Login durchgefuehrt, wenn dies zutrifft gibt es einen boolean mit true zuruck
+	 * Hier wird das Login durchgefuehrt, wenn dies zutrifft gibt es einen
+	 * boolean mit true zuruck
 	 * @param user
 	 * @return boolean login
 	 */
@@ -131,15 +132,10 @@ public class MBController {
 									.println("Sie haben sich erfolgreich angemeldet");
 							login = true;
 						}
-						else {
-							System.out
-									.println("Username und/oder Passwort stimmen nicht");
-						}
 					}
-					else {
-						System.out
-								.println("Username und/oder Passwort stimmen nicht");
-					}
+				}
+				if (login == false) {
+					System.out.println("Benutername oder Passwort falsch");
 				}
 			}
 		}
