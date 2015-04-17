@@ -6,12 +6,12 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 public class Obstacle {
-
-		private int x = 250;
-		private int y = 250;
+	
 		private Image image;
+		
+		private int x, y, type;
 
-		public Obstacle(int x, int y) {
+		public Obstacle(int x, int y, int type) {
 			image =  new ImageIcon("images/crate.png").getImage();
 			this.setX(x);
 			this.setY(y);
@@ -45,6 +45,14 @@ public class Obstacle {
 
 		public void setImage(Image image) {
 			this.image = image;
+		}
+
+		public int getType() {
+			return type;
+		}
+
+		public void setType(int type) {
+			this.type = type;
 		}
 
 }

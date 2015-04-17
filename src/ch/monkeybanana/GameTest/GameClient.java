@@ -21,6 +21,7 @@ public class GameClient extends JFrame {
         setTitle("MonkeyBanana Game");
         setResizable(true);
         setVisible(true);
+        setEnabled(true);
     }
 
     public static void main(String[] args) {

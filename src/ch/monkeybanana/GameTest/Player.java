@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 
 public class Player {
 	
-	public static final int SPEED = 2;
+	public static final int SPEED = 1;
 	private int vX, vY;
 //	private boolean up, down, left, right;
 	private int x, y;
