@@ -71,7 +71,15 @@ public class Entity extends JPanel implements ActionListener {
 					  0, 1, 0, 1, 0, 1, 2,
 					  0, 1, 1, 1, 2,
 					  0, 1, 0, 1, 0, 1, 2,
-					  0, 1, 0, 1, 0, 1, 2 };
+					  0, 1, 0, 1, 0, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 };
 		
 		int posX = 0;
 		int posY = 0;
@@ -81,10 +89,10 @@ public class Entity extends JPanel implements ActionListener {
 		//Generiert Karte aufgrund von int[] map
 		for (int s : map) {
 			Obstacle kiste = new Obstacle(posX, posY, s);
-			kiste.setType(s);
 			
 			if (!isModified) {
 				obstArray.add(kiste);
+				kiste.setType(s);
 			}
 			
 			if (s != 0) {
@@ -105,6 +113,7 @@ public class Entity extends JPanel implements ActionListener {
 				posX = posX + mapSize;
 			}
 		}
+		isModified = true;
 	}
 	
 	/**
@@ -148,7 +157,9 @@ public class Entity extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstArray) {
 			Rectangle recKiste = kiste.obstBounds();
 
-			if (kiste.getType() == 1) { //Wenn der Typ 0 ist passiert nichts
+			if (kiste.getType() == 1) { /* Wenn der Typ 1 ist, wird
+										 * geprüft ob das Hindernis
+										 * und der Spieler sich berühren */
 
 				if (recPlayer.intersects(recKiste)) {
 
@@ -168,7 +179,7 @@ public class Entity extends JPanel implements ActionListener {
 				}
 			}
 		}
-
+		System.out.println(obstArray.size());
 	}
 
 	private class TAdapter extends KeyAdapter {
