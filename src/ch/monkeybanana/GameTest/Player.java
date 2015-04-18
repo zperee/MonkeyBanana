@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 
 public class Player {
 	
-	public static final int SPEED = 1;
+	public static final int SPEED = 2;
 	private int vX, vY;
 //	private boolean up, down, left, right;
 	private int x, y;
@@ -23,6 +23,13 @@ public class Player {
 
 	public int setY;
 
+	/**
+	 * Konstruktor der Klasse Player. Ein neuer Spieler wird aufgrund
+	 * der x und y Positionen erstellt.
+	 * 
+	 * @author Dominic Pfister
+	 * @param x, y {@link int}
+	 */
 	public Player(int x, int y) {
 		image =  new ImageIcon("images/pokemon.png").getImage();
 		this.setY(y + 15);
@@ -44,6 +51,11 @@ public class Player {
 		y += vY;
 	}
 	
+	/**
+	 * Gibt die Hitbox des Spielers zurück
+	 * 
+	 * @author Dominic Pfister
+	 */
 	public Rectangle playerBounds() {
 		int height = this.getImage().getHeight(null) - 15;
 		int playerY = this.getY() + 15;
@@ -93,6 +105,7 @@ public class Player {
         }
     }
 
+    /* **ALTER LISTENER** */
 //	public void keyPressed(KeyEvent e) {
 //		switch (e.getKeyCode()) {
 //		case KeyEvent.VK_DOWN:

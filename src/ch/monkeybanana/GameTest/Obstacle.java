@@ -11,12 +11,27 @@ public class Obstacle {
 		
 		private int x, y, type;
 
+		/**
+		 * Erstellt ein neues Obstacle Objekt mit den Koordinaten
+		 * x, y und einem Typ.
+		 * 
+		 * @author Dominic Pfister
+		 * @param x {@link int}
+		 * @param y {@link int}
+		 * @param type {@link int}
+		 */
 		public Obstacle(int x, int y, int type) {
 			image =  new ImageIcon("images/crate.png").getImage();
 			this.setX(x);
 			this.setY(y);
 		}
 		
+		/**
+		 * Gibt die Hitbox des Obstacle Objektes
+		 * zurück
+		 * 
+		 * @author Dominic Pfister
+		 */
 		public Rectangle obstBounds() {
 			return new Rectangle(this.getX(), this.getY(), image.getWidth(null), image.getHeight(null));
 		}
