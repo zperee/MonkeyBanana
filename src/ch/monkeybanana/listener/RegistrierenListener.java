@@ -2,6 +2,8 @@ package ch.monkeybanana.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -10,7 +12,7 @@ import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
-public class RegistrierenListener implements ActionListener{
+public class RegistrierenListener implements ActionListener, KeyListener{
 
 	//Instanzvariablen
 	private JTextField user = null;
@@ -49,6 +51,32 @@ public class RegistrierenListener implements ActionListener{
 
 		Client.getInstance().registrieren(newUser);
 	}
+	
+	public void keyTyped(KeyEvent e) {
+		
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			User newUser = new User();
+			
+			String user = this.getUser().getText();
+			String passwort1 = this.getPasswort1().getText();
+			String passwort2 = this.getPasswort2().getText();
+			String email = this.getEmail().getText();
+			
+			newUser.setUsername(user);
+			newUser.setPasswort(passwort1);
+			newUser.setPasswort2(passwort2);
+			newUser.setEmail(email);
+
+			Client.getInstance().registrieren(newUser); 
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {		
+		
+	}
 
 	//Getter
 	public JTextField getUser() {
@@ -83,6 +111,4 @@ public class RegistrierenListener implements ActionListener{
 	public void setEmail(JTextField email) {
 		this.email = email;
 	}
-
-	
 }

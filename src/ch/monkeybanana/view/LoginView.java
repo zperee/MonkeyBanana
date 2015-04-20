@@ -7,8 +7,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 import ch.monkeybanana.listener.LoginListener;
+import ch.monkeybanana.model.User;
+import ch.monkeybanana.rmi.Client;
 
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Dies ist unser GUI für die Anmeldung
@@ -51,13 +55,15 @@ public class LoginView extends JFrame {
 		this.add(usernameLabel);
 
 		username.setBounds(160, 47, 197, 20);
-		this.add(username);
 		username.setColumns(10);
+		username.addKeyListener(new LoginListener(username, password));
+		this.add(username);
 
 		passwordLabel.setBounds(48, 76, 102, 24);
 		this.add(passwordLabel);
 
 		password.setBounds(160, 78, 197, 20);
+		password.addKeyListener(new LoginListener(username, password));
 		this.add(password);
 
 		registrierenButton.setBounds(160, 120, 106, 23);
@@ -68,9 +74,11 @@ public class LoginView extends JFrame {
 		loginbButton.setBounds(273, 120, 84, 23);
 		loginbButton.addActionListener(new LoginListener(username, password,
 				"login"));
+		loginbButton.addKeyListener(new LoginListener(username, password));
 		this.add(loginbButton);
 		
 		this.setVisible(true);
 
 	}
+	
 }

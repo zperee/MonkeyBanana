@@ -8,13 +8,8 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import ch.monkeybanana.message.EmailError;
-import ch.monkeybanana.message.InvalidUsername;
-import ch.monkeybanana.message.LoginError;
-import ch.monkeybanana.message.PasswordEmpity;
-import ch.monkeybanana.message.PasswordError;
-import ch.monkeybanana.message.RegistrSuccess;
-import ch.monkeybanana.message.UsernameEmpty;
+import javax.swing.JOptionPane;
+
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.util.CryptUtils;
 import ch.monkeybanana.view.HomeView;
@@ -73,7 +68,10 @@ public class Client {
 				.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 
 		if (newUser.getPasswort().isEmpty()) {
-			new PasswordEmpity();
+			JOptionPane.showMessageDialog(null,
+					"Passwort muss ausgef\u00fcllt sein",
+                    "Warnung!",
+                    JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 			newUser.setPasswort(CryptUtils.base64encode(newUser.getPasswort()));
@@ -81,15 +79,24 @@ public class Client {
 
 			if (newUser.getPasswort().equals(newUser.getPasswort2())) {
 				if (newUser.getUsername().isEmpty()) {
-					new UsernameEmpty();
+					JOptionPane.showMessageDialog(null,
+                            "Username muss ausgef\u00fcllt sein!",
+                            "Warnung!",
+                            JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					if (newUser.getEmail().isEmpty()) {
-						new EmailError();
+						JOptionPane.showMessageDialog(null,
+	                            "Email muss ausgef\u00fcllt sein!",
+	                            "Warnung!",
+	                            JOptionPane.ERROR_MESSAGE);
 					}
 					else {
 						if (!pattern.matcher(newUser.getEmail()).matches()) {
-							new EmailError();
+							JOptionPane.showMessageDialog(null,
+		                            "Email ist ung\u00fcltig!",
+		                            "Warnung!",
+		                            JOptionPane.ERROR_MESSAGE);
 						}
 						else {
 
@@ -104,7 +111,10 @@ public class Client {
 							for (User dbUser : dbUsers) {
 								if (newUser.getUsername().equals(
 										dbUser.getUsername())) {
-									new InvalidUsername();
+									JOptionPane.showMessageDialog(null,
+											"Username ist bereits vergeben",
+					                        "Warnung!",
+					                        JOptionPane.ERROR_MESSAGE);
 									userAlreadyExists = true;
 									break;
 								}
@@ -120,14 +130,20 @@ public class Client {
 								catch (RemoteException e) {
 									e.printStackTrace();
 								}
-								new RegistrSuccess();
+								JOptionPane.showMessageDialog(null,
+				                        "Sie wurden erfolgreich registriert",
+				                        "Registration!",
+				                        JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
 					}
 				}
 			}
 			else {
-				new PasswordError();
+				JOptionPane.showMessageDialog(null,
+                        "Passw\u00f6rter stimmen nicht \u00fcberein",
+                        "Warnung!",
+                        JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -143,11 +159,17 @@ public class Client {
 		boolean login = false;
 
 		if (user.getUsername().isEmpty()) {
-			new UsernameEmpty();
+			JOptionPane.showMessageDialog(null,
+                    "Username muss ausgef\u00fcllt sein",
+                    "Warnung!",
+                    JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 			if (user.getPasswort().isEmpty()) {
-				new PasswordEmpity();
+				JOptionPane.showMessageDialog(null,
+						"Passwort muss ausgef\u00fcllt sein",
+                        "Warnung!",
+                        JOptionPane.ERROR_MESSAGE);
 			}
 			else {
 				user.setPasswort(CryptUtils.base64encode(user.getPasswort()));
@@ -175,7 +197,10 @@ public class Client {
 					}
 				}
 				if (login == false) {
-					new LoginError();
+					JOptionPane.showMessageDialog(null,
+							"Passwort und Username stimmen nicht \u00fcberein",
+	                        "Warnung!",
+	                        JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}

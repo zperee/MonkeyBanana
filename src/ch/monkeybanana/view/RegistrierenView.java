@@ -55,28 +55,33 @@ public class RegistrierenView extends JFrame {
 				
 		username.setColumns(10);
 		username.setBounds(181, 47, 176, 20);
+		username.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		this.add(username);
 		
 		emailLabel.setBounds(48, 70, 102, 24);
 		this.add(emailLabel);
 		
 		email.setBounds(181, 72, 176, 20);
+		email.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		this.add(email);
 					
 		passwordLabel.setBounds(48, 96, 102, 24);
 		this.add(passwordLabel);
 		
 		password.setBounds(181, 98, 176, 20);
+		password.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		this.add(password);
 
 		passwordConfirmLabel.setBounds(48, 123, 123, 24);
 		this.add(passwordConfirmLabel);
 
 		passwordConfirm.setBounds(181, 125, 176, 20);
+		passwordConfirm.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		this.add(passwordConfirm);
 						
 		registrierenButton.setBounds(251, 154, 106, 23);
 		registrierenButton.addActionListener(new RegistrierenListener(username, email, password, passwordConfirm));
+		registrierenButton.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		this.add(registrierenButton);
 		
 		this.setVisible(true);

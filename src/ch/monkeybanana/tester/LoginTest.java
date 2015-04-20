@@ -2,7 +2,6 @@ package ch.monkeybanana.tester;
 
 import java.util.regex.Pattern;
 
-import ch.monkeybanana.message.UsernameEmpty;
 import ch.monkeybanana.view.LoginView;
 
 
