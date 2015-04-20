@@ -46,9 +46,13 @@ public class Entity extends JPanel implements ActionListener {
 		timer.start();
 
 	}
+	
+	public void banana() {
+		
+	}
 
 	/**
-	 * Erstellt die Karte f�r das Spiel mit den Hindernissen
+	 * Erstellt die Karte für das Spiel mit den Hindernissen
 	 * 
 	 * @author Dominic Pfister
 	 * 
@@ -64,22 +68,22 @@ public class Entity extends JPanel implements ActionListener {
 		 * **LEGENDE** 
 		 * 0 = kein Block 
 		 * 1 = Block 
-		 * 2 = n�chste Linie
+		 * 2 = nächste Linie
 		 */
-		int[] map = { 2,
-					  0, 1, 0, 1, 2,
-					  0, 1, 0, 1, 0, 1, 2,
-					  0, 1, 1, 1, 2,
-					  0, 1, 0, 1, 0, 1, 2,
-					  0, 1, 0, 1, 0, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 };
+		int[] map = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 };
 		
 		int posX = 0;
 		int posY = 0;
@@ -100,7 +104,7 @@ public class Entity extends JPanel implements ActionListener {
 					posX = posX + 32;
 					g2d.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
 
-					// Hitbox f�r Hindernis
+					// Hitbox für Hindernis
 					g2d.setColor(Color.GREEN);
 					g2d.drawRect(kiste.getX(), kiste.getY(), kiste.getImage().getWidth(null), kiste.getImage().getHeight(null));
 					
@@ -131,7 +135,7 @@ public class Entity extends JPanel implements ActionListener {
 
 		g2d.drawImage(player.getImage(), player.getX(), player.getY(), this); //Zeichnet den Spieler
 
-		// Hitbox f�r player
+		// Hitbox für player
 		g2d.drawRect(player.getX(), player.getY() + 15,
 		player.getImage().getWidth(null),
 		player.getImage().getHeight(null) - 15);
@@ -147,7 +151,7 @@ public class Entity extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich ber�hren
+	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berühren
      * 
 	 * @author Dominic Pfister
 	 */
@@ -158,8 +162,8 @@ public class Entity extends JPanel implements ActionListener {
 			Rectangle recKiste = kiste.obstBounds();
 
 			if (kiste.getType() == 1) { /* Wenn der Typ 1 ist, wird
-										 * gepr�ft ob das Hindernis
-										 * und der Spieler sich ber�hren */
+										 * geprüft ob das Hindernis
+										 * und der Spieler sich berühren */
 
 				if (recPlayer.intersects(recKiste)) {
 
@@ -179,7 +183,6 @@ public class Entity extends JPanel implements ActionListener {
 				}
 			}
 		}
-		System.out.println(obstArray.size());
 	}
 
 	private class TAdapter extends KeyAdapter {

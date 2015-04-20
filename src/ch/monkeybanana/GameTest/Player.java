@@ -17,7 +17,7 @@ public class Player {
 	
 	public static final int SPEED = 2;
 	private int vX, vY;
-//	private boolean up, down, left, right;
+	private boolean up, down, left, right;
 	private int x, y;
 	private Image image;
 
@@ -52,7 +52,7 @@ public class Player {
 	}
 	
 	/**
-	 * Gibt die Hitbox des Spielers zurück
+	 * Gibt die Hitbox des Spielers zurÃ¼ck
 	 * 
 	 * @author Dominic Pfister
 	 */
@@ -70,15 +70,27 @@ public class Player {
 
         if (key == KeyEvent.VK_LEFT) {
             vX = -SPEED;
+            left = true;
+            right = false;
+            up = false;
+            down = false;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
             vX = SPEED;
+            left = false;
+            right = true;
+            up = false;
+            down = false;
         }
 
         if (key == KeyEvent.VK_UP) {
             vY = -SPEED;
         }
+        left = false;
+        right = false;
+        up = true;
+        down = false;
 
         if (key == KeyEvent.VK_DOWN) {
             vY = SPEED;
