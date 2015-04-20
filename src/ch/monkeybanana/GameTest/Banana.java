@@ -1,6 +1,7 @@
 package ch.monkeybanana.GameTest;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
@@ -10,6 +11,7 @@ public class Banana {
 	private Image image;
 	
 	private int x, y, type;
+	private char direction;
 
 	/**
 	 * Erstellt ein neues Banananen Objekt mit den Koordinaten
@@ -20,11 +22,24 @@ public class Banana {
 	 * @param y {@link int}
 	 * @param type {@link int}
 	 */
-	public Banana(int x, int y, int type) {
+	public Banana(int x, int y, int type, char direction) {
 		image =  new ImageIcon("images/banana.png").getImage();
+		
 		this.setX(x);
 		this.setY(y);
 		this.setType(type);
+		this.setDirection(direction);
+	}
+	
+	/**
+	 * Gibt die Hitbox der Banane zurück
+	 * 
+	 * @author Dominic Pfister
+	 */
+	public Rectangle bananaBounds() {
+		int height = this.getImage().getHeight(null);
+		int y = this.getY() + 15;
+		return new Rectangle(this.getX(), y, image.getWidth(null), height);
 	}
 
 	/* **GETTER und SETTER** */
@@ -58,5 +73,13 @@ public class Banana {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public char getDirection() {
+		return direction;
+	}
+
+	public void setDirection(char direction) {
+		this.direction = direction;
 	}
 }

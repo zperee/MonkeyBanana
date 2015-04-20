@@ -2,7 +2,7 @@ package ch.monkeybanana.GameTest;
 import javax.swing.JFrame;
 
 /**
- * Hauptklasse fï¿½r den Spiel Client
+ * Hauptklasse für den Spiel Client
  * @author Dominic Pfister, Elia Perenzin
  * GameClient.java
  * Copyright Berufsbildungscenter MonkeyBanana 2015

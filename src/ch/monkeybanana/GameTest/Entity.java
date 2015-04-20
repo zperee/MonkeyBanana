@@ -2,7 +2,6 @@ package ch.monkeybanana.GameTest;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -26,13 +25,12 @@ public class Entity extends JPanel implements ActionListener {
 
 	private Timer timer;
 	private Player player = new Player(8 * 32, 4 * 32 + 2);
-	List<Obstacle> obstArray = new ArrayList<Obstacle>();
-	List<Banana> gesetzteBananen = new ArrayList<Banana>();
+	List<Obstacle> obstacleArray = new ArrayList<Obstacle>();
+	List<Banana> bananenArray = new ArrayList<Banana>();
 	private boolean isModified = false;
 
 	/**
-	 * Konstruktor der Klasse Entity. Timer wird initialisiert und gestartet.
-	 * Optionen des JPanel werden gesetzt.
+	 * DESC
 	 * 
 	 * @author Dominic Pfister
 	 */
@@ -45,34 +43,82 @@ public class Entity extends JPanel implements ActionListener {
 
 		timer = new Timer(10, this);
 		timer.start();
-
+		generateMap(32);
 	}
 	
+	/**
+	 * Erstellt neue Bananen wenn eine der beiden
+	 * Tasten gedrückt wurde
+	 * 
+	 * @author Dominic Pfister
+	 */
 	public void generateBanana() {
 		int xPos = 0;
 		int yPos = 0;
 		int type = 1;
+		char dir = 'k';
+		
+		/* **LEGENDE**
+		 * 
+		 * type:
+		 * 1 = Bananenschale
+		 * 2 = geworfene Bananen
+		 * 
+		 * direction:
+		 * u = up
+		 * d = down
+		 * r = right
+		 * l = left
+		 */
 
-		if (player.isBanana()) {
+		if (player.isBananaPeel()) { // key == e
 			xPos = player.getX() + 1;
 			yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
 			
-			Banana banana = new Banana(xPos, yPos, type);
-			gesetzteBananen.add(banana);
+			Banana banana = new Banana(xPos, yPos, type, 'k'); //k steht für keine direction
+			bananenArray.add(banana);
 
-			player.setBanana(false);
+			player.setBananaPeel(false);
+			
+		} else if (player.isBananaThrown()) { // key == r
+			type = 2;
+			
+			if (player.isUp()) {
+				xPos = player.getX();
+				yPos = player.getY();
+				dir = 'u';
+			} else if (player.isDown()) {
+				xPos = player.getX();
+				yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
+				dir = 'd';
+			} else if (player.isRight()) {
+				xPos = player.getX();
+				yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
+				dir = 'r';
+			} else if (player.isLeft()) {
+				xPos = player.getX();
+				yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
+				dir = 'l';
+			} 
+			
+			if (xPos != 0 && xPos != 0) { //Achtet darauf, dass am Anfang keine
+										  //Bananen geworfen werden
+				Banana banana = new Banana(xPos, yPos, type, dir);
+				bananenArray.add(banana);
+				player.setBananaThrown(false);
+			}
 		}
 	}
 
 	/**
-	 * Erstellt die Karte fÃ¼r das Spiel mit den Hindernissen
+	 * Erstellt die Karte für das Spiel mit den Hindernissen
 	 * 
 	 * @author Dominic Pfister
 	 * 
 	 * @param mapSize {@link int}
 	 * @param g {@link Graphics}
 	 */
-	public void generateMap(int mapSize, Graphics g) {
+	public void generateMap(int mapSize) {
 		/*
 		 * TODO !KannZiel map einlesen (verschiedene Maps)
 		 */
@@ -81,7 +127,7 @@ public class Entity extends JPanel implements ActionListener {
 		 * **LEGENDE** 
 		 * 0 = kein Block
 		 * 1 = Block 
-		 * 2 = nÃ¤chste Linie
+		 * 2 = nächste Linie
 		 * 3 = Jungle Baum (rand)
 		 */
 		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
@@ -101,26 +147,15 @@ public class Entity extends JPanel implements ActionListener {
 		
 		int posX = 0;
 		int posY = 0;
-		
-		Graphics2D g2d = (Graphics2D) g;
 
 		//Generiert Karte aufgrund von int[] map
 		for (int s : map) {
 			Obstacle kiste = new Obstacle(posX, posY, s);
-			
 			if (!isModified) {
-				obstArray.add(kiste);
+				obstacleArray.add(kiste);
 			}
-			
 				if (s == 1 || s == 3 || s == 0) {
-					posX = posX + 32;
-					g2d.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
-
-					// Hitbox fÃ¼r Hindernis
-//					g2d.setColor(Color.GREEN);
-//					g2d.drawRect(kiste.getX(), kiste.getY(), kiste.getImage().getWidth(null), 
-//					kiste.getImage().getHeight(null));
-					
+					posX = posX + 32;					
 				} else if (s == 2) {
 					posX = 0;
 					posY = posY + mapSize;
@@ -136,20 +171,54 @@ public class Entity extends JPanel implements ActionListener {
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
-		Graphics2D g2d = (Graphics2D) g;
-
-		generateMap(32, g2d);
 		
-		g2d.setColor(Color.GREEN);
-
-		for (Banana banana2 : gesetzteBananen) {
-			g.drawImage(banana2.getImage(), banana2.getX(), banana2.getY(), this);
+		/* Zeichnet die Hindernisse */
+		for (Obstacle kiste : obstacleArray) {
+			g.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
+			
+			// Hitbox für Hindernis
+//			g.setColor(Color.RED);
+//			g.drawRect(kiste.getX(), kiste.getY(), 
+//			kiste.getImage().getWidth(null), 
+//			kiste.getImage().getHeight(null));
 		}
 		
-		g2d.drawImage(player.getImage(), player.getX(), player.getY(), this); //Zeichnet den Spieler
+		/* Zeichnet die Bananen */
+		for (Banana banana : bananenArray) { //Erhöht die Koordinaten für geworfene Bananen
+			if (banana.getType() == 1) {
+			} else if (banana.getType() == 2) {
+				
+				char dir = banana.getDirection(); //Erhöht Positionen der Bananen
+				switch (dir) {
+				case('u'):
+					banana.setY(banana.getY() - Player.SPEED - 1);
+					break;
+				case('d'):
+					banana.setY(banana.getY() + Player.SPEED + 1);
+					break;
+				case('r'):
+					banana.setX(banana.getX() + Player.SPEED + 1);
+					break;
+				case('l'):
+					banana.setX(banana.getX() - Player.SPEED - 1);
+					break;
+				}
+			}
+			g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
+			
+			//Hitbox für Bananen
+//			g.setColor(Color.ORANGE);
+//			g.drawRect(banana.getX(), banana.getY(), 
+//			banana.getImage().getWidth(null), 
+//			banana.getImage().getHeight(null));
+		}
+		
+		/* Zeichnet den Spieler */
+		g.drawImage(player.getImage(), player.getX(), player.getY(), this);
 
-		// Hitbox fÃ¼r player
-//		g2d.drawRect(player.getX(), player.getY() + 15,
+		// Hitbox für player
+//		g.setColor(Color.GREEN);
+//		g.drawRect(player.getX(), player.getY() + 15,
 //		player.getImage().getWidth(null),
 //		player.getImage().getHeight(null) - 15);
 		
@@ -161,6 +230,7 @@ public class Entity extends JPanel implements ActionListener {
 		player.move();
 		repaint();
 		checkBounds();
+		checkBananaBounds();
 		generateBanana();
 	}
 
@@ -172,7 +242,7 @@ public class Entity extends JPanel implements ActionListener {
 	public void checkBounds() {
 		Rectangle recPlayer = player.playerBounds();
 
-		for (Obstacle kiste : obstArray) {
+		for (Obstacle kiste : obstacleArray) {
 			Rectangle recKiste = kiste.obstBounds();
 
 			if (kiste.getType() >= 1) { /* Wenn der Typ 1 ist, wird
@@ -193,6 +263,28 @@ public class Entity extends JPanel implements ActionListener {
 						player.setX((int) recKiste.getMinX() - player.getImage().getWidth(null));
 					} else if (recPlayer.getMinX() - 1>= recKiste.getMaxX() - 4) { //LEFT
 						player.setX((int) recKiste.getMaxX());
+					}
+				}
+			}
+		}
+	}
+	
+	public void checkBananaBounds() {
+		for (Banana banana : bananenArray) {
+			Rectangle recBanana = banana.bananaBounds();
+			
+			for (Obstacle kiste : obstacleArray) {
+				Rectangle recKiste = kiste.obstBounds();
+				
+				if (kiste.getType() >= 1) {
+					if (recBanana.intersects(recKiste)) {
+						/* 
+						 * TODO Entfernen wirft ConcurrentModificationException weil 
+						 * Objekt entfernt wurde, während es noch benutzt wurde
+						 */
+//						bananenArray.remove(banana);
+						System.out.println("getroffen");
+						
 					}
 				}
 			}

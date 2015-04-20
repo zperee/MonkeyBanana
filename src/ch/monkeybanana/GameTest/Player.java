@@ -17,7 +17,7 @@ public class Player {
 	
 	public static final int SPEED = 2;
 	private int vX, vY;
-	private boolean up, down, left, right, isBanana;
+	private boolean up, down, left, right, isBananaPeel, isBananaThrown;
 	private boolean allowBanana = true;
 	private int x, y;
 	private Image image;
@@ -59,7 +59,7 @@ public class Player {
 	 * @author Dominic Pfister
 	 */
 	public Rectangle playerBounds() {
-		int height = this.getImage().getHeight(null) - 15;
+		int height = this.getImage().getHeight(null) - 15; //-15 wegen der verkleinerten Hitbox
 		int playerY = this.getY() + 15;
 		return new Rectangle(this.getX(), playerY, image.getWidth(null), height);
 	}
@@ -120,7 +120,7 @@ public class Player {
         if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
             vY = 0;
         }
-        if (key == KeyEvent.VK_E) {
+        if (key == KeyEvent.VK_E || key == KeyEvent.VK_R) {
         	allowBanana = true;
         }
     }
@@ -129,7 +129,10 @@ public class Player {
     	char key2 = e.getKeyChar();
     	
     	if (key2 == 'e' && allowBanana) {
-    		isBanana = true;
+    		isBananaPeel = true;
+    		allowBanana = false;
+    	} else if (key2 == 'r' && allowBanana) {
+    		isBananaThrown = true;
     		allowBanana = false;
     	}
     }
@@ -242,12 +245,12 @@ public class Player {
 		this.right = right;
 	}
 
-	public boolean isBanana() {
-		return isBanana;
+	public boolean isBananaPeel() {
+		return isBananaPeel;
 	}
 
-	public void setBanana(boolean isBanana) {
-		this.isBanana = isBanana;
+	public void setBananaPeel(boolean isBananaPeel) {
+		this.isBananaPeel = isBananaPeel;
 	}
 
 	public int getSetY() {
@@ -264,5 +267,13 @@ public class Player {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public boolean isBananaThrown() {
+		return isBananaThrown;
+	}
+
+	public void setBananaThrown(boolean isBananaThrown) {
+		this.isBananaThrown = isBananaThrown;
 	}
 }
