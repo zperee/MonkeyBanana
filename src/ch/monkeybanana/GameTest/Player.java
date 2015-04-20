@@ -17,9 +17,11 @@ public class Player {
 	
 	public static final int SPEED = 2;
 	private int vX, vY;
-	private boolean up, down, left, right;
+	private boolean up, down, left, right, isBanana;
+	private boolean allowBanana = true;
 	private int x, y;
 	private Image image;
+	
 
 	public int setY;
 
@@ -65,10 +67,9 @@ public class Player {
 
 	/* **LISTENER** */
     public void keyPressed(KeyEvent e) {
-
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
+        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             vX = -SPEED;
             left = true;
             right = false;
@@ -76,7 +77,7 @@ public class Player {
             down = false;
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
             vX = SPEED;
             left = false;
             right = true;
@@ -84,37 +85,53 @@ public class Player {
             down = false;
         }
 
-        if (key == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
             vY = -SPEED;
+            left = false;
+            right = false;
+            up = true;
+            down = false;
         }
-        left = false;
-        right = false;
-        up = true;
-        down = false;
 
-        if (key == KeyEvent.VK_DOWN) {
+        if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
             vY = SPEED;
+            left = false;
+            right = false;
+            up = false;
+            down = true;
         }
     }
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
+        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             vX = 0;
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
             vX = 0;
         }
 
-        if (key == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
             vY = 0;
         }
 
-        if (key == KeyEvent.VK_DOWN) {
+        if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
             vY = 0;
         }
+        if (key == KeyEvent.VK_E) {
+        	allowBanana = true;
+        }
+    }
+    
+    public void keyTyped(KeyEvent e) {
+    	char key2 = e.getKeyChar();
+    	
+    	if (key2 == 'e' && allowBanana) {
+    		isBanana = true;
+    		allowBanana = false;
+    	}
     }
 
     /* **ALTER LISTENER** */
@@ -191,5 +208,61 @@ public class Player {
 
 	public void setX(int x) {
 		this.x = x;
+	}
+
+	public boolean isUp() {
+		return up;
+	}
+
+	public void setUp(boolean up) {
+		this.up = up;
+	}
+
+	public boolean isDown() {
+		return down;
+	}
+
+	public void setDown(boolean down) {
+		this.down = down;
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
+
+	public boolean isRight() {
+		return right;
+	}
+
+	public void setRight(boolean right) {
+		this.right = right;
+	}
+
+	public boolean isBanana() {
+		return isBanana;
+	}
+
+	public void setBanana(boolean isBanana) {
+		this.isBanana = isBanana;
+	}
+
+	public int getSetY() {
+		return setY;
+	}
+
+	public void setSetY(int setY) {
+		this.setY = setY;
+	}
+
+	public static int getSpeed() {
+		return SPEED;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 }

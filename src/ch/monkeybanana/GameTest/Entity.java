@@ -27,6 +27,7 @@ public class Entity extends JPanel implements ActionListener {
 	private Timer timer;
 	private Player player = new Player(8 * 32, 4 * 32 + 2);
 	List<Obstacle> obstArray = new ArrayList<Obstacle>();
+	List<Banana> gesetzteBananen = new ArrayList<Banana>();
 	private boolean isModified = false;
 
 	/**
@@ -47,8 +48,20 @@ public class Entity extends JPanel implements ActionListener {
 
 	}
 	
-	public void banana() {
-		
+	public void generateBanana() {
+		int xPos = 0;
+		int yPos = 0;
+		int type = 1;
+
+		if (player.isBanana()) {
+			xPos = player.getX() + 1;
+			yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
+			
+			Banana banana = new Banana(xPos, yPos, type);
+			gesetzteBananen.add(banana);
+
+			player.setBanana(false);
+		}
 	}
 
 	/**
@@ -66,24 +79,25 @@ public class Entity extends JPanel implements ActionListener {
 
 		/*
 		 * **LEGENDE** 
-		 * 0 = kein Block 
+		 * 0 = kein Block
 		 * 1 = Block 
 		 * 2 = nächste Linie
+		 * 3 = Jungle Baum (rand)
 		 */
-		int[] map = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-				 	  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,
-					  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2,
-					  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,
-					  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2,
-					  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,
-					  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2,
-					  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,
-					  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2,
-					  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,
-					  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2,
-					  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,
-					  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-					 };
+		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
+					  3, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 3, 2,
+					  3, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2,
+					  3, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 3, 2,
+					  3, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 3, 2,
+					  3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 2,
+					  3, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 3, 2,
+					  3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 3, 2,
+					  3, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
+					  3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 3, 2,
+					  3, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 3, 2,
+					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 3, 2,
+					  3, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 3, 2,
+					  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2  };
 		
 		int posX = 0;
 		int posY = 0;
@@ -96,26 +110,21 @@ public class Entity extends JPanel implements ActionListener {
 			
 			if (!isModified) {
 				obstArray.add(kiste);
-				kiste.setType(s);
 			}
 			
-			if (s != 0) {
-				if (s == 1) {
+				if (s == 1 || s == 3 || s == 0) {
 					posX = posX + 32;
 					g2d.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
 
 					// Hitbox für Hindernis
-					g2d.setColor(Color.GREEN);
-					g2d.drawRect(kiste.getX(), kiste.getY(), kiste.getImage().getWidth(null), kiste.getImage().getHeight(null));
+//					g2d.setColor(Color.GREEN);
+//					g2d.drawRect(kiste.getX(), kiste.getY(), kiste.getImage().getWidth(null), 
+//					kiste.getImage().getHeight(null));
 					
 				} else if (s == 2) {
 					posX = 0;
 					posY = posY + mapSize;
 				}
-			}
-			if (s == 0) {
-				posX = posX + mapSize;
-			}
 		}
 		isModified = true;
 	}
@@ -133,13 +142,17 @@ public class Entity extends JPanel implements ActionListener {
 		
 		g2d.setColor(Color.GREEN);
 
+		for (Banana banana2 : gesetzteBananen) {
+			g.drawImage(banana2.getImage(), banana2.getX(), banana2.getY(), this);
+		}
+		
 		g2d.drawImage(player.getImage(), player.getX(), player.getY(), this); //Zeichnet den Spieler
 
 		// Hitbox für player
-		g2d.drawRect(player.getX(), player.getY() + 15,
-		player.getImage().getWidth(null),
-		player.getImage().getHeight(null) - 15);
-
+//		g2d.drawRect(player.getX(), player.getY() + 15,
+//		player.getImage().getWidth(null),
+//		player.getImage().getHeight(null) - 15);
+		
 		Toolkit.getDefaultToolkit().sync();
 	}
 
@@ -148,6 +161,7 @@ public class Entity extends JPanel implements ActionListener {
 		player.move();
 		repaint();
 		checkBounds();
+		generateBanana();
 	}
 
 	/**
@@ -161,23 +175,23 @@ public class Entity extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstArray) {
 			Rectangle recKiste = kiste.obstBounds();
 
-			if (kiste.getType() == 1) { /* Wenn der Typ 1 ist, wird
+			if (kiste.getType() >= 1) { /* Wenn der Typ 1 ist, wird
 										 * geprüft ob das Hindernis
 										 * und der Spieler sich berühren */
 
 				if (recPlayer.intersects(recKiste)) {
 
-					if (recPlayer.getMaxY() <= recKiste.getMaxY() //TOP
-							&& !(recPlayer.getMinY() >= (recKiste.getMaxY() - 4))
-							&& !(recPlayer.getMaxX() <= recKiste.getMinX() + 4)
-							&& !(recPlayer.getMinX() >= recKiste.getMaxX() - 4)) {
+					if (recPlayer.getMaxY() - 1 <= recKiste.getMaxY() //TOP
+							&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
+							&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
+							&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
 
 						player.setY((int) recKiste.getMinY()- player.getImage().getHeight(null));
-					} else if (recPlayer.getMinY() >= (recKiste.getMaxY() - 4)) { //BOTTOM
+					} else if (recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4)) { //BOTTOM
 						player.setY((int) recKiste.getMaxY() - 15);
-					} else if (recPlayer.getMaxX() <= recKiste.getMinX() + 4) { //RIGHT
+					} else if (recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4) { //RIGHT
 						player.setX((int) recKiste.getMinX() - player.getImage().getWidth(null));
-					} else if (recPlayer.getMinX() >= recKiste.getMaxX() - 4) { //LEFT
+					} else if (recPlayer.getMinX() - 1>= recKiste.getMaxX() - 4) { //LEFT
 						player.setX((int) recKiste.getMaxX());
 					}
 				}
@@ -193,6 +207,10 @@ public class Entity extends JPanel implements ActionListener {
 
 		public void keyPressed(KeyEvent e) {
 			player.keyPressed(e);
+		}
+		
+		public void keyTyped(KeyEvent e) {
+			player.keyTyped(e);
 		}
 	}
 }

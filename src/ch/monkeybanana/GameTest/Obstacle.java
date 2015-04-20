@@ -21,14 +21,29 @@ public class Obstacle {
 		 * @param type {@link int}
 		 */
 		public Obstacle(int x, int y, int type) {
-			image =  new ImageIcon("images/crate.png").getImage();
+			this.setType(type);
+			
+			switch (type) {
+			case 0:
+				image =  new ImageIcon("images/dirt.png").getImage();
+				break;
+			case 1:
+				image =  new ImageIcon("images/crate.png").getImage();
+				break;
+			case 3:
+				image =  new ImageIcon("images/palm.png").getImage();
+				break;
+			default:
+				image =  new ImageIcon("images/dirt.png").getImage();
+			}
+				
 			this.setX(x);
 			this.setY(y);
 		}
 		
 		/**
 		 * Gibt die Hitbox des Obstacle Objektes
-		 * zurück
+		 * zurÃ¼ck
 		 * 
 		 * @author Dominic Pfister
 		 */
