@@ -5,15 +5,19 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import ch.monkeybanana.controller.MBController;
-import ch.monkeybanana.dao.UserDao;
-import ch.monkeybanana.dao.UserJDBCDao;
+import ch.monkeybanana.message.EmailError;
+import ch.monkeybanana.message.InvalidUsername;
+import ch.monkeybanana.message.LoginError;
+import ch.monkeybanana.message.PasswordEmpity;
+import ch.monkeybanana.message.PasswordError;
+import ch.monkeybanana.message.RegistrSuccess;
+import ch.monkeybanana.message.UsernameEmpty;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.util.CryptUtils;
+import ch.monkeybanana.view.HomeView;
 
 public class Client {
 
@@ -34,7 +38,7 @@ public class Client {
 	private Client() {
 
 		this.setIp("localhost");
-		this.setPort(1257);
+		this.setPort(1258);
 
 		try {
 			Remote remote = Naming.lookup("rmi://" + ip + ":" + port
@@ -69,7 +73,7 @@ public class Client {
 				.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 
 		if (newUser.getPasswort().isEmpty()) {
-			System.out.println("Passwort muss ausgef\u00fcllt sein");
+			new PasswordEmpity();
 		}
 		else {
 			newUser.setPasswort(CryptUtils.base64encode(newUser.getPasswort()));
@@ -77,16 +81,15 @@ public class Client {
 
 			if (newUser.getPasswort().equals(newUser.getPasswort2())) {
 				if (newUser.getUsername().isEmpty()) {
-					System.out.println("Username muss ausgef\u00fcllt sein");
+					new UsernameEmpty();
 				}
 				else {
 					if (newUser.getEmail().isEmpty()) {
-						System.out.println("Email muss ausgef\u00fcllt sein");
+						new EmailError();
 					}
 					else {
 						if (!pattern.matcher(newUser.getEmail()).matches()) {
-							System.out
-									.println("Keine gültige Email eingegeben");
+							new EmailError();
 						}
 						else {
 
@@ -101,8 +104,7 @@ public class Client {
 							for (User dbUser : dbUsers) {
 								if (newUser.getUsername().equals(
 										dbUser.getUsername())) {
-									System.out
-											.println("Username ist bereits vergeben");
+									new InvalidUsername();
 									userAlreadyExists = true;
 									break;
 								}
@@ -118,16 +120,14 @@ public class Client {
 								catch (RemoteException e) {
 									e.printStackTrace();
 								}
-								System.out
-										.println("Sie wurden erfolgreich eingetragen");
+								new RegistrSuccess();
 							}
 						}
 					}
 				}
 			}
 			else {
-				System.out
-						.println("Passw\u00f6rter stimmen nicht \u00fcberein");
+				new PasswordError();
 			}
 		}
 	}
@@ -143,11 +143,11 @@ public class Client {
 		boolean login = false;
 
 		if (user.getUsername().isEmpty()) {
-			System.out.println("Bitte Username ausf\u00fcllen");
+			new UsernameEmpty();
 		}
 		else {
 			if (user.getPasswort().isEmpty()) {
-				System.out.println("Bitte Passwort ausf\u00fcllen");
+				new PasswordEmpity();
 			}
 			else {
 				user.setPasswort(CryptUtils.base64encode(user.getPasswort()));
@@ -162,8 +162,7 @@ public class Client {
 				for (User dbUser : dbUsers) {
 					if (user.getUsername().equals(dbUser.getUsername())) {
 						if (user.getPasswort().equals(dbUser.getPasswort())) {
-							System.out
-									.println("Sie haben sich erfolgreich angemeldet");
+							new HomeView();
 							try {
 								user2.setUsername(dbUser.getUsername());
 								Client.getInstance().getConnect().login(user2);
@@ -176,7 +175,7 @@ public class Client {
 					}
 				}
 				if (login == false) {
-					System.out.println("Benutername oder Passwort falsch");
+					new LoginError();
 				}
 			}
 		}
