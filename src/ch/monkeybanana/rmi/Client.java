@@ -25,6 +25,9 @@ public class Client {
 	private Validator connect;
 
 	public static Client getInstance() {
+		if (instance == null){
+			instance = new Client();
+		}
 		return Client.instance;
 	}
 
@@ -136,6 +139,7 @@ public class Client {
 	 */
 	public void login(User user) {
 		List<User> dbUsers = null;
+		User user2 = new User();
 		boolean login = false;
 
 		if (user.getUsername().isEmpty()) {
@@ -160,6 +164,13 @@ public class Client {
 						if (user.getPasswort().equals(dbUser.getPasswort())) {
 							System.out
 									.println("Sie haben sich erfolgreich angemeldet");
+							try {
+								user2.setUsername(dbUser.getUsername());
+								Client.getInstance().getConnect().login(user2);
+							}
+							catch (RemoteException e) {
+								e.printStackTrace();
+							}
 							login = true;
 						}
 					}

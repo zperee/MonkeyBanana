@@ -48,7 +48,7 @@ public class Entity extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Erstellt die Karte für das Spiel mit den Hindernissen
+	 * Erstellt die Karte fï¿½r das Spiel mit den Hindernissen
 	 * 
 	 * @author Dominic Pfister
 	 * 
@@ -64,7 +64,7 @@ public class Entity extends JPanel implements ActionListener {
 		 * **LEGENDE** 
 		 * 0 = kein Block 
 		 * 1 = Block 
-		 * 2 = nächste Linie
+		 * 2 = nï¿½chste Linie
 		 */
 		int[] map = { 2,
 					  0, 1, 0, 1, 2,
@@ -100,7 +100,7 @@ public class Entity extends JPanel implements ActionListener {
 					posX = posX + 32;
 					g2d.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
 
-					// Hitbox für Hindernis
+					// Hitbox fï¿½r Hindernis
 					g2d.setColor(Color.GREEN);
 					g2d.drawRect(kiste.getX(), kiste.getY(), kiste.getImage().getWidth(null), kiste.getImage().getHeight(null));
 					
@@ -131,7 +131,7 @@ public class Entity extends JPanel implements ActionListener {
 
 		g2d.drawImage(player.getImage(), player.getX(), player.getY(), this); //Zeichnet den Spieler
 
-		// Hitbox für player
+		// Hitbox fï¿½r player
 		g2d.drawRect(player.getX(), player.getY() + 15,
 		player.getImage().getWidth(null),
 		player.getImage().getHeight(null) - 15);
@@ -147,7 +147,7 @@ public class Entity extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berühren
+	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berï¿½hren
      * 
 	 * @author Dominic Pfister
 	 */
@@ -158,8 +158,8 @@ public class Entity extends JPanel implements ActionListener {
 			Rectangle recKiste = kiste.obstBounds();
 
 			if (kiste.getType() == 1) { /* Wenn der Typ 1 ist, wird
-										 * geprüft ob das Hindernis
-										 * und der Spieler sich berühren */
+										 * geprï¿½ft ob das Hindernis
+										 * und der Spieler sich berï¿½hren */
 
 				if (recPlayer.intersects(recKiste)) {
 

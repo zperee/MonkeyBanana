@@ -28,5 +28,4 @@ public interface UserDao {
 	 * @throws SQLException
 	 */
 	public abstract void registrieren(User user) throws SQLException;
-
 }

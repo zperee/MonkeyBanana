@@ -1,15 +1,13 @@
 package ch.monkeybanana.controller;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.regex.Pattern;
 
+import javax.swing.JLabel;
+
+import ch.monkeybanana.GameTest.GameClient;
 import ch.monkeybanana.dao.UserDao;
 import ch.monkeybanana.dao.UserJDBCDao;
 import ch.monkeybanana.model.User;
-import ch.monkeybanana.util.CryptUtils;
-
-import com.mysql.jdbc.SQLError;
 
 /**
  * Hier ist die Kommunikation zwischen View und Datenbank implementiert
@@ -40,10 +38,10 @@ public class MBController {
 	 * @author Elia Perenzin
 	 * @param newUser {@link User}
 	 */
-	public void registrieren(User newUser) {
+	public void registrieren(User newUser, JLabel console) {
 		try{
 			USER_DAO.registrieren(newUser);
-			System.out.println("WOOOW da hat sich einer registriert! ");
+			console.setText(console.getText() + "Benutzer "+ newUser.getUsername() + " hat sich registriert." + "<br>");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -51,11 +49,11 @@ public class MBController {
 	}
 
 	/**
-	 * Hier wird das Login durchgefuehrt, wenn dies zutrifft gibt es einen
-	 * boolean mit true zuruck
+	 * Hier wird das Login durchgefuehrt
 	 * @param user {@link User}
 	 */
-	public void login(User user) {
-			System.out.println(user.getUsername() + " hat den Server betreten.");
+	public void login(User user, JLabel console) {
+			console.setText(console.getText() + user.getUsername() + " hat den Server betreten." + "<br/>");
+	
 	}
 }
