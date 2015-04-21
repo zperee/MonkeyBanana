@@ -2,7 +2,9 @@ package ch.monkeybanana.tester;
 
 import java.util.regex.Pattern;
 
+import ch.monkeybanana.view.HomeView;
 import ch.monkeybanana.view.LoginView;
+import ch.monkeybanana.view.RegistrierenView;
 
 
 public class LoginTest {

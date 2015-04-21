@@ -103,4 +103,5 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	public void setConsoleframe(JFrame consoleframe) {
 		this.consoleframe = consoleframe;
 	}
+
 }

@@ -28,4 +28,5 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 */
 	public abstract List<User> getAllUser() throws RemoteException;
+	
 }

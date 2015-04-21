@@ -51,9 +51,11 @@ public class MBController {
 	/**
 	 * Hier wird das Login durchgefuehrt
 	 * @param user {@link User}
+	 * @return 
 	 */
-	public void login(User user, JLabel console) {
+	public User login(User user, JLabel console) {
 			console.setText(console.getText() + user.getUsername() + " hat den Server betreten." + "<br/>");
+			return user;
 	
 	}
 }

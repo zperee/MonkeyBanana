@@ -48,7 +48,7 @@ public class Entity extends JPanel implements ActionListener {
 	
 	/**
 	 * Erstellt neue Bananen wenn eine der beiden
-	 * Tasten gedrückt wurde
+	 * Tasten gedrï¿½ckt wurde
 	 * 
 	 * @author Dominic Pfister
 	 */
@@ -75,7 +75,7 @@ public class Entity extends JPanel implements ActionListener {
 			xPos = player.getX() + 1;
 			yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
 			
-			Banana banana = new Banana(xPos, yPos, type, 'k'); //k steht für keine direction
+			Banana banana = new Banana(xPos, yPos, type, 'k'); //k steht fï¿½r keine direction
 			bananenArray.add(banana);
 
 			player.setBananaPeel(false);
@@ -111,7 +111,7 @@ public class Entity extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Erstellt die Karte für das Spiel mit den Hindernissen
+	 * Erstellt die Karte fï¿½r das Spiel mit den Hindernissen
 	 * 
 	 * @author Dominic Pfister
 	 * 
@@ -127,7 +127,7 @@ public class Entity extends JPanel implements ActionListener {
 		 * **LEGENDE** 
 		 * 0 = kein Block
 		 * 1 = Block 
-		 * 2 = nächste Linie
+		 * 2 = nï¿½chste Linie
 		 * 3 = Jungle Baum (rand)
 		 */
 		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
@@ -176,19 +176,19 @@ public class Entity extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
 			
-			// Hitbox für Hindernis
-//			g.setColor(Color.RED);
-//			g.drawRect(kiste.getX(), kiste.getY(), 
-//			kiste.getImage().getWidth(null), 
-//			kiste.getImage().getHeight(null));
+			// Hitbox fï¿½r Hindernis
+			g.setColor(Color.RED);
+			g.drawRect(kiste.getX(), kiste.getY(), 
+			kiste.getImage().getWidth(null), 
+			kiste.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet die Bananen */
-		for (Banana banana : bananenArray) { //Erhöht die Koordinaten für geworfene Bananen
+		for (Banana banana : bananenArray) { //Erhï¿½ht die Koordinaten fï¿½r geworfene Bananen
 			if (banana.getType() == 1) {
 			} else if (banana.getType() == 2) {
 				
-				char dir = banana.getDirection(); //Erhöht Positionen der Bananen
+				char dir = banana.getDirection(); //Erhï¿½ht Positionen der Bananen
 				switch (dir) {
 				case('u'):
 					banana.setY(banana.getY() - Player.SPEED - 1);
@@ -206,21 +206,21 @@ public class Entity extends JPanel implements ActionListener {
 			}
 			g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
 			
-			//Hitbox für Bananen
-//			g.setColor(Color.ORANGE);
-//			g.drawRect(banana.getX(), banana.getY(), 
-//			banana.getImage().getWidth(null), 
-//			banana.getImage().getHeight(null));
+			//Hitbox fï¿½r Bananen
+			g.setColor(Color.ORANGE);
+			g.drawRect(banana.getX(), banana.getY(), 
+			banana.getImage().getWidth(null), 
+			banana.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet den Spieler */
 		g.drawImage(player.getImage(), player.getX(), player.getY(), this);
 
-		// Hitbox für player
-//		g.setColor(Color.GREEN);
-//		g.drawRect(player.getX(), player.getY() + 15,
-//		player.getImage().getWidth(null),
-//		player.getImage().getHeight(null) - 15);
+		// Hitbox fï¿½r player
+		g.setColor(Color.GREEN);
+		g.drawRect(player.getX(), player.getY() + 15,
+		player.getImage().getWidth(null),
+		player.getImage().getHeight(null) - 15);
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -280,7 +280,7 @@ public class Entity extends JPanel implements ActionListener {
 					if (recBanana.intersects(recKiste)) {
 						/* 
 						 * TODO Entfernen wirft ConcurrentModificationException weil 
-						 * Objekt entfernt wurde, während es noch benutzt wurde
+						 * Objekt entfernt wurde, wï¿½hrend es noch benutzt wurde
 						 */
 //						bananenArray.remove(banana);
 						System.out.println("getroffen");

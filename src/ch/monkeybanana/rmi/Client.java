@@ -1,18 +1,23 @@
 package ch.monkeybanana.rmi;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.util.CryptUtils;
 import ch.monkeybanana.view.HomeView;
+import ch.monkeybanana.view.LoginView;
 
 public class Client {
 
@@ -20,38 +25,62 @@ public class Client {
 
 	private static Client client;
 	private String ip;
-	private int port;
+	private String port;
 	private Validator connect;
-
+	private static JFrame frame = new JFrame();
 	public static Client getInstance() {
 		if (instance == null){
 			instance = new Client();
 		}
 		return Client.instance;
 	}
-
+	
+	public static void main(String[] args) {
+		start();
+	}
+	
+	public static void start(){
+		setFrame(new LoginView());
+	}
+	
 	private Client() {
 
-		this.setIp("localhost");
-		this.setPort(1258);
+		String filename = "Serverdata.csv"; //File mit allen Informationen
+		File file = new File(filename);
+		String [] server = new String[2];
+		
+		try{
+			Scanner inputStream = new Scanner(file);
+			int i = 0;
+			while (inputStream.hasNext()){
+				String data = inputStream.next();
+				server[i] = data;
+				i++;
+			}
+			inputStream.close();
+		}
+		catch(FileNotFoundException e){
+			System.out.println("File nicht gefunden");
+		}
+		
 
 		try {
-			Remote remote = Naming.lookup("rmi://" + ip + ":" + port
-					+ "/validator");
+			this.setIp(server[0]);
+			this.setPort(server[1]);
+			Remote remote = Naming.lookup("rmi://" + server[0] + ":"
+					+ server[1] + "/validator");
 			Validator validator = (Validator) remote;
 			this.setConnect(validator);
 
-		}
-		catch (MalformedURLException me) {
+		} catch (MalformedURLException me) {
 			System.err.println("rmi://" + ip + ":" + port
 					+ "/validator is not a valid URL");
-		}
-		catch (NotBoundException nbe) {
+		} catch (NotBoundException nbe) {
 			System.err.println("Could not find requested object on the server");
-		}
-		catch (RemoteException re) {
+		} catch (RemoteException re) {
 			System.err.println(re.getMessage());
 		}
+
 	}
 
 	/**
@@ -184,7 +213,7 @@ public class Client {
 				for (User dbUser : dbUsers) {
 					if (user.getUsername().equals(dbUser.getUsername())) {
 						if (user.getPasswort().equals(dbUser.getPasswort())) {
-							new HomeView();
+							
 							try {
 								user2.setUsername(dbUser.getUsername());
 								Client.getInstance().getConnect().login(user2);
@@ -193,6 +222,8 @@ public class Client {
 								e.printStackTrace();
 							}
 							login = true;
+							getFrame().dispose();
+							new HomeView();
 						}
 					}
 				}
@@ -215,7 +246,7 @@ public class Client {
 		return ip;
 	}
 
-	public int getPort() {
+	public String getPort() {
 		return port;
 	}
 
@@ -232,11 +263,19 @@ public class Client {
 		this.ip = ip;
 	}
 
-	public void setPort(int port) {
+	public void setPort(String port) {
 		this.port = port;
 	}
 
 	public void setConnect(Validator connect) {
 		this.connect = connect;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public static void setFrame(JFrame frame) {
+		Client.frame = frame;
 	}
 }
