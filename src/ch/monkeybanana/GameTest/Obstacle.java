@@ -20,21 +20,41 @@ public class Obstacle {
 		 * @param y {@link int}
 		 * @param type {@link int}
 		 */
-		public Obstacle(int x, int y, int type) {
+		public Obstacle(int x, int y, int type, int scale) {
 			this.setType(type);
 			
 			switch (type) {
 			case 0:
 				image =  new ImageIcon("images/dirt.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
 				break;
 			case 1:
 				image =  new ImageIcon("images/crate.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
 				break;
 			case 3:
 				image =  new ImageIcon("images/palm.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
+				break;
+			case 4:
+				image =  new ImageIcon("images/Pipe_Down.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
+				break;
+			case 5:
+				image =  new ImageIcon("images/Pipe_Up.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
+				break;
+			case 6:
+				image =  new ImageIcon("images/Pipe_Right.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
+				break;
+			case 7:
+				image =  new ImageIcon("images/Pipe_Left.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
 				break;
 			default:
 				image =  new ImageIcon("images/dirt.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
 			}
 				
 			this.setX(x);

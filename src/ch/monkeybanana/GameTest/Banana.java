@@ -22,8 +22,10 @@ public class Banana {
 	 * @param y {@link int}
 	 * @param type {@link int}
 	 */
-	public Banana(int x, int y, int type, char direction) {
+	public Banana(int x, int y, int type, char direction, int scale) {
+		scale = scale / 2;
 		image =  new ImageIcon("images/banana.png").getImage();
+		image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
 		
 		this.setX(x);
 		this.setY(y);
@@ -32,13 +34,13 @@ public class Banana {
 	}
 	
 	/**
-	 * Gibt die Hitbox der Banane zurück
+	 * Gibt die Hitbox der Banane zurï¿½ck
 	 * 
 	 * @author Dominic Pfister
 	 */
 	public Rectangle bananaBounds() {
 		int height = this.getImage().getHeight(null);
-		int y = this.getY() + 15;
+		int y = this.getY();
 		return new Rectangle(this.getX(), y, image.getWidth(null), height);
 	}
 

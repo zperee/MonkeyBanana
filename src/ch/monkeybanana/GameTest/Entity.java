@@ -24,9 +24,16 @@ import javax.swing.Timer;
 public class Entity extends JPanel implements ActionListener {
 
 	private Timer timer;
-	private Player player = new Player(8 * 32, 4 * 32 + 2);
+	private Player player;
+	
 	List<Obstacle> obstacleArray = new ArrayList<Obstacle>();
 	List<Banana> bananenArray = new ArrayList<Banana>();
+	
+	private long coolDown;
+	private long refreshTimer = System.currentTimeMillis();
+
+	private int playerMaxBananas;
+	
 	private boolean isModified = false;
 
 	/**
@@ -43,19 +50,46 @@ public class Entity extends JPanel implements ActionListener {
 
 		timer = new Timer(10, this);
 		timer.start();
-		generateMap(32);
+		
+		player = new Player(64, 64, 15, 500, 64);
+		playerMaxBananas = player.getTotalBanana();
+		
+		/* Wartet für 100ms bis das Spieler Image neu skaliert wurde */
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		generateMap(player.getImage().getWidth(null));
+	}
+	
+	/**
+	 * Erhöht die Anzahl der Bananen des Spielers alle
+	 * (time).
+	 * 
+	 * @author Dominic Pfister
+	 * @param time {@link long}
+	 */
+	private void increaseBanana(long time) {
+		if (refreshTimer + time <= System.currentTimeMillis() 
+			&& playerMaxBananas > player.getTotalBanana()) {
+			
+			player.setTotalBanana(player.getTotalBanana() + 1);
+			refreshTimer = System.currentTimeMillis();
+		}
 	}
 	
 	/**
 	 * Erstellt neue Bananen wenn eine der beiden
-	 * Tasten gedr�ckt wurde
+	 * Tasten gedrückt wurde
 	 * 
 	 * @author Dominic Pfister
 	 */
-	public void generateBanana() {
+	private void generateBanana() {
 		int xPos = 0;
 		int yPos = 0;
-		int type = 1;
+		int type;
 		char dir = 'k';
 		
 		/* **LEGENDE**
@@ -71,54 +105,66 @@ public class Entity extends JPanel implements ActionListener {
 		 * l = left
 		 */
 
-		if (player.isBananaPeel()) { // key == e
-			xPos = player.getX() + 1;
-			yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
+		if (player.getTotalBanana() > 0
+			&& coolDown <= System.currentTimeMillis()) {
 			
-			Banana banana = new Banana(xPos, yPos, type, 'k'); //k steht f�r keine direction
-			bananenArray.add(banana);
-
-			player.setBananaPeel(false);
-			
-		} else if (player.isBananaThrown()) { // key == r
-			type = 2;
-			
-			if (player.isUp()) {
-				xPos = player.getX();
-				yPos = player.getY();
-				dir = 'u';
-			} else if (player.isDown()) {
-				xPos = player.getX();
-				yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
-				dir = 'd';
-			} else if (player.isRight()) {
-				xPos = player.getX();
-				yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
-				dir = 'r';
-			} else if (player.isLeft()) {
-				xPos = player.getX();
-				yPos = player.getY() + 15; //+15 wegen verkleinerten Hitbox
-				dir = 'l';
-			} 
-			
-			if (xPos != 0 && xPos != 0) { //Achtet darauf, dass am Anfang keine
-										  //Bananen geworfen werden
-				Banana banana = new Banana(xPos, yPos, type, dir);
+			if (player.isBananaPeel()) { // key == e
+				type = 1;
+				xPos = player.getX() + 1 + player.getImage().getWidth(null) / 4;
+				yPos = player.getY() + player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4;
+				
+				Banana banana = new Banana(xPos, yPos, type, 'k', player.getImage().getWidth(null)); //k steht für keine direction
 				bananenArray.add(banana);
-				player.setBananaThrown(false);
+	
+				player.setBananaPeel(false);
+				coolDown = (System.currentTimeMillis() + player.getCoolDown());
+				player.setTotalBanana(player.getTotalBanana() - 1);
+				player.setAllowBanana(false);
+				
+			} else if (player.isBananaThrown()) { // key == r
+				type = 2;
+				
+				if (player.isUp()) {
+					xPos = player.getX() + player.getImage().getWidth(null) / 4;
+					yPos = player.getY() + player.getImage().getWidth(null) / 4;
+					dir = 'u';
+				} else if (player.isDown()) {
+					xPos = player.getX() + player.getImage().getWidth(null) / 4;
+					yPos = player.getY() + player.getImage().getWidth(null) + player.getImage().getWidth(null) / 4;
+					dir = 'd';
+				} else if (player.isRight()) {
+					xPos = player.getX() + player.getImage().getWidth(null) / 4;
+					yPos = player.getY() + player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4;
+					dir = 'r';
+				} else if (player.isLeft()) {
+					xPos = player.getX() + player.getImage().getWidth(null) / 4;
+					yPos = player.getY() + player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4;
+					dir = 'l';
+				} 
+				
+				if (xPos != 0 && xPos != 0) { //Achtet darauf, dass am Anfang keine
+											  //Bananen geworfen werden
+					Banana banana = new Banana(xPos, yPos, type, dir, player.getImage().getWidth(null));
+					bananenArray.add(banana);
+					player.setBananaThrown(false);
+					coolDown = (System.currentTimeMillis() + player.getCoolDown());
+					
+					player.setTotalBanana(player.getTotalBanana() - 1);
+					player.setAllowBanana(false);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Erstellt die Karte f�r das Spiel mit den Hindernissen
+	 * Erstellt die Karte für das Spiel mit den Hindernissen
 	 * 
 	 * @author Dominic Pfister
 	 * 
 	 * @param mapSize {@link int}
 	 * @param g {@link Graphics}
 	 */
-	public void generateMap(int mapSize) {
+	private void generateMap(int mapSize) {
 		/*
 		 * TODO !KannZiel map einlesen (verschiedene Maps)
 		 */
@@ -127,35 +173,39 @@ public class Entity extends JPanel implements ActionListener {
 		 * **LEGENDE** 
 		 * 0 = kein Block
 		 * 1 = Block 
-		 * 2 = n�chste Linie
+		 * 2 = nächste Linie
 		 * 3 = Jungle Baum (rand)
+		 * 4 = Pipe up
+		 * 5 = Pipe down
+		 * 6 = Pipe right
+		 * 7 = Pipe left
 		 */
-		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
+		int[] map = { 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
 					  3, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 3, 2,
 					  3, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2,
 					  3, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 3, 2,
 					  3, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 3, 2,
 					  3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 2,
-					  3, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 3, 2,
+					  7, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 2,
 					  3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 3, 2,
 					  3, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
 					  3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 3, 2,
 					  3, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 3, 2,
 					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 3, 2,
 					  3, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 3, 2,
-					  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2  };
+					  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2  };
 		
 		int posX = 0;
 		int posY = 0;
 
 		//Generiert Karte aufgrund von int[] map
 		for (int s : map) {
-			Obstacle kiste = new Obstacle(posX, posY, s);
+			Obstacle kiste = new Obstacle(posX, posY, s, player.getImage().getWidth(null));
 			if (!isModified) {
 				obstacleArray.add(kiste);
 			}
-				if (s == 1 || s == 3 || s == 0) {
-					posX = posX + 32;					
+				if (s == 1 || s == 3 || s == 0 || s == 4 || s == 5 || s == 6 || s == 7) {
+					posX = posX + mapSize;					
 				} else if (s == 2) {
 					posX = 0;
 					posY = posY + mapSize;
@@ -175,20 +225,20 @@ public class Entity extends JPanel implements ActionListener {
 		/* Zeichnet die Hindernisse */
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
-			
-			// Hitbox f�r Hindernis
-			g.setColor(Color.RED);
-			g.drawRect(kiste.getX(), kiste.getY(), 
-			kiste.getImage().getWidth(null), 
-			kiste.getImage().getHeight(null));
+				
+			// Hitbox für Hindernis
+//			g.setColor(Color.RED);				
+//			g.drawRect(kiste.getX(), kiste.getY(), 
+//			kiste.getImage().getWidth(null), 
+//			kiste.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet die Bananen */
-		for (Banana banana : bananenArray) { //Erh�ht die Koordinaten f�r geworfene Bananen
+		for (Banana banana : bananenArray) { //Erhöht die Koordinaten für geworfene Bananen
 			if (banana.getType() == 1) {
 			} else if (banana.getType() == 2) {
 				
-				char dir = banana.getDirection(); //Erh�ht Positionen der Bananen
+				char dir = banana.getDirection(); //Erhöht Positionen der Bananen
 				switch (dir) {
 				case('u'):
 					banana.setY(banana.getY() - Player.SPEED - 1);
@@ -206,21 +256,22 @@ public class Entity extends JPanel implements ActionListener {
 			}
 			g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
 			
-			//Hitbox f�r Bananen
-			g.setColor(Color.ORANGE);
-			g.drawRect(banana.getX(), banana.getY(), 
-			banana.getImage().getWidth(null), 
-			banana.getImage().getHeight(null));
+			//Hitbox für Bananen
+//			g.setColor(Color.ORANGE);
+//			g.drawRect(banana.getX(), banana.getY(), 
+//			banana.getImage().getWidth(null), 
+//			banana.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet den Spieler */
 		g.drawImage(player.getImage(), player.getX(), player.getY(), this);
 
-		// Hitbox f�r player
-		g.setColor(Color.GREEN);
-		g.drawRect(player.getX(), player.getY() + 15,
-		player.getImage().getWidth(null),
-		player.getImage().getHeight(null) - 15);
+		// Hitbox für player
+//		g.setColor(Color.GREEN);
+//		g.drawRect(player.getX(), player.getY() + player.getImage().getWidth(null) / 2,
+//		player.getImage().getWidth(null),
+//		player.getImage().getHeight(null) - player.getImage().getWidth(null) / 2);
+		
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -232,6 +283,7 @@ public class Entity extends JPanel implements ActionListener {
 		checkBounds();
 		checkBananaBounds();
 		generateBanana();
+		increaseBanana(5000);
 	}
 
 	/**
@@ -239,54 +291,69 @@ public class Entity extends JPanel implements ActionListener {
      * 
 	 * @author Dominic Pfister
 	 */
-	public void checkBounds() {
+	private void checkBounds() {
 		Rectangle recPlayer = player.playerBounds();
 
 		for (Obstacle kiste : obstacleArray) {
 			Rectangle recKiste = kiste.obstBounds();
 
-			if (kiste.getType() >= 1) { /* Wenn der Typ 1 ist, wird
-										 * geprüft ob das Hindernis
-										 * und der Spieler sich berühren */
+			/* **Normal kiste detection** */
+			if (kiste.getType() == 1 || kiste.getType() == 3) { /* Wenn der Typ 1 oder 3 ist, wird
+																 * geprüft ob das Hindernis
+																 * und der Spieler sich berühren */
 
 				if (recPlayer.intersects(recKiste)) {
 
 					if (recPlayer.getMaxY() - 1 <= recKiste.getMaxY() //TOP
-							&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
-							&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
-							&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
+						&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
+						&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
+						&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
 
 						player.setY((int) recKiste.getMinY()- player.getImage().getHeight(null));
 					} else if (recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4)) { //BOTTOM
-						player.setY((int) recKiste.getMaxY() - 15);
+						player.setY((int) recKiste.getMaxY() - player.getImage().getHeight(null) / 3);
 					} else if (recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4) { //RIGHT
 						player.setX((int) recKiste.getMinX() - player.getImage().getWidth(null));
-					} else if (recPlayer.getMinX() - 1>= recKiste.getMaxX() - 4) { //LEFT
+					} else if (recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4) { //LEFT
 						player.setX((int) recKiste.getMaxX());
 					}
 				}
-			}
+				
+				/* **Pipe detection** */
+				} else if (kiste.getType() == 4) { //TOP
+					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - 24 - player.getImage().getWidth(null) / 4)) {
+						player.setY(12 * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4);
+					}
+				} else if (kiste.getType() == 5) { //BOTTOM
+					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - 4 - player.getImage().getWidth(null) / 4)) {
+						player.setY(1 * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4);					}
+				} else if (kiste.getType() == 6) { //RIGHT
+					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4 + player.getImage().getWidth(null) / 4)) {
+						player.setX((1 * player.getImage().getWidth(null)) - 16);
+					}
+				} else if (kiste.getType() == 7) { //LEFT
+					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4 - player.getImage().getWidth(null) / 4)) {
+						player.setX((13 * player.getImage().getWidth(null)) + 16);
+					}
+				}
 		}
 	}
 	
-	public void checkBananaBounds() {
+	private void checkBananaBounds() {
+		boolean isRemoved = true;
 		for (Banana banana : bananenArray) {
 			Rectangle recBanana = banana.bananaBounds();
-			
 			for (Obstacle kiste : obstacleArray) {
 				Rectangle recKiste = kiste.obstBounds();
-				
 				if (kiste.getType() >= 1) {
 					if (recBanana.intersects(recKiste)) {
-						/* 
-						 * TODO Entfernen wirft ConcurrentModificationException weil 
-						 * Objekt entfernt wurde, w�hrend es noch benutzt wurde
-						 */
-//						bananenArray.remove(banana);
-						System.out.println("getroffen");
-						
+						bananenArray.remove(banana);
+						isRemoved = false;
 					}
 				}
+			}
+			if (isRemoved == false) {
+				break;
 			}
 		}
 	}

@@ -21,21 +21,28 @@ public class Player {
 	private boolean allowBanana = true;
 	private int x, y;
 	private Image image;
+	private int totalBanana;
+	private int coolDown;
 	
 
 	public int setY;
 
 	/**
-	 * Konstruktor der Klasse Player. Ein neuer Spieler wird aufgrund
+	 * Konstruktor der Klasse Player. Ein neuer Spieler wird an
 	 * der x und y Positionen erstellt.
 	 * 
 	 * @author Dominic Pfister
-	 * @param x, y {@link int}
+	 * @param x {@link int}
+	 * @param y {@link int}
+	 * @param totalBanana {@link int}
 	 */
-	public Player(int x, int y) {
+	public Player(int x, int y, int totalBanana, int cooldown, int scale) {
 		image =  new ImageIcon("images/pokemon.png").getImage();
+		image = image.getScaledInstance(scale, scale + scale / 2, java.awt.Image.SCALE_SMOOTH);
 		this.setY(y + 15);
 		this.setX(x);
+		this.setTotalBanana(totalBanana);
+		this.setCoolDown(cooldown);
 	}
 
 	/**
@@ -59,8 +66,8 @@ public class Player {
 	 * @author Dominic Pfister
 	 */
 	public Rectangle playerBounds() {
-		int height = this.getImage().getHeight(null) - 15; //-15 wegen der verkleinerten Hitbox
-		int playerY = this.getY() + 15;
+		int height = this.getImage().getHeight(null) - this.getImage().getWidth(null) / 2;//-15 wegen der verkleinerten Hitbox
+		int playerY = this.getY() + this.getImage().getWidth(null) / 2;
 		return new Rectangle(this.getX(), playerY, image.getWidth(null), height);
 	}
 
@@ -126,14 +133,18 @@ public class Player {
     }
     
     public void keyTyped(KeyEvent e) {
+    	
     	char key2 = e.getKeyChar();
     	
     	if (key2 == 'e' && allowBanana) {
     		isBananaPeel = true;
     		allowBanana = false;
+    		
     	} else if (key2 == 'r' && allowBanana) {
     		isBananaThrown = true;
     		allowBanana = false;
+    		
+    		
     	}
     }
 
@@ -275,5 +286,29 @@ public class Player {
 
 	public void setBananaThrown(boolean isBananaThrown) {
 		this.isBananaThrown = isBananaThrown;
+	}
+
+	public int getTotalBanana() {
+		return totalBanana;
+	}
+
+	public void setTotalBanana(int totalBanana) {
+		this.totalBanana = totalBanana;
+	}
+
+	public int getCoolDown() {
+		return coolDown;
+	}
+
+	public void setCoolDown(int coolDown) {
+		this.coolDown = coolDown;
+	}
+
+	public boolean isAllowBanana() {
+		return allowBanana;
+	}
+
+	public void setAllowBanana(boolean allowBanana) {
+		this.allowBanana = allowBanana;
 	}
 }
