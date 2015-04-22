@@ -52,6 +52,10 @@ public class Obstacle {
 				image =  new ImageIcon("images/Pipe_Left.png").getImage();
 				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
 				break;
+			case 8:
+				image =  new ImageIcon("images/cube.png").getImage();
+				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);
+				break;
 			default:
 				image =  new ImageIcon("images/dirt.png").getImage();
 				image = image.getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH);

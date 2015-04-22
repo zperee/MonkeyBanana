@@ -51,7 +51,7 @@ public class Entity extends JPanel implements ActionListener {
 		timer = new Timer(10, this);
 		timer.start();
 		
-		player = new Player(64, 64, 15, 500, 64);
+		player = new Player(32, 32, 15, 500, 32);
 		playerMaxBananas = player.getTotalBanana();
 		
 		/* Wartet für 100ms bis das Spieler Image neu skaliert wurde */
@@ -183,17 +183,35 @@ public class Entity extends JPanel implements ActionListener {
 		int[] map = { 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
 					  3, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 3, 2,
 					  3, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2,
-					  3, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 3, 2,
-					  3, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 3, 2,
-					  3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 2,
-					  7, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 2,
-					  3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 3, 2,
-					  3, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
+					  3, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 3, 2,
+					  3, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 3, 2,
+					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 2,
+					  7, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 2,
+					  3, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 3, 2,
+					  3, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
 					  3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 3, 2,
 					  3, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 3, 2,
 					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 3, 2,
 					  3, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 3, 2,
-					  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2  };
+					  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
+					  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2};
+		
+		/* TEMPLATE */
+//		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+//				  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2  };
 		
 		int posX = 0;
 		int posY = 0;
@@ -204,7 +222,7 @@ public class Entity extends JPanel implements ActionListener {
 			if (!isModified) {
 				obstacleArray.add(kiste);
 			}
-				if (s == 1 || s == 3 || s == 0 || s == 4 || s == 5 || s == 6 || s == 7) {
+				if (s == 1 || s == 3 || s == 0 || s == 4 || s == 5 || s == 6 || s == 7 || s == 8) {
 					posX = posX + mapSize;					
 				} else if (s == 2) {
 					posX = 0;
@@ -280,18 +298,21 @@ public class Entity extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		player.move();
 		repaint();
-		checkBounds();
+		checkBounds(15, 17);
 		checkBananaBounds();
 		generateBanana();
 		increaseBanana(5000);
 	}
 
 	/**
-	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berühren
+	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berühren. Das Spielfeld muss quadratisch sein.
+	 * Die Spieldfeldlänge wird als Paramter mitgegeben.
      * 
 	 * @author Dominic Pfister
+	 * @param feldBreite {@link int}
+	 * @param feldHöhe {@link int}
 	 */
-	private void checkBounds() {
+	private void checkBounds(int feldBreite, int feldHöhe) {
 		Rectangle recPlayer = player.playerBounds();
 
 		for (Obstacle kiste : obstacleArray) {
@@ -322,18 +343,18 @@ public class Entity extends JPanel implements ActionListener {
 				/* **Pipe detection** */
 				} else if (kiste.getType() == 4) { //TOP
 					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - 24 - player.getImage().getWidth(null) / 4)) {
-						player.setY(12 * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4);
+						player.setY((feldHöhe - 3) * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4);
 					}
-				} else if (kiste.getType() == 5) { //BOTTOM
+				} else if (kiste.getType() == 5) { //BOTTOMe
 					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - 4 - player.getImage().getWidth(null) / 4)) {
-						player.setY(1 * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4);					}
+						player.setY(1 * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4 - 20);					}
 				} else if (kiste.getType() == 6) { //RIGHT
 					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4 + player.getImage().getWidth(null) / 4)) {
-						player.setX((1 * player.getImage().getWidth(null)) - 16);
+						player.setX((1 * player.getImage().getWidth(null)) - 12);
 					}
 				} else if (kiste.getType() == 7) { //LEFT
 					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4 - player.getImage().getWidth(null) / 4)) {
-						player.setX((13 * player.getImage().getWidth(null)) + 16);
+						player.setX(((feldBreite - 2) * player.getImage().getWidth(null)) + 12);
 					}
 				}
 		}
@@ -345,7 +366,7 @@ public class Entity extends JPanel implements ActionListener {
 			Rectangle recBanana = banana.bananaBounds();
 			for (Obstacle kiste : obstacleArray) {
 				Rectangle recKiste = kiste.obstBounds();
-				if (kiste.getType() >= 1) {
+				if (kiste.getType() == 1 || kiste.getType() == 3 || kiste.getType() >= 4 && kiste.getType() <= 7) {
 					if (recBanana.intersects(recKiste)) {
 						bananenArray.remove(banana);
 						isRemoved = false;
