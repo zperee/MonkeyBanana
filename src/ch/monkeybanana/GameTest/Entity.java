@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -315,6 +316,8 @@ public class Entity extends JPanel implements ActionListener {
 	private void checkBounds(int feldBreite, int feldHöhe) {
 		Rectangle recPlayer = player.playerBounds();
 
+		try {
+			
 		for (Obstacle kiste : obstacleArray) {
 			Rectangle recKiste = kiste.obstBounds();
 
@@ -358,6 +361,8 @@ public class Entity extends JPanel implements ActionListener {
 						player.setX((feldBreite - 2) * player.getImage().getWidth(null) - (int) (player.getImage().getWidth(null) * 0.75));
 					}
 				}
+		}
+		} catch (ConcurrentModificationException e) {
 		}
 	}
 	
