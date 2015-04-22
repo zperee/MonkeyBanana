@@ -37,7 +37,7 @@ public class Player {
 	 * @param totalBanana {@link int}
 	 */
 	public Player(int x, int y, int totalBanana, int cooldown, int scale) {
-		image =  new ImageIcon("images/pokemon.png").getImage();
+		image =  new ImageIcon("images/monkeyBlue.png").getImage();
 		image = image.getScaledInstance(scale, scale + scale / 2, java.awt.Image.SCALE_SMOOTH);
 		this.setY(y + 15);
 		this.setX(x);

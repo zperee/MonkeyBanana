@@ -16,7 +16,7 @@ public class GameClient extends JFrame {
         add(new Entity());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(15 * 32 + 7,  17 * 32 - 7);
+        setSize(15 * 48 + 7,  16 * 48 + 24);
         setLocationRelativeTo(null);
         setTitle("MonkeyBanana Game");
         setResizable(false);

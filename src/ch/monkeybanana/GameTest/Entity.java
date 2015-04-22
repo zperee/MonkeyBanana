@@ -51,7 +51,7 @@ public class Entity extends JPanel implements ActionListener {
 		timer = new Timer(10, this);
 		timer.start();
 		
-		player = new Player(32, 32, 15, 500, 32);
+		player = new Player(48, 48, 15, 500, 48);
 		playerMaxBananas = player.getTotalBanana();
 		
 		/* Wartet für 100ms bis das Spieler Image neu skaliert wurde */
@@ -180,22 +180,23 @@ public class Entity extends JPanel implements ActionListener {
 		 * 6 = Pipe right
 		 * 7 = Pipe left
 		 */
-		int[] map = { 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
+		int[] map = { 
+					  3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
 					  3, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 3, 2,
-					  3, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2,
+					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2,
 					  3, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 3, 2,
 					  3, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 3, 2,
 					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 2,
-					  7, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 2,
+					  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2,
 					  3, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 3, 2,
-					  3, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
+					  3, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
 					  3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 3, 2,
-					  3, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 3, 2,
+					  3, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 3, 2,
 					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 3, 2,
 					  3, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 3, 2,
 					  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
 					  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
-					  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2};
+					  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2 };
 		
 		/* TEMPLATE */
 //		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
@@ -243,7 +244,6 @@ public class Entity extends JPanel implements ActionListener {
 		/* Zeichnet die Hindernisse */
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
-				
 			// Hitbox für Hindernis
 //			g.setColor(Color.RED);				
 //			g.drawRect(kiste.getX(), kiste.getY(), 
@@ -298,8 +298,8 @@ public class Entity extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		player.move();
 		repaint();
-		checkBounds(15, 17);
-		checkBananaBounds();
+		checkBounds(16, 16);
+		checkBananaBounds(16, 16);
 		generateBanana();
 		increaseBanana(5000);
 	}
@@ -342,34 +342,54 @@ public class Entity extends JPanel implements ActionListener {
 				
 				/* **Pipe detection** */
 				} else if (kiste.getType() == 4) { //TOP
-					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - 24 - player.getImage().getWidth(null) / 4)) {
-						player.setY((feldHöhe - 3) * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4);
+					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - (player.getImage().getWidth(null) * 0.5))) {
+						player.setY((feldHöhe - 2) * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4);
 					}
-				} else if (kiste.getType() == 5) { //BOTTOMe
-					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - 4 - player.getImage().getWidth(null) / 4)) {
-						player.setY(1 * player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4 - 20);					}
+				} else if (kiste.getType() == 5) { //BOTTOM
+					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - (player.getImage().getWidth(null) * 0.75))) {
+						player.setY(1 * player.getImage().getWidth(null) - (int) (player.getImage().getWidth(null) * 0.75));					
+					}
 				} else if (kiste.getType() == 6) { //RIGHT
-					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4 + player.getImage().getWidth(null) / 4)) {
-						player.setX((1 * player.getImage().getWidth(null)) - 12);
+					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + (player.getImage().getWidth(null) * 0.25))) {
+						player.setX((1 * player.getImage().getWidth(null)) - (int) (player.getImage().getWidth(null) * 0.25) + 1);
 					}
 				} else if (kiste.getType() == 7) { //LEFT
-					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4 - player.getImage().getWidth(null) / 4)) {
-						player.setX(((feldBreite - 2) * player.getImage().getWidth(null)) + 12);
+					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - (player.getImage().getWidth(null) * 0.25))) {
+						player.setX((feldBreite - 2) * player.getImage().getWidth(null) - (int) (player.getImage().getWidth(null) * 0.75));
 					}
 				}
 		}
 	}
 	
-	private void checkBananaBounds() {
+	private void checkBananaBounds(int feldBreite, int feldHöhe) {
 		boolean isRemoved = true;
 		for (Banana banana : bananenArray) {
 			Rectangle recBanana = banana.bananaBounds();
 			for (Obstacle kiste : obstacleArray) {
 				Rectangle recKiste = kiste.obstBounds();
-				if (kiste.getType() == 1 || kiste.getType() == 3 || kiste.getType() >= 4 && kiste.getType() <= 7) {
+				if (kiste.getType() == 1 || kiste.getType() == 3) {
 					if (recBanana.intersects(recKiste)) {
 						bananenArray.remove(banana);
 						isRemoved = false;
+					}
+				} else if (kiste.getType() >= 4 && kiste.getType() <= 7) {
+					/* **Pipe detection** */
+					if (kiste.getType() == 4) { //TOP
+						if (!(recBanana.getMinY() - 1 >= recKiste.getMaxY() - (banana.getImage().getWidth(null) * 0.5))) {
+							banana.setY((feldHöhe - 2) * player.getImage().getWidth(null) + (int) (banana.getImage().getWidth(null) * 1.5));
+						}
+					} else if (kiste.getType() == 5) { //BOTTOM
+						if (!(recBanana.getMaxY() - 1 <= recKiste.getMaxY() - (banana.getImage().getWidth(null) * 1.6))) {
+							banana.setY(1 * player.getImage().getWidth(null) - (int) (banana.getImage().getWidth(null) * 0.62));					
+						}
+					} else if (kiste.getType() == 6) { //RIGHT
+						if (!(recBanana.getMaxX() - 1 <= recKiste.getMinX() + (banana.getImage().getWidth(null) * 0.45))) {
+							banana.setX((1 * player.getImage().getWidth(null)) - (int) (player.getImage().getWidth(null) * 0.25) + 1);
+						}
+					} else if (kiste.getType() == 7) { //LEFT
+						if (!(recBanana.getMinX() - 1 >= recKiste.getMaxX() - (banana.getImage().getWidth(null) * 0.4))) {
+							banana.setX((feldBreite - 2) * player.getImage().getWidth(null) - (int) (player.getImage().getWidth(null) * 0.21));
+						}
 					}
 				}
 			}
