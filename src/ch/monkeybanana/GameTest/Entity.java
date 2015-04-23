@@ -1,6 +1,7 @@
 package ch.monkeybanana.GameTest;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -46,13 +47,12 @@ public class Entity extends JPanel implements ActionListener {
 
 		addKeyListener(new TAdapter());
 		setFocusable(true);
-		setBackground(Color.ORANGE);
 		setDoubleBuffered(true);
 
 		timer = new Timer(10, this);
 		timer.start();
 		
-		player = new Player(48, 48, 15, 500, 48);
+		player = new Player(48, 4 * 51 - 3, 15, 500, 48);
 		playerMaxBananas = player.getTotalBanana();
 		
 		/* Wartet für 100ms bis das Spieler Image neu skaliert wurde */
@@ -181,23 +181,24 @@ public class Entity extends JPanel implements ActionListener {
 		 * 6 = Pipe right
 		 * 7 = Pipe left
 		 */
-		int[] map = { 
-					  3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
-					  3, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 3, 2,
-					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2,
-					  3, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 3, 2,
-					  3, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 3, 2,
-					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 2,
-					  7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2,
-					  3, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 3, 2,
-					  3, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
-					  3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 3, 2,
-					  3, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 3, 2,
-					  3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 3, 2,
-					  3, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 3, 2,
-					  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
-					  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
-					  3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2 };
+		int[] map = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
+					 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+					 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+					 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2,
+				     3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
+    				 3, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 3, 2,
+    				 3, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 2,
+    				 3, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 3, 2,
+    				 3, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 3, 2,
+    				 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 3, 2,
+    				 7, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 2,
+    				 3, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 3, 2,
+    				 3, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 3, 2,
+    				 3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 3, 2,
+    				 3, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 3, 2,
+    				 3, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 3, 2,
+    				 3, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 3, 2,
+    				 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2 };
 		
 		/* TEMPLATE */
 //		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
@@ -246,10 +247,10 @@ public class Entity extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
 			// Hitbox für Hindernis
-//			g.setColor(Color.RED);				
-//			g.drawRect(kiste.getX(), kiste.getY(), 
-//			kiste.getImage().getWidth(null), 
-//			kiste.getImage().getHeight(null));
+			g.setColor(Color.RED);				
+			g.drawRect(kiste.getX(), kiste.getY(), 
+			kiste.getImage().getWidth(null), 
+			kiste.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet die Bananen */
@@ -276,20 +277,23 @@ public class Entity extends JPanel implements ActionListener {
 			g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
 			
 			//Hitbox für Bananen
-//			g.setColor(Color.ORANGE);
-//			g.drawRect(banana.getX(), banana.getY(), 
-//			banana.getImage().getWidth(null), 
-//			banana.getImage().getHeight(null));
+			g.setColor(Color.ORANGE);
+			g.drawRect(banana.getX(), banana.getY(), 
+			banana.getImage().getWidth(null), 
+			banana.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet den Spieler */
 		g.drawImage(player.getImage(), player.getX(), player.getY(), this);
 
 		// Hitbox für player
-//		g.setColor(Color.GREEN);
-//		g.drawRect(player.getX(), player.getY() + player.getImage().getWidth(null) / 2,
-//		player.getImage().getWidth(null),
-//		player.getImage().getHeight(null) - player.getImage().getWidth(null) / 2);
+		g.setColor(Color.GREEN);
+		g.drawRect(player.getX(), player.getY() + player.getImage().getWidth(null) / 2,
+		player.getImage().getWidth(null),
+		player.getImage().getHeight(null) - player.getImage().getWidth(null) / 2);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
+		g.setColor(Color.RED);
+		g.drawString(String.valueOf(player.getTotalBanana()), 50, 50);
 		
 		
 		Toolkit.getDefaultToolkit().sync();
@@ -299,14 +303,14 @@ public class Entity extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		player.move();
 		repaint();
-		checkBounds(16, 16);
-		checkBananaBounds(16, 16);
+		checkBounds(15, 18);
+		checkBananaBounds(16, 18);
 		generateBanana();
 		increaseBanana(5000);
 	}
 
 	/**
-	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berühren. Das Spielfeld muss quadratisch sein.
+	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berühren.
 	 * Die Spieldfeldlänge wird als Paramter mitgegeben.
      * 
 	 * @author Dominic Pfister
@@ -350,7 +354,7 @@ public class Entity extends JPanel implements ActionListener {
 					}
 				} else if (kiste.getType() == 5) { //BOTTOM
 					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - (player.getImage().getWidth(null) * 0.75))) {
-						player.setY(1 * player.getImage().getWidth(null) - (int) (player.getImage().getWidth(null) * 0.75));					
+						player.setY(5 * player.getImage().getWidth(null) - (int) (player.getImage().getWidth(null) * 0.9));					
 					}
 				} else if (kiste.getType() == 6) { //RIGHT
 					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + (player.getImage().getWidth(null) * 0.25))) {
@@ -358,14 +362,23 @@ public class Entity extends JPanel implements ActionListener {
 					}
 				} else if (kiste.getType() == 7) { //LEFT
 					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - (player.getImage().getWidth(null) * 0.25))) {
-						player.setX((feldBreite - 2) * player.getImage().getWidth(null) - (int) (player.getImage().getWidth(null) * 0.75));
+						player.setX((feldBreite - 2) * player.getImage().getWidth(null) + (int) (player.getImage().getWidth(null) * 0.25));
 					}
 				}
 		}
 		} catch (ConcurrentModificationException e) {
+			System.out.println("Get caught m8");
 		}
 	}
 	
+	/**
+	 * Es wird abgerufen ob die Banane bzw. das Hindernis sich berühren.
+	 * Die Spieldfeldlänge wird als Paramter mitgegeben.
+     * 
+	 * @author Dominic Pfister
+	 * @param feldBreite {@link int}
+	 * @param feldHöhe {@link int}
+	 */
 	private void checkBananaBounds(int feldBreite, int feldHöhe) {
 		boolean isRemoved = true;
 		for (Banana banana : bananenArray) {
@@ -385,7 +398,7 @@ public class Entity extends JPanel implements ActionListener {
 						}
 					} else if (kiste.getType() == 5) { //BOTTOM
 						if (!(recBanana.getMaxY() - 1 <= recKiste.getMaxY() - (banana.getImage().getWidth(null) * 1.6))) {
-							banana.setY(1 * player.getImage().getWidth(null) - (int) (banana.getImage().getWidth(null) * 0.62));					
+							banana.setY(5 * player.getImage().getWidth(null) - (int) (banana.getImage().getWidth(null) * 0.62));					
 						}
 					} else if (kiste.getType() == 6) { //RIGHT
 						if (!(recBanana.getMaxX() - 1 <= recKiste.getMinX() + (banana.getImage().getWidth(null) * 0.45))) {
