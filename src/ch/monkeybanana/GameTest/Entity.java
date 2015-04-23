@@ -32,11 +32,11 @@ public class Entity extends JPanel implements ActionListener {
 	List<Banana> bananenArray = new ArrayList<Banana>();
 	
 	private long coolDown;
-	private long refreshTimer = System.currentTimeMillis();
+	private long refreshTimer;
 
 	private int playerMaxBananas;
 	
-	private boolean isModified = false;
+	private boolean isModified;
 
 	/**
 	 * DESC
@@ -51,6 +51,9 @@ public class Entity extends JPanel implements ActionListener {
 
 		timer = new Timer(10, this);
 		timer.start();
+		
+		isModified = false;
+		refreshTimer = System.currentTimeMillis();
 		
 		player = new Player(48, 4 * 51 - 3, 15, 500, 48);
 		playerMaxBananas = player.getTotalBanana();

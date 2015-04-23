@@ -39,9 +39,7 @@ public class Banana {
 	 * @author Dominic Pfister
 	 */
 	public Rectangle bananaBounds() {
-		int height = this.getImage().getHeight(null);
-		int y = this.getY();
-		return new Rectangle(this.getX(), y, image.getWidth(null), height);
+		return new Rectangle(this.getX(), this.getY(), image.getWidth(null), image.getHeight(null));
 	}
 
 	/* **GETTER und SETTER** */

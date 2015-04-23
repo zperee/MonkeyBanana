@@ -66,7 +66,7 @@ public class Player {
 	 * @author Dominic Pfister
 	 */
 	public Rectangle playerBounds() {
-		int height = this.getImage().getHeight(null) - this.getImage().getWidth(null) / 2;//-15 wegen der verkleinerten Hitbox
+		int height = this.getImage().getHeight(null) - this.getImage().getWidth(null) / 2;
 		int playerY = this.getY() + this.getImage().getWidth(null) / 2;
 		return new Rectangle(this.getX(), playerY, image.getWidth(null), height);
 	}
