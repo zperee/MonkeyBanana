@@ -23,8 +23,9 @@ public class GameClient extends JFrame {
         setVisible(true);
         setEnabled(true);
     }
+	
+//	public static void main(String[] args) {
+//		new GameClient();
+//	}
 
-    public static void main(String[] args) {
-        new GameClient();
-    }
 }

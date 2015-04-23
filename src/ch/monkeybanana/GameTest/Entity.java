@@ -46,13 +46,9 @@ public class Entity extends JPanel implements ActionListener {
 	 * @author Dominic Pfister
 	 */
 	public Entity() {
-
 		addKeyListener(new TAdapter());
 		setFocusable(true);
 		setDoubleBuffered(true);
-
-		timer = new Timer(10, this);
-		timer.start();
 		
 		isModified = false;
 		refreshTimer = System.currentTimeMillis();
@@ -67,7 +63,11 @@ public class Entity extends JPanel implements ActionListener {
 			e.printStackTrace();
 		}
 		
-		generateMap(player.getImage().getWidth(null));
+		timer = new Timer(10, this);
+		timer.start();
+		System.out.println("time");
+		
+		generateMap(48);
 	}
 	
 	/**
@@ -182,7 +182,7 @@ public class Entity extends JPanel implements ActionListener {
 		/*
 		 * TODO !KannZiel map einlesen (verschiedene Maps)
 		 */
-
+		System.out.println(mapSize);
 		/*
 		 * **LEGENDE** 
 		 * 0 = kein Block
@@ -234,7 +234,7 @@ public class Entity extends JPanel implements ActionListener {
 
 		//Generiert Karte aufgrund von int[] map
 		for (int s : map) {
-			Obstacle kiste = new Obstacle(posX, posY, s, player.getImage().getWidth(null));
+			Obstacle kiste = new Obstacle(posX, posY, s, 48);
 			if (!isModified) {
 				obstacleArray.add(kiste);
 			}
@@ -260,10 +260,10 @@ public class Entity extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
 			// Hitbox für Hindernis
-			g.setColor(Color.RED);				
-			g.drawRect(kiste.getX(), kiste.getY(), 
-			kiste.getImage().getWidth(null), 
-			kiste.getImage().getHeight(null));
+//			g.setColor(Color.RED);				
+//			g.drawRect(kiste.getX(), kiste.getY(), 
+//			kiste.getImage().getWidth(null), 
+//			kiste.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet die Bananen */
@@ -290,20 +290,21 @@ public class Entity extends JPanel implements ActionListener {
 			g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
 			
 			//Hitbox für Bananen
-			g.setColor(Color.ORANGE);
-			g.drawRect(banana.getX(), banana.getY(), 
-			banana.getImage().getWidth(null), 
-			banana.getImage().getHeight(null));
+//			g.setColor(Color.ORANGE);
+//			g.drawRect(banana.getX(), banana.getY(), 
+//			banana.getImage().getWidth(null), 
+//			banana.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet den Spieler */
 		g.drawImage(player.getImage(), player.getX(), player.getY(), this);
 
 		// Hitbox für player
-		g.setColor(Color.GREEN);
-		g.drawRect(player.getX(), player.getY() + player.getImage().getWidth(null) / 2,
-		player.getImage().getWidth(null),
-		player.getImage().getHeight(null) - player.getImage().getWidth(null) / 2);
+//		g.setColor(Color.GREEN);
+//		g.drawRect(player.getX(), player.getY() + player.getImage().getWidth(null) / 2,
+//		player.getImage().getWidth(null),
+//		player.getImage().getHeight(null) - player.getImage().getWidth(null) / 2);
+		
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 16)); 
 		g.setColor(Color.RED);
 		g.drawString(String.valueOf(player.getTotalBanana()), 50, 50);
