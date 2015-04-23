@@ -155,6 +155,13 @@ public class Entity extends JPanel implements ActionListener {
 					player.setAllowBanana(false);
 				}
 			}
+		} else if (coolDown <= System.currentTimeMillis()) {
+			player.setUp(false);
+			player.setDown(false);
+			player.setRight(false);
+			player.setLeft(false);
+			player.setBananaPeel(false);
+			player.setBananaThrown(false);
 		}
 	}
 
