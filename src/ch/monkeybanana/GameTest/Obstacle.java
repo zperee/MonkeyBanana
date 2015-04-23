@@ -9,7 +9,11 @@ public class Obstacle {
 	
 		private Image image;
 		
-		private int x, y, type;
+		protected int x;
+
+		protected int y;
+
+		private int type;
 
 		/**
 		 * Erstellt ein neues Obstacle Objekt mit den Koordinaten

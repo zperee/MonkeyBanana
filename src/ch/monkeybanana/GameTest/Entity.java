@@ -16,6 +16,8 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import ch.monkeybanana.listener.GameListener;
+
 /**
  * DESC
  * 
@@ -55,7 +57,7 @@ public class Entity extends JPanel implements ActionListener {
 		isModified = false;
 		refreshTimer = System.currentTimeMillis();
 		
-		player = new Player(48, 4 * 51 - 3, 15, 500, 48);
+		player = new Player(48, 4 * 51 - 3, 15, 500, 48, 1);
 		playerMaxBananas = player.getTotalBanana();
 		
 		/* Wartet für 100ms bis das Spieler Image neu skaliert wurde */
@@ -113,7 +115,7 @@ public class Entity extends JPanel implements ActionListener {
 		if (player.getTotalBanana() > 0
 			&& coolDown <= System.currentTimeMillis()) {
 			
-			if (player.isBananaPeel()) { // key == e
+			if (GameListener.isBananaPeel()) { // key == e
 				type = 1;
 				xPos = player.getX() + 1 + player.getImage().getWidth(null) / 4;
 				yPos = player.getY() + player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4;
@@ -121,27 +123,27 @@ public class Entity extends JPanel implements ActionListener {
 				Banana banana = new Banana(xPos, yPos, type, 'k', player.getImage().getWidth(null)); //k steht für keine direction
 				bananenArray.add(banana);
 	
-				player.setBananaPeel(false);
+				GameListener.setBananaPeel(false);
 				coolDown = (System.currentTimeMillis() + player.getCoolDown());
 				player.setTotalBanana(player.getTotalBanana() - 1);
-				player.setAllowBanana(false);
+				GameListener.setAllowBanana(false);
 				
-			} else if (player.isBananaThrown()) { // key == r
+			} else if (GameListener.isBananaThrown()) { // key == r
 				type = 2;
 				
-				if (player.isUp()) {
+				if (GameListener.isUp()) {
 					xPos = player.getX() + player.getImage().getWidth(null) / 4;
 					yPos = player.getY() + player.getImage().getWidth(null) / 4;
 					dir = 'u';
-				} else if (player.isDown()) {
+				} else if (GameListener.isDown()) {
 					xPos = player.getX() + player.getImage().getWidth(null) / 4;
 					yPos = player.getY() + player.getImage().getWidth(null) + player.getImage().getWidth(null) / 4;
 					dir = 'd';
-				} else if (player.isRight()) {
+				} else if (GameListener.isRight()) {
 					xPos = player.getX() + player.getImage().getWidth(null) / 4;
 					yPos = player.getY() + player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4;
 					dir = 'r';
-				} else if (player.isLeft()) {
+				} else if (GameListener.isLeft()) {
 					xPos = player.getX() + player.getImage().getWidth(null) / 4;
 					yPos = player.getY() + player.getImage().getWidth(null) - player.getImage().getWidth(null) / 4;
 					dir = 'l';
@@ -151,20 +153,20 @@ public class Entity extends JPanel implements ActionListener {
 											  //Bananen geworfen werden
 					Banana banana = new Banana(xPos, yPos, type, dir, player.getImage().getWidth(null));
 					bananenArray.add(banana);
-					player.setBananaThrown(false);
+					GameListener.setBananaThrown(false);
 					coolDown = (System.currentTimeMillis() + player.getCoolDown());
 					
 					player.setTotalBanana(player.getTotalBanana() - 1);
-					player.setAllowBanana(false);
+					GameListener.setAllowBanana(false);
 				}
 			}
 		} else if (coolDown <= System.currentTimeMillis()) {
-			player.setUp(false);
-			player.setDown(false);
-			player.setRight(false);
-			player.setLeft(false);
-			player.setBananaPeel(false);
-			player.setBananaThrown(false);
+			GameListener.setUp(false);
+			GameListener.setDown(false);
+			GameListener.setRight(false);
+			GameListener.setLeft(false);
+			GameListener.setBananaPeel(false);
+			GameListener.setBananaThrown(false);
 		}
 	}
 
@@ -378,7 +380,6 @@ public class Entity extends JPanel implements ActionListener {
 				}
 		}
 		} catch (ConcurrentModificationException e) {
-			System.out.println("Get caught m8");
 		}
 	}
 	
@@ -429,17 +430,17 @@ public class Entity extends JPanel implements ActionListener {
 	}
 
 	private class TAdapter extends KeyAdapter {
-
+		
 		public void keyReleased(KeyEvent e) {
-			player.keyReleased(e);
+			GameListener.keyReleased(e, player);
 		}
 
 		public void keyPressed(KeyEvent e) {
-			player.keyPressed(e);
+			GameListener.keyPressed(e, player);
 		}
 		
 		public void keyTyped(KeyEvent e) {
-			player.keyTyped(e);
+			GameListener.keyTyped(e, player);
 		}
 	}
 }

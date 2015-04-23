@@ -1,8 +1,6 @@
 package ch.monkeybanana.GameTest;
 
-import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
@@ -13,19 +11,12 @@ import javax.swing.ImageIcon;
  *         Berufsbildungscenter MonkeyBanana 2015
  */
 
-public class Player {
+public class Player extends Obstacle {
 	
 	public static final int SPEED = 2;
 	private int vX, vY;
-	private boolean up, down, left, right, isBananaPeel, isBananaThrown;
-	private boolean allowBanana = true;
-	private int x, y;
-	private Image image;
 	private int totalBanana;
 	private int coolDown;
-	
-
-	public int setY;
 
 	/**
 	 * Konstruktor der Klasse Player. Ein neuer Spieler wird an
@@ -36,11 +27,12 @@ public class Player {
 	 * @param y {@link int}
 	 * @param totalBanana {@link int}
 	 */
-	public Player(int x, int y, int totalBanana, int cooldown, int scale) {
-		image =  new ImageIcon("images/monkeyBlue.png").getImage();
-		image = image.getScaledInstance(scale, scale + scale / 2, java.awt.Image.SCALE_SMOOTH);
-		this.setY(y + 15);
-		this.setX(x);
+	public Player(int x, int y, int totalBanana, int cooldown, int scale, int type) {
+		super(x,y,type,scale);
+		
+		super.setImage(new ImageIcon("images/monkeyBlue.png").getImage());
+		super.setImage(super.getImage().getScaledInstance(scale, scale + scale / 2, java.awt.Image.SCALE_SMOOTH));
+		
 		this.setTotalBanana(totalBanana);
 		this.setCoolDown(cooldown);
 	}
@@ -56,8 +48,8 @@ public class Player {
 	 * That's ugly!!
 	 */
 	public void move() {
-		x += vX;
-		y += vY;
+		super.setX(x += getvX());
+		super.setY(y += vY);
 	}
 	
 	/**
@@ -66,87 +58,12 @@ public class Player {
 	 * @author Dominic Pfister
 	 */
 	public Rectangle playerBounds() {
-		int height = this.getImage().getHeight(null) - this.getImage().getWidth(null) / 2;
-		int playerY = this.getY() + this.getImage().getWidth(null) / 2;
-		return new Rectangle(this.getX(), playerY, image.getWidth(null), height);
+		super.obstBounds();
+		return  new Rectangle(super.getX(), super.getY() + super.getImage().getWidth(null) / 2,
+				super.getImage().getWidth(null), 
+				super.getImage().getHeight(null) - super.getImage().getWidth(null) / 2);
 	}
 
-
-	/* **LISTENER** */
-    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-            vX = -SPEED;
-            left = true;
-            right = false;
-            up = false;
-            down = false;
-        }
-
-        if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-            vX = SPEED;
-            left = false;
-            right = true;
-            up = false;
-            down = false;
-        }
-
-        if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
-            vY = -SPEED;
-            left = false;
-            right = false;
-            up = true;
-            down = false;
-        }
-
-        if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
-            vY = SPEED;
-            left = false;
-            right = false;
-            up = false;
-            down = true;
-        }
-    }
-
-    public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-            vX = 0;
-        }
-
-        if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-            vX = 0;
-        }
-
-        if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
-            vY = 0;
-        }
-
-        if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
-            vY = 0;
-        }
-        if (key == KeyEvent.VK_E || key == KeyEvent.VK_R) {
-        	allowBanana = true;
-        }
-    }
-    
-    public void keyTyped(KeyEvent e) {
-    	
-    	char key2 = e.getKeyChar();
-    	
-    	if (key2 == 'e' && allowBanana) {
-    		isBananaPeel = true;
-    		allowBanana = false;
-    		
-    	} else if (key2 == 'r' && allowBanana) {
-    		isBananaThrown = true;
-    		allowBanana = false;
-    		
-    		
-    	}
-    }
 
     /* **ALTER LISTENER** */
 //	public void keyPressed(KeyEvent e) {
@@ -204,90 +121,6 @@ public class Player {
 //	}
 
 	/* **GETTER SETTER** */
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public Image getImage() {
-		return image;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public boolean isUp() {
-		return up;
-	}
-
-	public void setUp(boolean up) {
-		this.up = up;
-	}
-
-	public boolean isDown() {
-		return down;
-	}
-
-	public void setDown(boolean down) {
-		this.down = down;
-	}
-
-	public boolean isLeft() {
-		return left;
-	}
-
-	public void setLeft(boolean left) {
-		this.left = left;
-	}
-
-	public boolean isRight() {
-		return right;
-	}
-
-	public void setRight(boolean right) {
-		this.right = right;
-	}
-
-	public boolean isBananaPeel() {
-		return isBananaPeel;
-	}
-
-	public void setBananaPeel(boolean isBananaPeel) {
-		this.isBananaPeel = isBananaPeel;
-	}
-
-	public int getSetY() {
-		return setY;
-	}
-
-	public void setSetY(int setY) {
-		this.setY = setY;
-	}
-
-	public static int getSpeed() {
-		return SPEED;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public boolean isBananaThrown() {
-		return isBananaThrown;
-	}
-
-	public void setBananaThrown(boolean isBananaThrown) {
-		this.isBananaThrown = isBananaThrown;
-	}
-
 	public int getTotalBanana() {
 		return totalBanana;
 	}
@@ -304,11 +137,19 @@ public class Player {
 		this.coolDown = coolDown;
 	}
 
-	public boolean isAllowBanana() {
-		return allowBanana;
+	public int getvX() {
+		return vX;
 	}
 
-	public void setAllowBanana(boolean allowBanana) {
-		this.allowBanana = allowBanana;
+	public void setvX(int vX) {
+		this.vX = vX;
+	}
+	
+	public int getvY() {
+		return vY;
+	}
+
+	public void setvY(int vY) {
+		this.vY = vY;
 	}
 }
