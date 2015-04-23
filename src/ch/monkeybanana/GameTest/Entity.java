@@ -68,16 +68,17 @@ public class Entity extends JPanel implements ActionListener {
 	/**
 	 * Erhöht die Anzahl der Bananen des Spielers alle
 	 * (time).
-	 * 
-	 * @author Dominic Pfister
+	 * @author Dominic Pfister, Elia Perenzin
 	 * @param time {@link long}
 	 */
 	private void increaseBanana(long time) {
-		if (refreshTimer + time <= System.currentTimeMillis() 
-			&& playerMaxBananas > player.getTotalBanana()) {
-			
-			player.setTotalBanana(player.getTotalBanana() + 1);
-			refreshTimer = System.currentTimeMillis();
+		int i = 0;
+		if (refreshTimer + time <= System.currentTimeMillis() ) {
+			while (player.getTotalBanana() < playerMaxBananas && i < 5)	{	
+				player.setTotalBanana(player.getTotalBanana() + 1);
+				i++;
+				refreshTimer = System.currentTimeMillis();
+			}
 		}
 	}
 	
@@ -306,7 +307,7 @@ public class Entity extends JPanel implements ActionListener {
 		checkBounds(15, 18);
 		checkBananaBounds(16, 18);
 		generateBanana();
-		increaseBanana(5000);
+		increaseBanana(10000);
 	}
 
 	/**
