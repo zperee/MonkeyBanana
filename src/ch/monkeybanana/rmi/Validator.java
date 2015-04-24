@@ -29,4 +29,12 @@ public interface Validator extends Remote {
 	 */
 	public abstract List<User> getAllUser() throws RemoteException;
 	
+	public abstract void join(User user) throws RemoteException;
+	
+	public abstract void logoutServer(User user) throws RemoteException;
+	
+	public abstract void logoutSpiel(User user) throws RemoteException;
+	
+	public abstract int getSlots() throws RemoteException;
+	
 }

@@ -4,26 +4,29 @@ import java.sql.SQLException;
 
 import javax.swing.JLabel;
 
-import ch.monkeybanana.GameTest.GameClient;
 import ch.monkeybanana.dao.UserDao;
 import ch.monkeybanana.dao.UserJDBCDao;
 import ch.monkeybanana.model.User;
 
 /**
  * Hier ist die Kommunikation zwischen View und Datenbank implementiert
+ * Darf nur von Server benutzt werden!
  * @author Dominic Pfister, Elia Perenzin MBController.java Copyright
  *         Berufsbildungscenter MonkeyBanana 2015
  */
 public class MBController {
 	private static MBController instance = new MBController();
 	private final static UserDao USER_DAO = new UserJDBCDao();
+	
+	private int slotsBesetzt = 0;
+	
 
 	public static UserDao getUserDao() {
 		return USER_DAO;
 	}
 
 	/**
-	 * Konstruktor der Klasse GMCController nur Privat
+	 * Konstruktor der Klasse MBController nur Privat
 	 */
 	private MBController() {
 	}
@@ -57,5 +60,13 @@ public class MBController {
 			console.setText(console.getText() + user.getUsername() + " hat den Server betreten." + "<br/>");
 			return user;
 	
+	}
+
+	public int getSlotsBesetzt() {
+		return slotsBesetzt;
+	}
+
+	public void setSlotsBesetzt(int slotsBesetzt) {
+		this.slotsBesetzt = slotsBesetzt;
 	}
 }

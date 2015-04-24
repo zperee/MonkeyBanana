@@ -29,6 +29,7 @@ public class Entity extends JPanel implements ActionListener {
 
 	private Timer timer;
 	private Player player;
+	private Player player2;
 	
 	List<Obstacle> obstacleArray = new ArrayList<Obstacle>();
 	List<Banana> bananenArray = new ArrayList<Banana>();
@@ -54,6 +55,7 @@ public class Entity extends JPanel implements ActionListener {
 		refreshTimer = System.currentTimeMillis();
 		
 		player = new Player(48, 4 * 51 - 3, 15, 500, 48, 1);
+		player2 = new Player(200, 4 * 51 - 3, 15, 500, 48, 2);
 		playerMaxBananas = player.getTotalBanana();
 		
 		/* Wartet für 100ms bis das Spieler Image neu skaliert wurde */
@@ -65,7 +67,6 @@ public class Entity extends JPanel implements ActionListener {
 		
 		timer = new Timer(10, this);
 		timer.start();
-		System.out.println("time");
 		
 		generateMap(48);
 	}
@@ -182,7 +183,7 @@ public class Entity extends JPanel implements ActionListener {
 		/*
 		 * TODO !KannZiel map einlesen (verschiedene Maps)
 		 */
-		System.out.println(mapSize);
+
 		/*
 		 * **LEGENDE** 
 		 * 0 = kein Block
@@ -298,6 +299,7 @@ public class Entity extends JPanel implements ActionListener {
 		
 		/* Zeichnet den Spieler */
 		g.drawImage(player.getImage(), player.getX(), player.getY(), this);
+		g.drawImage(player2.getImage(), player2.getX(), player2.getY(), this);
 
 		// Hitbox für player
 //		g.setColor(Color.GREEN);

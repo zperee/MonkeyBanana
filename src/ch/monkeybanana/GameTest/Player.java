@@ -30,7 +30,18 @@ public class Player extends Obstacle {
 	public Player(int x, int y, int totalBanana, int cooldown, int scale, int type) {
 		super(x,y,type,scale);
 		
-		super.setImage(new ImageIcon("images/monkeyBlue.png").getImage());
+		switch (type) {
+		case 1:
+			super.setImage(new ImageIcon("images/monkeyRed.png").getImage());
+			break;
+		case 2:
+			super.setImage(new ImageIcon("images/monkeyBlue.png").getImage());
+			break;
+		default:
+			super.setImage(new ImageIcon("images/pokemon.png").getImage());
+			break;
+		}
+		
 		super.setImage(super.getImage().getScaledInstance(scale, scale + scale / 2, java.awt.Image.SCALE_SMOOTH));
 		
 		this.setTotalBanana(totalBanana);

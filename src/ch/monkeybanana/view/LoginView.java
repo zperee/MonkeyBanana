@@ -1,18 +1,14 @@
 package ch.monkeybanana.view;
 
+import java.awt.Font;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
+import javax.swing.JTextField;
 
 import ch.monkeybanana.listener.LoginListener;
-import ch.monkeybanana.model.User;
-import ch.monkeybanana.rmi.Client;
-
-import java.awt.Font;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * Dies ist unser GUI für die Anmeldung

@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
@@ -36,6 +35,7 @@ public class RegistrierenListener implements ActionListener, KeyListener{
 	 * ActionListner fuer den Button registrieren, traegt einen neuen User in die DB ein
 	 * @author Elia Perenzin
 	 */
+	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
 		User newUser = new User();
 		
@@ -56,6 +56,7 @@ public class RegistrierenListener implements ActionListener, KeyListener{
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			User newUser = new User();

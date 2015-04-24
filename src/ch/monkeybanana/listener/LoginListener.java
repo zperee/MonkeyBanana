@@ -2,6 +2,7 @@ package ch.monkeybanana.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPasswordField;
@@ -10,8 +11,6 @@ import javax.swing.JTextField;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 import ch.monkeybanana.view.RegistrierenView;
-
-import java.awt.event.KeyEvent;
 
 /**
  * Hier sind alle Actionlistener fuer das Login
@@ -53,6 +52,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	 * 
 	 * @author Elia Perenzin
 	 */
+	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
 		if (button.equals("login")) {
 			User loginUser = new User();
@@ -71,6 +71,7 @@ public class LoginListener implements ActionListener, KeyListener{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			User loginUser = new User();

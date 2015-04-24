@@ -45,7 +45,7 @@ public class Client {
 	
 	private Client() {
 
-		String filename = "Serverdata.csv"; //File mit allen Informationen
+		String filename = "Serverdata.csv"; // File mit allen Informationen
 		File file = new File(filename);
 		String [] server = new String[2];
 		
@@ -177,7 +177,7 @@ public class Client {
 		}
 	}
 
-	/**
+	/**Ar
 	 * Hier wird ueberprueft ob die die Kombination aus Username und Passwort uebereinstimmen
 	 * @param user {@link User}
 	 * @return login Boolean
@@ -223,7 +223,7 @@ public class Client {
 							}
 							login = true;
 							getFrame().dispose();
-							new HomeView();
+							new HomeView(user2);
 						}
 					}
 				}

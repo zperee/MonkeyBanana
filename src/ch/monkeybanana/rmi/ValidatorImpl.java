@@ -24,6 +24,7 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	private JLabel consolelabel;
 	private JPanel consolepanel;
 	private JFrame consoleframe;
+	private JLabel slotLabel;
 	
 	/**
 	 * Konstrukor fuer ValidatorImpl
@@ -32,15 +33,21 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	 */
 	public ValidatorImpl() throws RemoteException {
 		this.setConsoleframe(new JFrame());
-		this.getConsoleframe().setTitle("Server");
+		this.getConsoleframe().setTitle("Server Console");
 		this.getConsoleframe().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getConsoleframe().setSize(700, 800);
+		this.getConsoleframe().setSize(500, 300);
+		
 		this.setConsolelabel(new JLabel("<html>"));
-		this.setConsolepanel(new JPanel());
 		this.getConsolelabel().setHorizontalTextPosition(SwingConstants.LEFT);
+		
+		this.setConsolepanel(new JPanel());
 		this.getConsolepanel().add(this.getConsolelabel());
+		
 		this.getConsoleframe().add(this.getConsolepanel(), BorderLayout.WEST);
 		this.getConsoleframe().setVisible(true);
+		
+		slotLabel = new JLabel("Slots: " + MBController.getInstance().getSlotsBesetzt());
+		this.getConsoleframe().add(slotLabel);
 	}
 
 	/**
@@ -79,7 +86,39 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 			
 		return null;
 	}
+	
+	@Override
+	public void join(User user) throws RemoteException {
+		this.getConsolelabel().setText(this.getConsolelabel().getText() + "Benutzer "+ user.getUsername() + " hat das Spiel betreten." + "<br>");
+		MBController.getInstance().setSlotsBesetzt(MBController.getInstance().getSlotsBesetzt() + 1);
+		System.out.println(MBController.getInstance().getSlotsBesetzt());
+		slotLabel.setText("Slots: " + MBController.getInstance().getSlotsBesetzt());
+		System.out.println(MBController.getInstance().getSlotsBesetzt());
+	}
+	
+	@Override
+	public void logoutServer(User user) throws RemoteException {
+		this.getConsolelabel().setText(this.getConsolelabel().getText() + user.getUsername() + " hat den Server verlassen." + "<br>");
+		MBController.getInstance().setSlotsBesetzt(MBController.getInstance().getSlotsBesetzt() - 1);
+		
+		slotLabel.setText("Slots: " + MBController.getInstance().getSlotsBesetzt());
+	}
+	
+	@Override
+	public void logoutSpiel(User user) throws RemoteException {
+		this.getConsolelabel().setText(this.getConsolelabel().getText() + user.getUsername() + " hat das Spiel verlassen." + "<br>");
+		MBController.getInstance().setSlotsBesetzt(MBController.getInstance().getSlotsBesetzt() - 1);
+		
+		slotLabel.setText("Slots: " + MBController.getInstance().getSlotsBesetzt());
+	}
+	
 
+	@Override
+	public int getSlots() throws RemoteException {
+		return MBController.getInstance().getSlotsBesetzt();
+	}
+
+	
 	public JLabel getConsolelabel() {
 		return consolelabel;
 	}
