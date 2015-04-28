@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
 
+import com.sun.javafx.scene.EnteredExitedHandler;
+
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
@@ -18,12 +20,13 @@ import ch.monkeybanana.rmi.Client;
 public class GameClient extends JFrame {
 	
 	private User u;
+	private Entity ent;
 
-	public GameClient(User u) {
+	public GameClient(User u, int playerNr) {
 		this.setU(u);
         JFrame frame = new JFrame();
-
-        frame.add(new Entity());
+        this.setEnt(new Entity(playerNr));
+       
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(15 * 48 + 16,  19 * 48 - 10);
         frame.setLocationRelativeTo(null);
@@ -31,7 +34,7 @@ public class GameClient extends JFrame {
         frame.setResizable(true);
         frame.setVisible(true);
         frame.setEnabled(true);
-        
+        frame.add(this.getEnt());
         frame.addWindowListener(new WindowAdapter() {
 	        @Override
 	        public void windowClosing(WindowEvent e) {
@@ -54,6 +57,14 @@ public class GameClient extends JFrame {
 
 	public void setU(User u) {
 		this.u = u;
+	}
+
+	public Entity getEnt() {
+		return ent;
+	}
+
+	public void setEnt(Entity ent) {
+		this.ent = ent;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
@@ -18,6 +19,7 @@ import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 import ch.monkeybanana.GameTest.GameClient;
+import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
@@ -26,7 +28,10 @@ public class HomeView extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private User u;
 	private JFrame waitframe;
-
+	private Timer timer = new Timer(500, this);
+	private boolean isModified = false;
+	private int playerNr = 0;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -116,94 +121,54 @@ public class HomeView extends JFrame implements ActionListener{
 	    });
 	}
 
-	public class Process implements ActionListener {
-		boolean started = false;
-		Timer timer = new Timer(2000, this);
-		public Process() {
-		}
+	public void actionPerformed(ActionEvent e) {
+		int slots = 0;
+		JFrame waitFrame = new JFrame();
+		JLabel waitSlots = new JLabel("0 / 2", SwingConstants.CENTER);
+		timer.start();
 		
-		public void run() {
-			while (true && !started) {
-				
-				getWaitframe().removeAll();
-				int slots = 0;
-				JLabel waitSlots = new JLabel("0 / 2", SwingConstants.CENTER);
-				try {
-					 slots = Client.getInstance().getConnect().getSlots();
-				} catch (RemoteException e1) {
-					e1.printStackTrace();
-				}
-				waitSlots.setText("<html>" + slots + " / 2 Spieler <br> Waiting...</html>");
-				System.out.println("called");
-				getWaitframe().add(waitSlots);
-				repaint();
-				
-				if (slots == 2) {
-					new GameClient(u);
-					this.setStarted(true);
-				}
-			}
+		if (!isModified) {
+			System.out.println(playerNr);
 			
-		}
-
-		public boolean isStarted() {
-			return started;
-		}
-
-		public void setStarted(boolean started) {
-			this.started = started;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			setWaitframe(getWaitframe());
-			getWaitframe().setResizable(false);
-			getWaitframe().setVisible(true);
-			getWaitframe().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			getWaitframe().setSize(200, 150);
-			
-			JLabel waitSlots = new JLabel("0 / 2", SwingConstants.CENTER);
-			int slots = 0;
 			try {
-				 slots = Client.getInstance().getConnect().getSlots();
+				Client.getInstance().getConnect().join(this.getU());
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}
-			waitSlots.setText("<html>" + slots + " / 2 Spieler <br> Waiting...</html>");
-			getWaitframe().add(waitSlots);
+			try {
+				if (Client.getInstance().getConnect().getSlots() == 1) {
+					this.setPlayerNr(0);
+				} else {
+					this.setPlayerNr(1);
+				}
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+			setVisible(false); //Lässt das HomeView verschwinden
+			this.setWaitframe(waitFrame);
+			waitFrame.setResizable(false);
+			waitFrame.setVisible(true);
+			waitFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			waitFrame.setSize(200, 150);
+			this.setModified(true);
 		}
-	}
-	public void actionPerformed(ActionEvent e) {
 		
-		try {
-			Client.getInstance().getConnect().join(this.getU());
-		} catch (RemoteException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		setVisible(false); //Lässt das HomeView verschwinden
-		JFrame waitFrame = new JFrame();
-		this.setWaitframe(waitFrame);
-		waitFrame.setResizable(false);
-		waitFrame.setVisible(true);
-		waitFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		waitFrame.setSize(200, 150);
-		
-		JLabel waitSlots = new JLabel("0 / 2", SwingConstants.CENTER);
-		int slots = 0;
 		try {
 			 slots = Client.getInstance().getConnect().getSlots();
 		} catch (RemoteException e1) {
 			e1.printStackTrace();
 		}
+		
 		waitSlots.setText("<html>" + slots + " / 2 Spieler <br> Waiting...</html>");
 		waitFrame.add(waitSlots);
 		
-		Process p = new Process();
-		p.run();
-		
-
+		if (slots == 2) {
+			GameClient gc = new GameClient(u, this.getPlayerNr());
+			gc.getEnt().addKeyListener((KeyListener) (new GameListener(gc.getEnt().getPlayerArray().get(this.getPlayerNr()))));
+			waitSlots.setVisible(false);
+			getWaitframe().dispose();
+			timer.stop();
+		}
 		
 	}
 
@@ -221,5 +186,21 @@ public class HomeView extends JFrame implements ActionListener{
 
 	public void setWaitframe(JFrame waitframe) {
 		this.waitframe = waitframe;
+	}
+
+	public boolean isModified() {
+		return isModified;
+	}
+
+	public void setModified(boolean isModified) {
+		this.isModified = isModified;
+	}
+
+	public int getPlayerNr() {
+		return playerNr;
+	}
+
+	public void setPlayerNr(int playerNr) {
+		this.playerNr = playerNr;
 	}
 }

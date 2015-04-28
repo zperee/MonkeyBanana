@@ -9,9 +9,9 @@ public class Obstacle {
 	
 		private Image image;
 		
-		protected int x;
+		protected int x = 0;
 
-		protected int y;
+		protected int y = 0;
 
 		private int type;
 

@@ -1,20 +1,26 @@
 package ch.monkeybanana.listener;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import ch.monkeybanana.GameTest.Player;
 
-public class GameListener {
+public class GameListener implements KeyListener{
 
 	private static boolean up, down, left, right, isBananaPeel, isBananaThrown;
 	private static boolean allowBanana = true;
-
+	private Player player;
 	/* **LISTENER** */
-	public static void keyPressed(KeyEvent e, Player player) {
+	public GameListener(Player p){
+		this.setPlayer(p);
+	}
+	
+	
+	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-			player.setvX(-Player.SPEED);
+			this.getPlayer().setvX(-Player.SPEED);
 			left = true;
 			right = false;
 			up = false;
@@ -22,7 +28,7 @@ public class GameListener {
 		}
 
 		if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-			player.setvX(Player.SPEED);
+			this.getPlayer().setvX(Player.SPEED);
 			left = false;
 			right = true;
 			up = false;
@@ -30,7 +36,7 @@ public class GameListener {
 		}
 
 		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
-			player.setvY(-Player.SPEED);
+			this.getPlayer().setvY(-Player.SPEED);
 			left = false;
 			right = false;
 			up = true;
@@ -38,7 +44,7 @@ public class GameListener {
 		}
 
 		if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
-			player.setvY(Player.SPEED);
+			this.getPlayer().setvY(Player.SPEED);
 			left = false;
 			right = false;
 			up = false;
@@ -46,7 +52,7 @@ public class GameListener {
 		}
 	}
 
-	public static void keyReleased(KeyEvent e, Player player) {
+	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
@@ -69,7 +75,7 @@ public class GameListener {
 		}
 	}
 
-	public static void keyTyped(KeyEvent e, Player player) {
+	public void keyTyped(KeyEvent e) {
 
 		char key2 = e.getKeyChar();
 
@@ -82,6 +88,7 @@ public class GameListener {
 			allowBanana = false;
 		}
 	}
+	
 
 	public static boolean isUp() {
 		return up;
@@ -138,5 +145,16 @@ public class GameListener {
 	public static void setAllowBanana(boolean allowBanana) {
 		GameListener.allowBanana = allowBanana;
 	}
+
+
+	public Player getPlayer() {
+		return player;
+	}
+
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 
 }

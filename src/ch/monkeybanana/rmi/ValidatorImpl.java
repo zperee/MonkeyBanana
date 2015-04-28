@@ -58,7 +58,7 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	 */
 	public void registration(User newUser) throws RemoteException {
 			MBController.getInstance().registrieren(newUser, this.getConsolelabel());
-			}
+	}
 
 	/**
 	 * Methode fuer das Login auf dem Server
@@ -91,9 +91,8 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	public void join(User user) throws RemoteException {
 		this.getConsolelabel().setText(this.getConsolelabel().getText() + "Benutzer "+ user.getUsername() + " hat das Spiel betreten." + "<br>");
 		MBController.getInstance().setSlotsBesetzt(MBController.getInstance().getSlotsBesetzt() + 1);
-		System.out.println(MBController.getInstance().getSlotsBesetzt());
+		
 		slotLabel.setText("Slots: " + MBController.getInstance().getSlotsBesetzt());
-		System.out.println(MBController.getInstance().getSlotsBesetzt());
 	}
 	
 	@Override

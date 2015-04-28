@@ -29,7 +29,7 @@ public class Client {
 	private Validator connect;
 	private static JFrame frame = new JFrame();
 	public static Client getInstance() {
-		if (instance == null){
+		if (instance == null) {
 			instance = new Client();
 		}
 		return Client.instance;
@@ -39,7 +39,7 @@ public class Client {
 		start();
 	}
 	
-	public static void start(){
+	public static void start() {
 		setFrame(new LoginView());
 	}
 	
@@ -49,17 +49,17 @@ public class Client {
 		File file = new File(filename);
 		String [] server = new String[2];
 		
-		try{
+		try {
 			Scanner inputStream = new Scanner(file);
 			int i = 0;
-			while (inputStream.hasNext()){
+			while (inputStream.hasNext()) {
 				String data = inputStream.next();
 				server[i] = data;
 				i++;
 			}
 			inputStream.close();
 		}
-		catch(FileNotFoundException e){
+		catch(FileNotFoundException e) {
 			System.out.println("File nicht gefunden");
 		}
 		
@@ -177,7 +177,7 @@ public class Client {
 		}
 	}
 
-	/**Ar
+	/**
 	 * Hier wird ueberprueft ob die die Kombination aus Username und Passwort uebereinstimmen
 	 * @param user {@link User}
 	 * @return login Boolean

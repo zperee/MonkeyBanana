@@ -59,8 +59,8 @@ public class Player extends Obstacle {
 	 * That's ugly!!
 	 */
 	public void move() {
-		super.setX(x += getvX());
-		super.setY(y += vY);
+		super.setX(x += this.getvX());
+		super.setY(y += this.getvY());
 	}
 	
 	/**
