@@ -37,4 +37,11 @@ public interface Validator extends Remote {
 	
 	public abstract int getSlots() throws RemoteException;
 	
+	public abstract void tellPosition(int x, int y, int ownPlayerNr) throws RemoteException;
+	
+	public abstract int getPosition(char XorY, int ownPlayerNr) throws RemoteException; 
+	
+	public abstract void tellBanana(int x, int y, int type, int owner) throws RemoteException;
+	
+	public abstract int getBanana(char XorY, int ownPlayerNr) throws RemoteException;
 }

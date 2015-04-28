@@ -24,18 +24,22 @@ public class GameClient extends JFrame {
 
 	public GameClient(User u, int playerNr) {
 		this.setU(u);
-        JFrame frame = new JFrame();
         this.setEnt(new Entity(playerNr));
        
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(15 * 48 + 16,  19 * 48 - 10);
-        frame.setLocationRelativeTo(null);
-        frame.setTitle("MonkeyBanana Game");
-        frame.setResizable(true);
-        frame.setVisible(true);
-        frame.setEnabled(true);
-        frame.add(this.getEnt());
-        frame.addWindowListener(new WindowAdapter() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(15 * 48 + 16,  19 * 48 - 10);
+        this.setLocationRelativeTo(null);
+        this.setTitle("MonkeyBanana Game");
+        this.setResizable(true);
+        
+        if (u.getUsername().equals("SYSTEM")){
+        	this.setVisible(false);
+        } else {
+        	this.setVisible(true);
+        }
+        this.setEnabled(true);
+        this.add(this.getEnt());
+        this.addWindowListener(new WindowAdapter() {
 	        @Override
 	        public void windowClosing(WindowEvent e) {
 	            try {

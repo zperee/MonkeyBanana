@@ -9,6 +9,7 @@ public class Banana extends Obstacle {
 	
 	private char direction;
 
+	private int owner;
 	/**
 	 * Erstellt ein neues Banananen Objekt mit den Koordinaten
 	 * x, y und einem Typ. Die Bildgrösse wird durch scale 
@@ -21,13 +22,14 @@ public class Banana extends Obstacle {
 	 * @param direction {@link char}
 	 * @param scale {@link int}
 	 */
-	public Banana (int x, int y, int type, char direction, int scale) {
+	public Banana (int x, int y, int type, char direction, int scale, int owner) {
 		super(x,y,type,scale);
 		scale = scale / 2;
 		
 		super.setImage(new ImageIcon("images/banana.png").getImage());
 		super.setImage(super.getImage().getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH));
 		
+		this.setOwner(owner);
 		this.setDirection(direction);
 	}
 
@@ -48,5 +50,15 @@ public class Banana extends Obstacle {
 
 	public void setDirection(char direction) {
 		this.direction = direction;
+	}
+
+
+	public int getOwner() {
+		return owner;
+	}
+
+
+	public void setOwner(int owner) {
+		this.owner = owner;
 	}
 }

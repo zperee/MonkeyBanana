@@ -104,6 +104,7 @@ public class Entity extends JPanel implements ActionListener {
 		int xPos = 0;
 		int yPos = 0;
 		int type;
+		int owner;
 		char dir = 'k';
 		
 		/* **LEGENDE**
@@ -127,9 +128,10 @@ public class Entity extends JPanel implements ActionListener {
 				xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + 1 + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
 				yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null)
 						- this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
+				owner = this.getPlayerNr();
 				
 				Banana banana = new Banana(xPos, yPos, type, 'k', 
-						this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null)); //k steht für keine direction
+						this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null), owner); //k steht für keine direction
 				bananenArray.add(banana);
 	
 				GameListener.setBananaPeel(false);
@@ -139,6 +141,7 @@ public class Entity extends JPanel implements ActionListener {
 				
 			} else if (GameListener.isBananaThrown()) { // key == r
 				type = 2;
+				owner = this.getPlayerNr();
 				
 				if (GameListener.isUp()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
@@ -163,7 +166,8 @@ public class Entity extends JPanel implements ActionListener {
 				
 				if (xPos != 0 && xPos != 0) { //Achtet darauf, dass am Anfang keine
 											  //Bananen geworfen werden
-					Banana banana = new Banana(xPos, yPos, type, dir, this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null));
+					owner = this.getPlayerNr();
+					Banana banana = new Banana(xPos, yPos, type, dir, this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null), owner);
 					bananenArray.add(banana);
 					GameListener.setBananaThrown(false);
 					coolDown = (System.currentTimeMillis() + this.getPlayerArray().get(this.getPlayerNr()).getCoolDown());

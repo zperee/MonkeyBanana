@@ -31,6 +31,8 @@ public class HomeView extends JFrame implements ActionListener{
 	private Timer timer = new Timer(500, this);
 	private boolean isModified = false;
 	private int playerNr = 0;
+	private boolean isStarted = false;
+	private GameClient gc;
 	
 	/**
 	 * Launch the application.
@@ -168,8 +170,55 @@ public class HomeView extends JFrame implements ActionListener{
 			waitSlots.setVisible(false);
 			getWaitframe().dispose();
 			timer.stop();
+			this.setGc(gc);
+			(new GameProzess()).start();
+			this.setStarted(true);
+			
+			
 		}
 		
+	}
+	
+	public class GameProzess extends Thread{
+		public void run(){
+			while (true){
+				doPlayer(getGc());
+			}
+		}
+	}
+	
+	public void doPlayer(GameClient gc) {
+		try {
+			Client.getInstance().getConnect().tellPosition(gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getX(),
+			gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getY(), this.getPlayerNr());
+
+		if (this.getPlayerNr() == 0) {
+			gc.getEnt().getPlayerArray().get(1).setX(Client.getInstance().getConnect().getPosition('x', 0));
+			gc.getEnt().getPlayerArray().get(1).setY(Client.getInstance().getConnect().getPosition('y', 0));
+		} else if  (this.getPlayerNr() == 1) {
+			gc.getEnt().getPlayerArray().get(0).setX(Client.getInstance().getConnect().getPosition('x', 1));
+			gc.getEnt().getPlayerArray().get(0).setY(Client.getInstance().getConnect().getPosition('y', 1));
+		}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void doBanana(GameClient gc) {
+		try {
+			Client.getInstance().getConnect().tellPosition(gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getX(),
+			gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getY(), this.getPlayerNr());
+
+		if (this.getPlayerNr() == 0) {
+			gc.getEnt().getPlayerArray().get(1).setX(Client.getInstance().getConnect().getPosition('x', 0));
+			gc.getEnt().getPlayerArray().get(1).setY(Client.getInstance().getConnect().getPosition('y', 0));
+		} else if  (this.getPlayerNr() == 1) {
+			gc.getEnt().getPlayerArray().get(0).setX(Client.getInstance().getConnect().getPosition('x', 1));
+			gc.getEnt().getPlayerArray().get(0).setY(Client.getInstance().getConnect().getPosition('y', 1));
+		}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public User getU() {
@@ -202,5 +251,21 @@ public class HomeView extends JFrame implements ActionListener{
 
 	public void setPlayerNr(int playerNr) {
 		this.playerNr = playerNr;
+	}
+
+	public boolean isStarted() {
+		return isStarted;
+	}
+
+	public void setStarted(boolean isStarted) {
+		this.isStarted = isStarted;
+	}
+
+	public GameClient getGc() {
+		return gc;
+	}
+
+	public void setGc(GameClient gc) {
+		this.gc = gc;
 	}
 }

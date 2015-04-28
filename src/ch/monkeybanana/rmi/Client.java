@@ -27,6 +27,7 @@ public class Client {
 	private String ip;
 	private String port;
 	private Validator connect;
+	
 	private static JFrame frame = new JFrame();
 	public static Client getInstance() {
 		if (instance == null) {

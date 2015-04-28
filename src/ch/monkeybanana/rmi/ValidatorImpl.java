@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import ch.monkeybanana.GameTest.GameClient;
 import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.model.User;
 
@@ -25,6 +26,7 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	private JPanel consolepanel;
 	private JFrame consoleframe;
 	private JLabel slotLabel;
+	private GameClient game;
 	
 	/**
 	 * Konstrukor fuer ValidatorImpl
@@ -48,6 +50,9 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		
 		slotLabel = new JLabel("Slots: " + MBController.getInstance().getSlotsBesetzt());
 		this.getConsoleframe().add(slotLabel);
+		User system = new User();
+		system.setUsername("SYSTEM");
+		this.setGame(new GameClient(system, 0));
 	}
 
 	/**
@@ -86,6 +91,42 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 			
 		return null;
 	}
+	
+	
+	@Override
+	public void tellPosition(int x, int y, int ownPlayerNr)
+			throws RemoteException {
+		this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setX(x);
+		this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setY(y);
+		
+	}
+
+	@Override
+	public int getPosition(char XorY, int ownPlayerNr) throws RemoteException {
+		if (ownPlayerNr == 0){
+			if (XorY == 'x'){
+				return this.getGame().getEnt().getPlayerArray().get(1).getX();
+			}
+			else if (XorY == 'y'){
+				return this.getGame().getEnt().getPlayerArray().get(1).getY();
+			}
+		
+		
+		}
+		else if (ownPlayerNr == 1){
+			if (XorY == 'x'){
+				return this.getGame().getEnt().getPlayerArray().get(0).getX();
+			}
+			else if (XorY == 'y'){
+				return this.getGame().getEnt().getPlayerArray().get(0).getY();
+			}
+		
+			
+		}
+		
+		return 0;
+	}
+
 	
 	@Override
 	public void join(User user) throws RemoteException {
@@ -141,5 +182,27 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	public void setConsoleframe(JFrame consoleframe) {
 		this.consoleframe = consoleframe;
 	}
+
+	public GameClient getGame() {
+		return game;
+	}
+
+	public void setGame(GameClient game) {
+		this.game = game;
+	}
+
+	@Override
+	public void tellBanana(int x, int y, int type, int owner)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getBanana(char XorY, int ownPlayerNr) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
