@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import ch.monkeybanana.GameTest.Banana;
 import ch.monkeybanana.GameTest.GameClient;
 import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.model.User;
@@ -27,6 +29,7 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	private JFrame consoleframe;
 	private JLabel slotLabel;
 	private GameClient game;
+	private List<Banana> bananen = new ArrayList<Banana>();
 	
 	/**
 	 * Konstrukor fuer ValidatorImpl
@@ -126,6 +129,27 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		
 		return 0;
 	}
+	
+	
+	@Override
+	public void tellBanana(Banana banana) throws RemoteException {
+		this.getBananen().add(banana);
+	}
+
+	@Override
+	public Banana getBanana(int playerNr) throws RemoteException {
+		if (this.getBananen().size() != 0){
+			
+			for (Banana b : this.getBananen()){
+				if (b.getOwner() != playerNr) {
+					this.getBananen().remove(b);
+					return b;
+				}
+			}
+		}
+		
+		return null;
+	}
 
 	
 	@Override
@@ -151,7 +175,6 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		
 		slotLabel.setText("Slots: " + MBController.getInstance().getSlotsBesetzt());
 	}
-	
 
 	@Override
 	public int getSlots() throws RemoteException {
@@ -191,18 +214,12 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		this.game = game;
 	}
 
-	@Override
-	public void tellBanana(int x, int y, int type, int owner)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		
+	public List<Banana> getBananen() {
+		return bananen;
 	}
 
-	@Override
-	public int getBanana(char XorY, int ownPlayerNr) throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setBananen(List<Banana> bananen) {
+		this.bananen = bananen;
 	}
-
 
 }

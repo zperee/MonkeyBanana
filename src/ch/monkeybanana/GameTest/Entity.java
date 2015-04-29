@@ -7,8 +7,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -17,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import ch.monkeybanana.listener.GameListener;
+import ch.monkeybanana.rmi.Client;
 
 /**
  * DESC
@@ -57,8 +57,8 @@ public class Entity extends JPanel implements ActionListener {
 		isModified = false;
 		refreshTimer = System.currentTimeMillis();
 		
-		p1 = new Player(48, 4 * 48, 15, 500, 48, 1);
-		p2 = new Player(200, 4 * 48, 15, 500, 48, 2);
+		p1 = new Player(48, 4 * 48, 15, 500, 1);
+		p2 = new Player(200, 4 * 48, 15, 500, 2);
 		playerArray.add(this.getP1());
 		playerArray.add(this.getP2());
 		
@@ -125,13 +125,12 @@ public class Entity extends JPanel implements ActionListener {
 			
 			if (GameListener.isBananaPeel()) { // key == e
 				type = 1;
-				xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + 1 + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
-				yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null)
-						- this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
+				xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + 1 + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
+				yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+						- this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 				owner = this.getPlayerNr();
 				
-				Banana banana = new Banana(xPos, yPos, type, 'k', 
-						this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null), owner); //k steht für keine direction
+				Banana banana = new Banana(xPos, yPos, type, 'k', owner); //k steht für keine direction
 				bananenArray.add(banana);
 	
 				GameListener.setBananaPeel(false);
@@ -139,41 +138,54 @@ public class Entity extends JPanel implements ActionListener {
 				this.getPlayerArray().get(this.getPlayerNr()).setTotalBanana(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() - 1);
 				GameListener.setAllowBanana(false);
 				
+				try {
+					Client.getInstance().getConnect().tellBanana(banana);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+				
+				
 			} else if (GameListener.isBananaThrown()) { // key == r
 				type = 2;
 				owner = this.getPlayerNr();
 				
 				if (GameListener.isUp()) {
-					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
-					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
+					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
+					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'u';
 				} else if (GameListener.isDown()) {
-					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
-					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) +
-							this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
+					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
+					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) +
+							this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'd';
 				} else if (GameListener.isRight()) {
-					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
-					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) - 
-							this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
+					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
+					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) - 
+							this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'r';
 				} else if (GameListener.isLeft()) {
-					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
-					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) - 
-							this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) / 4;
+					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
+					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) - 
+							this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'l';
-				} 
+				}
 				
 				if (xPos != 0 && xPos != 0) { //Achtet darauf, dass am Anfang keine
 											  //Bananen geworfen werden
 					owner = this.getPlayerNr();
-					Banana banana = new Banana(xPos, yPos, type, dir, this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null), owner);
+					Banana banana = new Banana(xPos, yPos, type, dir, owner);
 					bananenArray.add(banana);
 					GameListener.setBananaThrown(false);
 					coolDown = (System.currentTimeMillis() + this.getPlayerArray().get(this.getPlayerNr()).getCoolDown());
 					
 					this.getPlayerArray().get(this.getPlayerNr()).setTotalBanana(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() - 1);
 					GameListener.setAllowBanana(false);
+					
+					try {
+						Client.getInstance().getConnect().tellBanana(banana);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		} else if (coolDown <= System.currentTimeMillis()) {
@@ -250,12 +262,12 @@ public class Entity extends JPanel implements ActionListener {
 
 		//Generiert Karte aufgrund von int[] map
 		for (int s : map) {
-			Obstacle kiste = new Obstacle(posX, posY, s, 48);
+			Obstacle kiste = new Obstacle(posX, posY, s);
 			if (!isModified) {
 				obstacleArray.add(kiste);
 			}
 				if (s == 1 || s == 3 || s == 0 || s == 4 || s == 5 || s == 6 || s == 7 || s == 8) {
-					posX = posX + mapSize;					
+					posX = posX + mapSize;				
 				} else if (s == 2) {
 					posX = 0;
 					posY = posY + mapSize;
@@ -274,11 +286,11 @@ public class Entity extends JPanel implements ActionListener {
 		
 		/* Zeichnet die Hindernisse */
 		for (Obstacle kiste : obstacleArray) {
-			g.drawImage(kiste.getImage(), kiste.getX(), kiste.getY(), this);
+			g.drawImage(kiste.getImage().getImage(), kiste.getX(), kiste.getY(), this);
 			// Hitbox für Hindernis
 //			g.setColor(Color.RED);
 //			g.drawRect(kiste.getX(), kiste.getY(),
-//			kiste.getImage().getWidth(null),
+//			kiste.getImage().getImage().getWidth(null),
 //			kiste.getImage().getHeight(null));
 		}
 		
@@ -303,25 +315,25 @@ public class Entity extends JPanel implements ActionListener {
 					break;
 				}
 			}
-			g.drawImage(banana.getImage(), banana.getX(), banana.getY(), this);
+			g.drawImage(banana.getImage().getImage(), banana.getX(), banana.getY(), this);
 			
 			//Hitbox für Bananen
 //			g.setColor(Color.ORANGE);
 //			g.drawRect(banana.getX(), banana.getY(), 
-//			banana.getImage().getWidth(null), 
+//			banana.getImage().getImage().getWidth(null), 
 //			banana.getImage().getHeight(null));
 		}
 		
 		/* Zeichnet den Spieler */
 		for (Player p : playerArray) {
-			g.drawImage(p.getImage(), p.getX(), p.getY(), this);
+			g.drawImage(p.getImage().getImage(), p.getX(), p.getY(), this);
 		}
 
 		// Hitbox für player
 //		g.setColor(Color.GREEN);
-//		g.drawRect(player.getX(), player.getY() + player.getImage().getWidth(null) / 2,
-//		player.getImage().getWidth(null),
-//		player.getImage().getHeight(null) - player.getImage().getWidth(null) / 2);
+//		g.drawRect(player.getX(), player.getY() + player.getImage().getImage().getWidth(null) / 2,
+//		player.getImage().getImage().getWidth(null),
+//		player.getImage().getHeight(null) - player.getImage().getImage().getWidth(null) / 2);
 		
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
 		g.setColor(Color.RED);
@@ -373,11 +385,11 @@ public class Entity extends JPanel implements ActionListener {
 						&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
 						&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
 
-						p.setY((int) recKiste.getMinY()- p.getImage().getHeight(null));
+						p.setY((int) recKiste.getMinY()- p.getImage().getImage().getHeight(null));
 					} else if (recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4)) { //BOTTOM
-						p.setY((int) recKiste.getMaxY() - p.getImage().getHeight(null) / 3);
+						p.setY((int) recKiste.getMaxY() - p.getImage().getImage().getHeight(null) / 3);
 					} else if (recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4) { //RIGHT
-						p.setX((int) recKiste.getMinX() -p.getImage().getWidth(null));
+						p.setX((int) recKiste.getMinX() -p.getImage().getImage().getWidth(null));
 					} else if (recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4) { //LEFT
 						p.setX((int) recKiste.getMaxX());
 					}
@@ -385,20 +397,20 @@ public class Entity extends JPanel implements ActionListener {
 				
 				/* **Pipe detection** */
 				} else if (kiste.getType() == 4) { //TOP
-					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - (p.getImage().getWidth(null) * 0.5))) {
-						p.setY((feldHöhe - 2) * p.getImage().getWidth(null) - p.getImage().getWidth(null) / 4);
+					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - (p.getImage().getImage().getWidth(null) * 0.5))) {
+						p.setY((feldHöhe - 2) * p.getImage().getImage().getWidth(null) - p.getImage().getImage().getWidth(null) / 4);
 					}
 				} else if (kiste.getType() == 5) { //BOTTOM
-					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - (p.getImage().getWidth(null) * 0.75))) {
-						p.setY(5 * p.getImage().getWidth(null) - (int) (p.getImage().getWidth(null) * 0.9));					
+					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - (p.getImage().getImage().getWidth(null) * 0.75))) {
+						p.setY(5 * p.getImage().getImage().getWidth(null) - (int) (p.getImage().getImage().getWidth(null) * 0.9));					
 					}
 				} else if (kiste.getType() == 6) { //RIGHT
-					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + (p.getImage().getWidth(null) * 0.25))) {
-						p.setX((1 * p.getImage().getWidth(null)) - (int) (p.getImage().getWidth(null) * 0.25) + 1);
+					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + (p.getImage().getImage().getWidth(null) * 0.25))) {
+						p.setX((1 * p.getImage().getImage().getWidth(null)) - (int) (p.getImage().getImage().getWidth(null) * 0.25) + 1);
 					}
 				} else if (kiste.getType() == 7) { //LEFT
-					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - (p.getImage().getWidth(null) * 0.25))) {
-						p.setX((feldBreite - 2) * p.getImage().getWidth(null) + (int) (p.getImage().getWidth(null) * 0.25));
+					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - (p.getImage().getImage().getWidth(null) * 0.25))) {
+						p.setX((feldBreite - 2) * p.getImage().getImage().getWidth(null) + (int) (p.getImage().getImage().getWidth(null) * 0.25));
 					}
 				}
 		}
@@ -430,24 +442,24 @@ public class Entity extends JPanel implements ActionListener {
 					/* **Pipe detection** */
 				} else if (kiste.getType() >= 4 && kiste.getType() <= 7) {
 					if (kiste.getType() == 4) { //TOP
-						if (!(recBanana.getMinY() - 1 >= recKiste.getMaxY() - (banana.getImage().getWidth(null) * 0.5))) {
-							banana.setY((feldHöhe - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null)
-							+ (int) (banana.getImage().getWidth(null) * 1.5));
+						if (!(recBanana.getMinY() - 1 >= recKiste.getMaxY() - (banana.getImage().getImage().getWidth(null) * 0.5))) {
+							banana.setY((feldHöhe - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+							+ (int) (banana.getImage().getImage().getWidth(null) * 1.5));
 						}
 					} else if (kiste.getType() == 5) { //BOTTOM
-						if (!(recBanana.getMaxY() - 1 <= recKiste.getMaxY() - (banana.getImage().getWidth(null) * 1.6))) {
-							banana.setY(5 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null)
-							- (int) (banana.getImage().getWidth(null) * 0.62));					
+						if (!(recBanana.getMaxY() - 1 <= recKiste.getMaxY() - (banana.getImage().getImage().getWidth(null) * 1.6))) {
+							banana.setY(5 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+							- (int) (banana.getImage().getImage().getWidth(null) * 0.62));					
 						}
 					} else if (kiste.getType() == 6) { //RIGHT
-						if (!(recBanana.getMaxX() - 1 <= recKiste.getMinX() + (banana.getImage().getWidth(null) * 0.45))) {
-							banana.setX((1 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null))
-							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) * 0.25) + 1);
+						if (!(recBanana.getMaxX() - 1 <= recKiste.getMinX() + (banana.getImage().getImage().getWidth(null) * 0.45))) {
+							banana.setX((1 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null))
+							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) * 0.25) + 1);
 						}
 					} else if (kiste.getType() == 7) { //LEFT
-						if (!(recBanana.getMinX() - 1 >= recKiste.getMaxX() - (banana.getImage().getWidth(null) * 0.4))) {
-							banana.setX((feldBreite - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null)
-							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getWidth(null) * 0.21));
+						if (!(recBanana.getMinX() - 1 >= recKiste.getMaxX() - (banana.getImage().getImage().getWidth(null) * 0.4))) {
+							banana.setX((feldBreite - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) * 0.21));
 						}
 					}
 				}

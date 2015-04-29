@@ -1,12 +1,18 @@
 package ch.monkeybanana.GameTest;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public class Banana extends Obstacle {
+public class Banana extends Obstacle implements Serializable{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8043746736772410176L;
+
 	private char direction;
 
 	private int owner;
@@ -22,12 +28,10 @@ public class Banana extends Obstacle {
 	 * @param direction {@link char}
 	 * @param scale {@link int}
 	 */
-	public Banana (int x, int y, int type, char direction, int scale, int owner) {
-		super(x,y,type,scale);
-		scale = scale / 2;
+	public Banana (int x, int y, int type, char direction, int owner) {
+		super(x,y,type);
 		
-		super.setImage(new ImageIcon("images/banana.png").getImage());
-		super.setImage(super.getImage().getScaledInstance(scale, scale, java.awt.Image.SCALE_SMOOTH));
+		super.setImage(new ImageIcon("images/banana.png"));
 		
 		this.setOwner(owner);
 		this.setDirection(direction);

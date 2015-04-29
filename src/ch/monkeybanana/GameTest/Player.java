@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 
 public class Player extends Obstacle {
 	
-	public static final int SPEED = 2;
+	public static final int SPEED = 3;
 	private int vX, vY;
 	private int totalBanana;
 	private int coolDown;
@@ -27,22 +27,21 @@ public class Player extends Obstacle {
 	 * @param y {@link int}
 	 * @param totalBanana {@link int}
 	 */
-	public Player(int x, int y, int totalBanana, int cooldown, int scale, int type) {
-		super(x,y,type,scale);
+	public Player(int x, int y, int totalBanana, int cooldown, int type) {
+		super(x,y,type);
 		
 		switch (type) {
 		case 1:
-			super.setImage(new ImageIcon("images/monkeyRed.png").getImage());
+			super.setImage(new ImageIcon("images/monkeyRed.png"));
 			break;
 		case 2:
-			super.setImage(new ImageIcon("images/monkeyBlue.png").getImage());
+			super.setImage(new ImageIcon("images/monkeyBlue.png"));
 			break;
 		default:
-			super.setImage(new ImageIcon("images/pokemon.png").getImage());
+			super.setImage(new ImageIcon("images/pokemon.png"));
 			break;
 		}
-		
-		super.setImage(super.getImage().getScaledInstance(scale, scale + scale / 2, java.awt.Image.SCALE_SMOOTH));
+
 		
 		this.setTotalBanana(totalBanana);
 		this.setCoolDown(cooldown);
@@ -70,9 +69,9 @@ public class Player extends Obstacle {
 	 */
 	public Rectangle playerBounds() {
 		super.obstBounds();
-		return  new Rectangle(super.getX(), super.getY() + super.getImage().getWidth(null) / 2,
-				super.getImage().getWidth(null), 
-				super.getImage().getHeight(null) - super.getImage().getWidth(null) / 2);
+		return  new Rectangle(super.getX(), super.getY() + super.getImage().getImage().getWidth(null) / 2,
+				super.getImage().getImage().getWidth(null), 
+				super.getImage().getImage().getHeight(null) - super.getImage().getImage().getWidth(null) / 2);
 	}
 
 

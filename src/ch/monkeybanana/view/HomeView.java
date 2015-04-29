@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import ch.monkeybanana.GameTest.Banana;
 import ch.monkeybanana.GameTest.GameClient;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
@@ -130,8 +131,6 @@ public class HomeView extends JFrame implements ActionListener{
 		timer.start();
 		
 		if (!isModified) {
-			System.out.println(playerNr);
-			
 			try {
 				Client.getInstance().getConnect().join(this.getU());
 			} catch (RemoteException e1) {
@@ -182,12 +181,13 @@ public class HomeView extends JFrame implements ActionListener{
 	public class GameProzess extends Thread{
 		public void run(){
 			while (true){
-				doPlayer(getGc());
+				doPlayer();
+				doBanana();
 			}
 		}
 	}
 	
-	public void doPlayer(GameClient gc) {
+	public void doPlayer() {
 		try {
 			Client.getInstance().getConnect().tellPosition(gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getX(),
 			gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getY(), this.getPlayerNr());
@@ -204,18 +204,12 @@ public class HomeView extends JFrame implements ActionListener{
 		}
 	}
 	
-	public void doBanana(GameClient gc) {
+	public void doBanana() {
 		try {
-			Client.getInstance().getConnect().tellPosition(gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getX(),
-			gc.getEnt().getPlayerArray().get(this.getPlayerNr()).getY(), this.getPlayerNr());
-
-		if (this.getPlayerNr() == 0) {
-			gc.getEnt().getPlayerArray().get(1).setX(Client.getInstance().getConnect().getPosition('x', 0));
-			gc.getEnt().getPlayerArray().get(1).setY(Client.getInstance().getConnect().getPosition('y', 0));
-		} else if  (this.getPlayerNr() == 1) {
-			gc.getEnt().getPlayerArray().get(0).setX(Client.getInstance().getConnect().getPosition('x', 1));
-			gc.getEnt().getPlayerArray().get(0).setY(Client.getInstance().getConnect().getPosition('y', 1));
-		}
+			Banana b = Client.getInstance().getConnect().getBanana(playerNr);
+			if (b != null) {
+				gc.getEnt().getBananenArray().add(b);
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

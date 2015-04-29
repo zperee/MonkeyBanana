@@ -5,8 +5,6 @@ import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
 
-import com.sun.javafx.scene.EnteredExitedHandler;
-
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
