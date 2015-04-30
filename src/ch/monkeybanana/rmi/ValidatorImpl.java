@@ -25,7 +25,8 @@ import ch.monkeybanana.model.User;
  */
 public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 	private JLabel consolelabel;
-	private JPanel consolepanel;
+	private JPanel consolepanelRight;
+	
 	private JFrame consoleframe;
 	private JLabel slotLabel;
 	private GameClient game;
@@ -45,10 +46,10 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		this.setConsolelabel(new JLabel("<html>"));
 		this.getConsolelabel().setHorizontalTextPosition(SwingConstants.LEFT);
 		
-		this.setConsolepanel(new JPanel());
-		this.getConsolepanel().add(this.getConsolelabel());
+		this.setConsolepanelRight(new JPanel());
+		this.getConsolepanelRight().add(this.getConsolelabel());
 		
-		this.getConsoleframe().add(this.getConsolepanel(), BorderLayout.WEST);
+		this.getConsoleframe().add(this.getConsolepanelRight(), BorderLayout.WEST);
 		this.getConsoleframe().setVisible(true);
 		
 		slotLabel = new JLabel("Slots: " + MBController.getInstance().getSlotsBesetzt());
@@ -136,6 +137,9 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		this.getBananen().add(banana);
 	}
 
+	/**
+	 * see {@link Validator#getBanana(int)}
+	 */
 	@Override
 	public Banana getBanana(int playerNr) throws RemoteException {
 		if (this.getBananen().size() != 0){
@@ -151,7 +155,9 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		return null;
 	}
 
-	
+	/**
+	 * 
+	 */
 	@Override
 	public void join(User user) throws RemoteException {
 		this.getConsolelabel().setText(this.getConsolelabel().getText() + "Benutzer "+ user.getUsername() + " hat das Spiel betreten." + "<br>");
@@ -190,12 +196,12 @@ public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
 		this.consolelabel = consolelabel;
 	}
 
-	public JPanel getConsolepanel() {
-		return consolepanel;
+	public JPanel getConsolepanelRight() {
+		return consolepanelRight;
 	}
 
-	public void setConsolepanel(JPanel consolepanel) {
-		this.consolepanel = consolepanel;
+	public void setConsolepanelRight(JPanel consolepanelRight) {
+		this.consolepanelRight = consolepanelRight;
 	}
 
 	public JFrame getConsoleframe() {

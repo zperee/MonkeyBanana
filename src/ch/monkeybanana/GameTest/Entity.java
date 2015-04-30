@@ -27,6 +27,7 @@ import ch.monkeybanana.rmi.Client;
 
 public class Entity extends JPanel implements ActionListener {
 
+	private static final long serialVersionUID = -8488779096979941350L;
 	private Timer timer;
 	private Player p1;
 	private Player p2;
@@ -57,8 +58,8 @@ public class Entity extends JPanel implements ActionListener {
 		isModified = false;
 		refreshTimer = System.currentTimeMillis();
 		
-		p1 = new Player(48, 4 * 48, 15, 500, 1);
-		p2 = new Player(200, 4 * 48, 15, 500, 2);
+		p1 = new Player(48, 4 * 48, 15, 500, 1, 48);
+		p2 = new Player(200, 4 * 48, 15, 500, 2, 48);
 		playerArray.add(this.getP1());
 		playerArray.add(this.getP2());
 		
@@ -130,7 +131,7 @@ public class Entity extends JPanel implements ActionListener {
 						- this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 				owner = this.getPlayerNr();
 				
-				Banana banana = new Banana(xPos, yPos, type, 'k', owner); //k steht für keine direction
+				Banana banana = new Banana(xPos, yPos, type, 'k', 48 / 2, owner); //k steht für keine direction
 				bananenArray.add(banana);
 	
 				GameListener.setBananaPeel(false);
@@ -173,7 +174,7 @@ public class Entity extends JPanel implements ActionListener {
 				if (xPos != 0 && xPos != 0) { //Achtet darauf, dass am Anfang keine
 											  //Bananen geworfen werden
 					owner = this.getPlayerNr();
-					Banana banana = new Banana(xPos, yPos, type, dir, owner);
+					Banana banana = new Banana(xPos, yPos, type, dir, 48 / 2, owner);
 					bananenArray.add(banana);
 					GameListener.setBananaThrown(false);
 					coolDown = (System.currentTimeMillis() + this.getPlayerArray().get(this.getPlayerNr()).getCoolDown());
@@ -262,7 +263,7 @@ public class Entity extends JPanel implements ActionListener {
 
 		//Generiert Karte aufgrund von int[] map
 		for (int s : map) {
-			Obstacle kiste = new Obstacle(posX, posY, s);
+			Obstacle kiste = new Obstacle(posX, posY, s, 48);
 			if (!isModified) {
 				obstacleArray.add(kiste);
 			}
@@ -291,7 +292,7 @@ public class Entity extends JPanel implements ActionListener {
 //			g.setColor(Color.RED);
 //			g.drawRect(kiste.getX(), kiste.getY(),
 //			kiste.getImage().getImage().getWidth(null),
-//			kiste.getImage().getHeight(null));
+//			kiste.getImage().getImage().getHeight(null));
 		}
 		
 		/* Zeichnet die Bananen */

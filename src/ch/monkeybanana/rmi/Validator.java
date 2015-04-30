@@ -44,5 +44,10 @@ public interface Validator extends Remote {
 	
 	public abstract void tellBanana(Banana banana) throws RemoteException;
 	
+	/**
+	 * @param playerNr
+	 * @return
+	 * @throws RemoteException
+	 */
 	public abstract Banana getBanana(int playerNr) throws RemoteException;
 }

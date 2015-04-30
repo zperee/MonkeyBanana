@@ -14,11 +14,9 @@ public class Obstacle implements Serializable{
 	private static final long serialVersionUID = -1575282248261096070L;
 
 		private ImageIcon image;
-		
 		protected int x = 0;
-
 		protected int y = 0;
-
+		protected int scale;
 		private int type;
 
 		/**
@@ -30,41 +28,52 @@ public class Obstacle implements Serializable{
 		 * @param y {@link int}
 		 * @param type {@link int}
 		 */
-		public Obstacle(int x, int y, int type) {
+		public Obstacle(int x, int y, int type, int scale) {
 			this.setType(type);
+			this.setX(x);
+			this.setY(y);
+			this.setScale(scale);
 			
 			switch (type) {
 			case 0:
 				image =  new ImageIcon("images/dirt.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			case 1:
 				image =  new ImageIcon("images/crate.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			case 3:
 				image =  new ImageIcon("images/palm.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			case 4:
 				image =  new ImageIcon("images/Pipe_Down.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			case 5:
 				image =  new ImageIcon("images/Pipe_Up.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			case 6:
 				image =  new ImageIcon("images/Pipe_Right.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			case 7:
 				image =  new ImageIcon("images/Pipe_Left.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			case 8:
 				image =  new ImageIcon("images/cube.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 				break;
 			default:
 				image =  new ImageIcon("images/dirt.png");
+				image.setImage(image.getImage().getScaledInstance(scale, scale, Image.SCALE_FAST));
 			}
-				
-			this.getImage().getImage().getScaledInstance(48, 48, Image.SCALE_FAST);
-			this.setX(x);
-			this.setY(y);
+			Image scaledImage = image.getImage(); // transform it 
+		    scaledImage = scaledImage.getScaledInstance(scale, scale,  java.awt.Image.SCALE_FAST); // scale it the smooth way  
+		    image = new ImageIcon(scaledImage);  // transform it back
 		}
 		
 		/**
@@ -109,6 +118,14 @@ public class Obstacle implements Serializable{
 
 		public void setType(int type) {
 			this.type = type;
+		}
+
+		public int getScale() {
+			return scale;
+		}
+
+		public void setScale(int scale) {
+			this.scale = scale;
 		}
 
 }

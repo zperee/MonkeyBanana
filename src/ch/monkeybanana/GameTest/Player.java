@@ -1,5 +1,6 @@
 package ch.monkeybanana.GameTest;
 
+import java.awt.Image;
 import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
@@ -12,8 +13,9 @@ import javax.swing.ImageIcon;
  */
 
 public class Player extends Obstacle {
-	
-	public static final int SPEED = 3;
+
+	private static final long serialVersionUID = -2981485709358783707L;
+	public static final int SPEED = 4;
 	private int vX, vY;
 	private int totalBanana;
 	private int coolDown;
@@ -27,8 +29,10 @@ public class Player extends Obstacle {
 	 * @param y {@link int}
 	 * @param totalBanana {@link int}
 	 */
-	public Player(int x, int y, int totalBanana, int cooldown, int type) {
-		super(x,y,type);
+	public Player(int x, int y, int totalBanana, int cooldown, int type, int scale) {
+		super(x, y, type, scale);
+		this.setTotalBanana(totalBanana);
+		this.setCoolDown(cooldown);
 		
 		switch (type) {
 		case 1:
@@ -41,22 +45,11 @@ public class Player extends Obstacle {
 			super.setImage(new ImageIcon("images/pokemon.png"));
 			break;
 		}
-
-		
-		this.setTotalBanana(totalBanana);
-		this.setCoolDown(cooldown);
+		Image scaledImage = super.getImage().getImage(); // transform it 
+	    scaledImage = scaledImage.getScaledInstance(scale, scale + scale/2,  java.awt.Image.SCALE_FAST); // scale it the smooth way  
+	    super.setImage(new ImageIcon(scaledImage));  // transform it back
 	}
 
-	/**
-	 * This is the only method that the client should ever call! Instead of
-	 * moving a sprite when you press a button, you should be moving a sprite
-	 * while certain states hold. Also, do not animate the sprite in the event
-	 * handler! Animate it in your main rendering loop!! That means that your
-	 * main rendering loop will call player.go() and nothing more. This will
-	 * result in smooth animation. If you rely on animating the sprite in the
-	 * keypressed method, the sprite will only move when an event is fired.
-	 * That's ugly!!
-	 */
 	public void move() {
 		super.setX(x += this.getvX());
 		super.setY(y += this.getvY());
