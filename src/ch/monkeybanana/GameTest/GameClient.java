@@ -16,7 +16,7 @@ import ch.monkeybanana.rmi.Client;
  */
 
 public class GameClient extends JFrame {
-	
+	private static final long serialVersionUID = -1599709363381584400L;
 	private User u;
 	private Entity ent;
 

@@ -25,7 +25,7 @@ import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
 public class HomeView extends JFrame implements ActionListener{
-
+	private static final long serialVersionUID = 3784778276460922250L;
 	private JPanel contentPane;
 	private User u;
 	private JFrame waitframe;
