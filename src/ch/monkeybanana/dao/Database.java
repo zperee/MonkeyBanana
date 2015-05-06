@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import ch.monkeybanana.util.CryptUtils;
+
 /**
  * Oberklasse aller JDBCDao enthaelt alle Informationen zur DB Verbindung
  * @author Dominic Pfister, Elia Perenzin
@@ -47,8 +49,10 @@ public class Database {
 		
 		String db = database[0];
 		String user = database[1];
-		String pw = database[2];
 		
+		String pw = CryptUtils.base64decode(database[2]);
+//		String pw = database[2];
+
 		//Connection aufbauen
 		setCon(DriverManager.getConnection(
 				db, user, pw));

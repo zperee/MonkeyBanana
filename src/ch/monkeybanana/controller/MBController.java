@@ -19,6 +19,7 @@ public class MBController {
 	private final static UserDao USER_DAO = new UserJDBCDao();
 	
 	private int slotsBesetzt = 0;
+
 	
 
 	public static UserDao getUserDao() {
@@ -57,12 +58,7 @@ public class MBController {
 	 * @return 
 	 */
 	public User login(User user, JLabel console) {
-			System.out.println(console.getText());
-			if (console.getText().equals("Server inititiallized!")) {
-				System.out.println(1);
-				console.removeAll();
-				console.repaint();
-			}
+
 			console.setText(console.getText() + user.getUsername() + " hat den Server betreten." + "<br/>");
 			return user;
 	
