@@ -25,11 +25,12 @@ public class GameClient extends JFrame {
         this.setEnt(new Entity(playerNr));
        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(15 * 48 + 16,  19 * 48 - 10);
+        this.setSize(15 * 48 + 16,  18 * 48 - 10);
         this.setLocationRelativeTo(null);
         this.setTitle("MonkeyBanana Game");
         this.setResizable(true);
         
+        u.setUsername("Hi");
         if (u.getUsername().equals("SYSTEM")){
         	this.setVisible(false);
         } else {

@@ -58,8 +58,8 @@ public class Entity extends JPanel implements ActionListener {
 		isModified = false;
 		refreshTimer = System.currentTimeMillis();
 		
-		p1 = new Player(48, 4 * 48, 15, 500, 1, 48);
-		p2 = new Player(200, 4 * 48, 15, 500, 2, 48);
+		p1 = new Player(200, 300, 15, 500, 1, 48);
+		p2 = new Player(200, 300, 15, 500, 2, 48);
 		playerArray.add(this.getP1());
 		playerArray.add(this.getP2());
 		
@@ -214,34 +214,37 @@ public class Entity extends JPanel implements ActionListener {
 
 		/*
 		 * **LEGENDE** 
-		 * 0 = nächste Linie
-		 * 1-13 = Boden
-		 * 1 = Block 
-		 * 2 = nächste Linie
-		 * 3 = Jungle Baum (rand)
-		 * 4 = Pipe up
-		 * 5 = Pipe down
-		 * 6 = Pipe right
-		 * 7 = Pipe left
+		 * 0 = next Line
+		 * 0-13 = Ground
+		 * 14-29 = Border
+		 	* 14 = corner_bottom_left
+		 	* 15 = corner_bottom_right
+		 	* 16 = corner_top_left
+		 	* 17 = corner_top_right
+		 	* 18-20 = bottom
+		 	* 21-23 = left
+		 	* 24-26 = right
+		 	* 27-29 = top
+		 * 55 = Brick
+		 * 56 = Brick_moss
 		 */
-		int[] map = {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0,
-					 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-					 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-					 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-				     14, 14, 14, 4, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 0,
-    				 14, 14, 14, 5, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0 };
+		int[] map = { 40, 16, 29, 28, 27, 29, 27, 28, 27, 29, 28, 27, 29, 17, 40,  0,
+					  40, 22, 55, 56, 55, 55, 55, 56, 55, 56, 56, 55, 55, 25, 40,  0,
+					  40, 14, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 15, 40,  0,
+					  16, 27, 29, 28, 27, 29, 27, 27, 28, 29, 28, 29, 27, 29, 17,  0,
+					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
+					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
+					  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
+					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
+					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
+					  22,  1,  1,  1,  1,  1,  1, 29,  1,  1,  1,  1,  1,  1, 24,  0,
+					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
+					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
+					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
+					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
+					  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
+					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
+					  14, 18, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 19, 15,  0  };
 		
 		/* TEMPLATE */
 //		int[] map = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
@@ -268,7 +271,7 @@ public class Entity extends JPanel implements ActionListener {
 			if (!isModified) {
 				obstacleArray.add(kiste);
 			}
-				if (s > 0) {
+				if (s >= 1) {
 					posX = posX + mapSize;				
 				} else if (s == 0) {
 					posX = 0;
@@ -298,8 +301,7 @@ public class Entity extends JPanel implements ActionListener {
 		
 		/* Zeichnet die Bananen */
 		for (Banana banana : bananenArray) { //Erhöht die Koordinaten für geworfene Bananen
-			if (banana.getType() == 1) {
-			} else if (banana.getType() == 2) {
+			if (banana.getType() == 2) {
 				
 				char dir = banana.getDirection(); //Erhöht Positionen der Bananen
 				switch (dir) {
@@ -320,10 +322,10 @@ public class Entity extends JPanel implements ActionListener {
 			g.drawImage(banana.getImage().getImage(), banana.getX(), banana.getY(), this);
 			
 			//Hitbox für Bananen
-//			g.setColor(Color.ORANGE);
-//			g.drawRect(banana.getX(), banana.getY(), 
-//			banana.getImage().getImage().getWidth(null), 
-//			banana.getImage().getHeight(null));
+			g.setColor(Color.ORANGE);
+			g.drawRect(banana.getX(), banana.getY(), 
+			banana.getImage().getImage().getWidth(null), 
+			banana.getImage().getImage().getHeight(null));
 		}
 		
 		/* Zeichnet den Spieler */
@@ -337,9 +339,9 @@ public class Entity extends JPanel implements ActionListener {
 //		player.getImage().getImage().getWidth(null),
 //		player.getImage().getHeight(null) - player.getImage().getImage().getWidth(null) / 2);
 		
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-		g.setColor(Color.RED);
-		g.drawString(String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 100, 75);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
+		g.setColor(Color.BLACK);
+		g.drawString(String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 200, 85);
 		
 		
 		Toolkit.getDefaultToolkit().sync();
@@ -352,8 +354,8 @@ public class Entity extends JPanel implements ActionListener {
 		}
 		
 		repaint();
-//		checkBounds(15, 18);
-//		checkBananaBounds(16, 18);
+		checkBounds(15, 18);
+		checkBananaBounds(16, 18);
 		generateBanana();
 		increaseBanana(10000);
 	}
@@ -366,60 +368,60 @@ public class Entity extends JPanel implements ActionListener {
 	 * @param feldBreite {@link int}
 	 * @param feldHöhe {@link int}
 	 */
-//	private void checkBounds(int feldBreite, int feldHöhe) {
-//		for (Player p : this.getPlayerArray()) {
-//		Rectangle recPlayer = p.playerBounds();
-//
-//		try {
-//			
-//		for (Obstacle kiste : obstacleArray) {
-//			Rectangle recKiste = kiste.obstBounds();
-//
-//			/* **Normal kiste detection** */
-//			if (kiste.getType() == 1 || kiste.getType() == 3) { /* Wenn der Typ 1 oder 3 ist, wird
-//																 * geprüft ob das Hindernis
-//																 * und der Spieler sich berühren */
-//
-//				if (recPlayer.intersects(recKiste)) {
-//
-//					if (recPlayer.getMaxY() - 1 <= recKiste.getMaxY() //TOP
-//						&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
-//						&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
-//						&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
-//
-//						p.setY((int) recKiste.getMinY()- p.getImage().getImage().getHeight(null));
-//					} else if (recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4)) { //BOTTOM
-//						p.setY((int) recKiste.getMaxY() - p.getImage().getImage().getHeight(null) / 3);
-//					} else if (recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4) { //RIGHT
-//						p.setX((int) recKiste.getMinX() -p.getImage().getImage().getWidth(null));
-//					} else if (recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4) { //LEFT
-//						p.setX((int) recKiste.getMaxX());
-//					}
-//				}
-//				
-//				/* **Pipe detection** */
-//				} else if (kiste.getType() == 4) { //TOP
-//					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - (p.getImage().getImage().getWidth(null) * 0.5))) {
-//						p.setY((feldHöhe - 2) * p.getImage().getImage().getWidth(null) - p.getImage().getImage().getWidth(null) / 4);
-//					}
-//				} else if (kiste.getType() == 5) { //BOTTOM
-//					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - (p.getImage().getImage().getWidth(null) * 0.75))) {
-//						p.setY(5 * p.getImage().getImage().getWidth(null) - (int) (p.getImage().getImage().getWidth(null) * 0.9));					
-//					}
-//				} else if (kiste.getType() == 6) { //RIGHT
-//					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + (p.getImage().getImage().getWidth(null) * 0.25))) {
-//						p.setX((1 * p.getImage().getImage().getWidth(null)) - (int) (p.getImage().getImage().getWidth(null) * 0.25) + 1);
-//					}
-//				} else if (kiste.getType() == 7) { //LEFT
-//					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - (p.getImage().getImage().getWidth(null) * 0.25))) {
-//						p.setX((feldBreite - 2) * p.getImage().getImage().getWidth(null) + (int) (p.getImage().getImage().getWidth(null) * 0.25));
-//					}
-//				}
-//		}
-//		} catch (ConcurrentModificationException e) {
-//		}
-//		}
-//	}
+	private void checkBounds(int feldBreite, int feldHöhe) {
+		for (Player p : this.getPlayerArray()) {
+		Rectangle recPlayer = p.playerBounds();
+
+		try {
+			
+		for (Obstacle kiste : obstacleArray) {
+			Rectangle recKiste = kiste.obstBounds();
+
+			/* **Normal kiste detection** */
+			if (kiste.getType() >= 14 && kiste.getType() <= 29) { /* Wenn der Typ 1 oder 3 ist, wird
+																 * geprüft ob das Hindernis
+																 * und der Spieler sich berühren */
+
+				if (recPlayer.intersects(recKiste)) {
+
+					if (recPlayer.getMaxY() - 1 <= recKiste.getMaxY() //TOP
+						&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
+						&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
+						&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
+
+						p.setY((int) recKiste.getMinY()- p.getImage().getImage().getHeight(null));
+					} else if (recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4)) { //BOTTOM
+						p.setY((int) recKiste.getMaxY() - p.getImage().getImage().getHeight(null) / 3);
+					} else if (recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4) { //RIGHT
+						p.setX((int) recKiste.getMinX() -p.getImage().getImage().getWidth(null));
+					} else if (recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4) { //LEFT
+						p.setX((int) recKiste.getMaxX());
+					}
+				}
+				
+				/* **Pipe detection** */
+				} else if (kiste.getType() == 51) { //TOP
+					if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY() - (p.getImage().getImage().getWidth(null) * 0.5))) {
+						p.setY((feldHöhe - 2) * p.getImage().getImage().getWidth(null) - p.getImage().getImage().getWidth(null) / 4);
+					}
+				} else if (kiste.getType() == 52) { //BOTTOM
+					if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY() - (p.getImage().getImage().getWidth(null) * 0.75))) {
+						p.setY(5 * p.getImage().getImage().getWidth(null) - (int) (p.getImage().getImage().getWidth(null) * 0.9));					
+					}
+				} else if (kiste.getType() == 53) { //RIGHT
+					if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + (p.getImage().getImage().getWidth(null) * 0.25))) {
+						p.setX((1 * p.getImage().getImage().getWidth(null)) - (int) (p.getImage().getImage().getWidth(null) * 0.25) + 1);
+					}
+				} else if (kiste.getType() == 54) { //LEFT
+					if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - (p.getImage().getImage().getWidth(null) * 0.25))) {
+						p.setX((feldBreite - 2) * p.getImage().getImage().getWidth(null) + (int) (p.getImage().getImage().getWidth(null) * 0.25));
+					}
+				}
+		}
+		} catch (ConcurrentModificationException e) {
+		}
+		}
+	}
 	
 	/**
 	 * Es wird abgerufen ob die Banane bzw. das Hindernis sich berühren.
@@ -429,48 +431,48 @@ public class Entity extends JPanel implements ActionListener {
 	 * @param feldBreite {@link int}
 	 * @param feldHöhe {@link int}
 	 */
-//	private void checkBananaBounds(int feldBreite, int feldHöhe) {
-//		boolean isRemoved = true;
-//		for (Banana banana : bananenArray) {
-//			Rectangle recBanana = banana.bananaBounds();
-//			for (Obstacle kiste : obstacleArray) {
-//				Rectangle recKiste = kiste.obstBounds();
-//				if (kiste.getType() == 1 || kiste.getType() == 3) {
-//					if (recBanana.intersects(recKiste)) {
-//						bananenArray.remove(banana);
-//						isRemoved = false;
-//					}
-//					
-//					/* **Pipe detection** */
-//				} else if (kiste.getType() >= 4 && kiste.getType() <= 7) {
-//					if (kiste.getType() == 4) { //TOP
-//						if (!(recBanana.getMinY() - 1 >= recKiste.getMaxY() - (banana.getImage().getImage().getWidth(null) * 0.5))) {
-//							banana.setY((feldHöhe - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
-//							+ (int) (banana.getImage().getImage().getWidth(null) * 1.5));
-//						}
-//					} else if (kiste.getType() == 5) { //BOTTOM
-//						if (!(recBanana.getMaxY() - 1 <= recKiste.getMaxY() - (banana.getImage().getImage().getWidth(null) * 1.6))) {
-//							banana.setY(5 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
-//							- (int) (banana.getImage().getImage().getWidth(null) * 0.62));					
-//						}
-//					} else if (kiste.getType() == 6) { //RIGHT
-//						if (!(recBanana.getMaxX() - 1 <= recKiste.getMinX() + (banana.getImage().getImage().getWidth(null) * 0.45))) {
-//							banana.setX((1 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null))
-//							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) * 0.25) + 1);
-//						}
-//					} else if (kiste.getType() == 7) { //LEFT
-//						if (!(recBanana.getMinX() - 1 >= recKiste.getMaxX() - (banana.getImage().getImage().getWidth(null) * 0.4))) {
-//							banana.setX((feldBreite - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
-//							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) * 0.21));
-//						}
-//					}
-//				}
-//			}
-//			if (isRemoved == false) {
-//				break;
-//			}
-//		}
-//	}
+	private void checkBananaBounds(int feldBreite, int feldHöhe) {
+		boolean isRemoved = true;
+		for (Banana banana : bananenArray) {
+			Rectangle recBanana = banana.bananaBounds();
+			for (Obstacle kiste : obstacleArray) {
+				Rectangle recKiste = kiste.obstBounds();
+				if (kiste.getType() >= 14 && kiste.getType() <= 29) {
+					if (recBanana.intersects(recKiste)) {
+						bananenArray.remove(banana);
+						isRemoved = false;
+					}
+					
+					/* **Pipe detection** */
+				} else if (kiste.getType() >= 51 && kiste.getType() <= 54) {
+					if (kiste.getType() == 51) { //TOP
+						if (!(recBanana.getMinY() - 1 >= recKiste.getMaxY() - (banana.getImage().getImage().getWidth(null) * 0.5))) {
+							banana.setY((feldHöhe - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+							+ (int) (banana.getImage().getImage().getWidth(null) * 1.5));
+						}
+					} else if (kiste.getType() == 52) { //BOTTOM
+						if (!(recBanana.getMaxY() - 1 <= recKiste.getMaxY() - (banana.getImage().getImage().getWidth(null) * 1.6))) {
+							banana.setY(5 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+							- (int) (banana.getImage().getImage().getWidth(null) * 0.62));					
+						}
+					} else if (kiste.getType() == 53) { //RIGHT
+						if (!(recBanana.getMaxX() - 1 <= recKiste.getMinX() + (banana.getImage().getImage().getWidth(null) * 0.45))) {
+							banana.setX((1 * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null))
+							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) * 0.25) + 1);
+						}
+					} else if (kiste.getType() == 54) { //LEFT
+						if (!(recBanana.getMinX() - 1 >= recKiste.getMaxX() - (banana.getImage().getImage().getWidth(null) * 0.4))) {
+							banana.setX((feldBreite - 2) * this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+							- (int) (this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) * 0.21));
+						}
+					}
+				}
+			}
+			if (isRemoved == false) {
+				break;
+			}
+		}
+	}
 
 	public Player getP1() {
 		return p1;

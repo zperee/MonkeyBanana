@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class Player extends Obstacle {
 
 	private static final long serialVersionUID = -2981485709358783707L;
-	public static final int SPEED = 4;
+	public static final int SPEED = 3;
 	private int vX, vY;
 	private int totalBanana;
 	private int coolDown;
@@ -28,6 +28,9 @@ public class Player extends Obstacle {
 	 * @param x {@link int}
 	 * @param y {@link int}
 	 * @param totalBanana {@link int}
+	 * @param cooldown {@link int}
+	 * @param type {@link int}
+	 * @param scale {@link int}
 	 */
 	public Player(int x, int y, int totalBanana, int cooldown, int type, int scale) {
 		super(x, y, type, scale);
