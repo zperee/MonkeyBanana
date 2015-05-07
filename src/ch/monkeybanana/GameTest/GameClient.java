@@ -18,18 +18,18 @@ import ch.monkeybanana.rmi.Client;
 public class GameClient extends JFrame {
 	private static final long serialVersionUID = -1599709363381584400L;
 	private User u;
-	private Entity ent;
+	private Gameboard ent;
 
 	public GameClient(User u, int playerNr) {
 		this.setU(u);
-        this.setEnt(new Entity(playerNr));
+        this.setEnt(new Gameboard(playerNr, u));
        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(15 * 48 + 16,  18 * 48 - 10);
+        this.setSize(15 * 48 + 10,  18 * 48 - 5);
         this.setLocationRelativeTo(null);
         this.setTitle("MonkeyBanana Game");
-        this.setResizable(true);
-        u.setUsername("Gast");
+        this.setResizable(false);
+        
         if (u.getUsername().equals("SYSTEM")){
         	this.setVisible(false);
         } else {
@@ -61,11 +61,11 @@ public class GameClient extends JFrame {
 		this.u = u;
 	}
 
-	public Entity getEnt() {
+	public Gameboard getEnt() {
 		return ent;
 	}
 
-	public void setEnt(Entity ent) {
+	public void setEnt(Gameboard ent) {
 		this.ent = ent;
 	}
 

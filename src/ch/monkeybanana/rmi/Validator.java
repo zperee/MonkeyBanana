@@ -51,4 +51,8 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 */
 	public abstract Banana getBanana(int playerNr) throws RemoteException;
+	
+	public abstract boolean isHit() throws RemoteException;
+	
+	public abstract void setHit(boolean isHit) throws RemoteException;
 }

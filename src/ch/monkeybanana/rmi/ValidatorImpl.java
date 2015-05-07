@@ -6,7 +6,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,7 +37,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private int scorePlayer2 = 0;
 	private int rundenZahl = 0;
 
-	private boolean isHit;
+	private boolean isHit = false;
 
 	/**
 	 * Konstrukor fuer ValidatorImpl
@@ -47,6 +46,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public ValidatorImpl() throws RemoteException {
+		System.out.println(isHit);
 		this.setConsoleframe(new JFrame());
 		this.getConsoleframe().setTitle("Server Console");
 		this.getConsoleframe().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -297,12 +297,15 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.rundenZahl = rundenZahl;
 	}
 
-	public boolean isHit() {
-		return isHit;
+
+	@Override
+	public void setHit(boolean isHit) throws RemoteException {
+		this.isHit = isHit;
 	}
 
-	public void setHit(boolean isHit) {
-		this.isHit = isHit;
+	@Override
+	public boolean isHit() throws RemoteException {
+		return isHit;
 	}
 
 }
