@@ -43,8 +43,6 @@ public class Entity extends JPanel implements ActionListener {
 	private int playerMaxBananas;
 	
 	private boolean isModified;
-	private boolean isRestarted;
-	private boolean isHit;
 
 	/**
 	 * DESC
@@ -77,9 +75,7 @@ public class Entity extends JPanel implements ActionListener {
 		timer = new Timer(10, this);
 		timer.start();
 		
-		if(!isRestarted){
-			generateMap(48);
-		}
+		generateMap(48);
 	}
 	
 	/**
@@ -137,7 +133,7 @@ public class Entity extends JPanel implements ActionListener {
 				
 				Banana banana = new Banana(xPos, yPos, type, 'k', 48 / 2, owner); //k steht für keine direction
 				bananenArray.add(banana);
-
+	
 				GameListener.setBananaPeel(false);
 				coolDown = (System.currentTimeMillis() + this.getPlayerArray().get(this.getPlayerNr()).getCoolDown());
 				this.getPlayerArray().get(this.getPlayerNr()).setTotalBanana(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() - 1);
@@ -346,7 +342,7 @@ public class Entity extends JPanel implements ActionListener {
 		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
 		g.setColor(Color.BLACK);
 		g.drawString(String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 200, 85);
-		g.drawString("°", 500, 500);
+		
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -356,21 +352,12 @@ public class Entity extends JPanel implements ActionListener {
 		for (Player p : playerArray) {
 			p.move();
 		}
-//		try {
-//			Client.getInstance().getConnect().checkCollision(500, 500, this.getPlayerArray().get(this.getPlayerNr()).getX() + 1 + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4, this.getPlayerArray().get(this.getPlayerNr()).getY() + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
-//					- this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4);
-//		}
-//		catch (RemoteException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		
 		repaint();
 		checkBounds(15, 18);
 		checkBananaBounds(16, 18);
 		generateBanana();
 		increaseBanana(10000);
-		checkBananaHit();
-		
 	}
 
 	/**
@@ -455,6 +442,7 @@ public class Entity extends JPanel implements ActionListener {
 						bananenArray.remove(banana);
 						isRemoved = false;
 					}
+					
 					/* **Pipe detection** */
 				} else if (kiste.getType() >= 51 && kiste.getType() <= 54) {
 					if (kiste.getType() == 51) { //TOP
@@ -485,40 +473,7 @@ public class Entity extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
-	private void checkBananaHit(){
-		Rectangle recPlayer;
-		for (Banana b : bananenArray){
-			if (b.getOwner()!= playerNr && !isHit){
-				Rectangle recBanana = b.bananaBounds();
-				if(playerNr == 0){
-					 recPlayer = p1.playerBounds();
-				}
-				else{
-					 recPlayer = p2.playerBounds();
-				}
-				
-				if(recPlayer.intersects(recBanana)){
-				try {
-					Client.getInstance().getConnect().score(playerNr);
-					this.isHit = true;
-				}
-				catch (RemoteException e) {
-					e.printStackTrace();
-				}
-				}
-			}
-		}
-	}
 
-	private void restartGame(){
-		this.getBananenArray().clear();
-		this.p1 = null;
-		this.p2 = null;
-		
-		new Entity(15);
-	}
-	
 	public Player getP1() {
 		return p1;
 	}

@@ -30,6 +30,7 @@ public class GameClient extends JFrame {
         this.setTitle("MonkeyBanana Game");
         this.setResizable(true);
         
+        u.setUsername("Hi");
         if (u.getUsername().equals("SYSTEM")){
         	this.setVisible(false);
         } else {
