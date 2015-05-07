@@ -24,6 +24,8 @@ import ch.monkeybanana.model.User;
  * Copyright Berufsbildungscenter MonkeyBanana 2015
  */
 public class ValidatorImpl extends UnicastRemoteObject  implements Validator {
+
+	private static final long serialVersionUID = -6227411205842232875L;
 	private JLabel consolelabel;
 	private JPanel consolepanelRight;
 	

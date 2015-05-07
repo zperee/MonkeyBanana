@@ -326,10 +326,10 @@ public class Entity extends JPanel implements ActionListener {
 			g.drawImage(banana.getImage().getImage(), banana.getX(), banana.getY(), this);
 			
 			//Hitbox für Bananen
-			g.setColor(Color.ORANGE);
-			g.drawRect(banana.getX(), banana.getY(), 
-			banana.getImage().getImage().getWidth(null), 
-			banana.getImage().getImage().getHeight(null));
+//			g.setColor(Color.ORANGE);
+//			g.drawRect(banana.getX(), banana.getY(), 
+//			banana.getImage().getImage().getWidth(null), 
+//			banana.getImage().getImage().getHeight(null));
 		}
 		
 		/* Zeichnet den Spieler */
@@ -346,7 +346,6 @@ public class Entity extends JPanel implements ActionListener {
 		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
 		g.setColor(Color.BLACK);
 		g.drawString(String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 200, 85);
-		g.drawString("°", 500, 500);
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
