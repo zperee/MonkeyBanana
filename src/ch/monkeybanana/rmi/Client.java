@@ -40,7 +40,7 @@ public class Client {
 		start();
 	}
 	
-	public static void start() {
+	public static void start() { 
 		setFrame(new LoginView());
 	}
 	

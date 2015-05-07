@@ -178,9 +178,9 @@ public class HomeView extends JFrame implements ActionListener{
 		
 	}
 	
-	public class GameProzess extends Thread{
-		public void run(){
-			while (true){
+	public class GameProzess extends Thread {
+		public void run() {
+			while (true) {
 				doPlayer();
 				doBanana();
 			}
