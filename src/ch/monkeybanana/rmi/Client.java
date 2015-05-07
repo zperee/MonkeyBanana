@@ -232,7 +232,7 @@ public class Client {
 					JOptionPane.showMessageDialog(null,
 							"Passwort und Username stimmen nicht \u00fcberein",
 	                        "Warnung!",
-	                        JOptionPane.ERROR_MESSAGE);
+	                        JOptionPane.ERROR_MESSAGE); 
 				}
 			}
 		}

@@ -1,7 +1,9 @@
 package ch.monkeybanana.util;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 /**
@@ -16,7 +18,7 @@ public class CryptUtils {
 	//Instanzvariablen
 	private static final String DEFAULT_CODING = "UTF-8";
 	private static BASE64Encoder enc = new BASE64Encoder();
-//	private static BASE64Decoder dec = new BASE64Decoder();
+	private static BASE64Decoder dec = new BASE64Decoder();
 	
 	/**
 	 * Hier wird das Passwort des Users verschlüsselt
@@ -42,13 +44,13 @@ public class CryptUtils {
 	 * @return String mit Passwort unverschluesselt
 	 * @throws Exception
 	 */
-//	public static String base64decode (String passwort) {
-//		try{
-//			//Passwort wird decodiert
-//			return new String (dec.decodeBuffer(passwort), DEFAULT_CODING);
-//		}
-//		catch (IOException e){
-//			return null;
-//		}
-//	}
+	public static String base64decode (String passwort) {
+		try{
+			//Passwort wird decodiert
+			return new String (dec.decodeBuffer(passwort), DEFAULT_CODING);
+		}
+		catch (IOException e){
+			return null;
+		}
+	}
 }
