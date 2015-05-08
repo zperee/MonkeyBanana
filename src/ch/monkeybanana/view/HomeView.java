@@ -18,8 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import ch.monkeybanana.GameTest.Banana;
-import ch.monkeybanana.GameTest.GameClient;
+import ch.monkeybanana.game.Banana;
+import ch.monkeybanana.game.GameWindow;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
@@ -33,7 +33,7 @@ public class HomeView extends JFrame implements ActionListener{
 	private boolean isModified = false;
 	private int playerNr = 0;
 	private boolean isStarted = false;
-	private GameClient gc;
+	private GameWindow gc;
 	
 	/**
 	 * Launch the application.
@@ -164,7 +164,7 @@ public class HomeView extends JFrame implements ActionListener{
 		waitFrame.add(waitSlots);
 		
 		if (slots == 2) {
-			GameClient gc = new GameClient(u, this.getPlayerNr());
+			GameWindow gc = new GameWindow(u, this.getPlayerNr());
 			gc.getEnt().addKeyListener((KeyListener) (new GameListener(gc.getEnt().getPlayerArray().get(this.getPlayerNr()))));
 			waitSlots.setVisible(false);
 			getWaitframe().dispose();
@@ -255,11 +255,11 @@ public class HomeView extends JFrame implements ActionListener{
 		this.isStarted = isStarted;
 	}
 
-	public GameClient getGc() {
+	public GameWindow getGc() {
 		return gc;
 	}
 
-	public void setGc(GameClient gc) {
+	public void setGc(GameWindow gc) {
 		this.gc = gc;
 	}
 }

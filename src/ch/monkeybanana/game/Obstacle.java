@@ -1,4 +1,4 @@
-package ch.monkeybanana.GameTest;
+package ch.monkeybanana.game;
 
 import java.awt.Image;
 import java.awt.Rectangle;

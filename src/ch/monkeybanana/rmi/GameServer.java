@@ -9,7 +9,7 @@ public class GameServer {
 	public static void main(String[] args){
 		try {
 
-			Registry reg = LocateRegistry.createRegistry(1257); //port
+			Registry reg = LocateRegistry.createRegistry(1258); //port
 			Validator aValidator = new ValidatorImpl();
 
 			reg.rebind("validator", aValidator);

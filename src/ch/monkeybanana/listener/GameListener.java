@@ -3,7 +3,7 @@ package ch.monkeybanana.listener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import ch.monkeybanana.GameTest.Player;
+import ch.monkeybanana.game.Player;
 
 public class GameListener implements KeyListener{
 

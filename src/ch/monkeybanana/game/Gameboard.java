@@ -1,4 +1,4 @@
-package ch.monkeybanana.GameTest;
+package ch.monkeybanana.game;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -343,10 +343,10 @@ public class Gameboard extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage().getImage(), kiste.getX(), kiste.getY(), this);
 			// Hitbox für Hindernis
-			// g.setColor(Color.RED);
-			// g.drawRect(kiste.getX(), kiste.getY(),
-			// kiste.getImage().getImage().getWidth(null),
-			// kiste.getImage().getImage().getHeight(null));
+//			 g.setColor(Color.RED);
+//			 g.drawRect(kiste.getX(), kiste.getY(),
+//			 kiste.getImage().getImage().getWidth(null),
+//			 kiste.getImage().getImage().getHeight(null));
 		}
 
 		/* Zeichnet die Bananen */
@@ -632,6 +632,7 @@ public class Gameboard extends JPanel implements ActionListener {
 					if (recPlayer.intersects(recBanana)) {
 						this.setRun(false);
 						try {
+							Client.getInstance().getConnect().score(playerNr);
 							Client.getInstance().getConnect().setHit(true);
 						} catch (RemoteException e) {
 							e.printStackTrace();
@@ -651,15 +652,25 @@ public class Gameboard extends JPanel implements ActionListener {
 				// this.getPlayerArray().clear();
 				// this.setP1(null);
 				// this.setP2(null);
-
+				
+				System.out.println(Client.getInstance().getConnect().getScore(0) + " : "
+				+ Client.getInstance().getConnect().getScore(1));
 				
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			
+				p1.setX(400);
+				p1.setY(400);
+				p1.setTotalBanana(15);
+				
+				p2.setX(100);
+				p2.setY(200);
+				p2.setTotalBanana(15);
+				
 				this.setRun(true);
 				Client.getInstance().getConnect().setHit(false);
 			}

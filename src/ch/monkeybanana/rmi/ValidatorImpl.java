@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import ch.monkeybanana.GameTest.Banana;
-import ch.monkeybanana.GameTest.GameClient;
 import ch.monkeybanana.controller.MBController;
+import ch.monkeybanana.game.Banana;
+import ch.monkeybanana.game.GameWindow;
 import ch.monkeybanana.model.User;
 
 /**
@@ -31,7 +31,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	private JFrame consoleframe;
 	private JLabel slotLabel;
-	private GameClient game;
+	private GameWindow game;
 	private List<Banana> bananen = new ArrayList<Banana>();
 	private int scorePlayer1 = 0;
 	private int scorePlayer2 = 0;
@@ -46,7 +46,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public ValidatorImpl() throws RemoteException {
-		System.out.println(isHit);
 		this.setConsoleframe(new JFrame());
 		this.getConsoleframe().setTitle("Server Console");
 		this.getConsoleframe().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +66,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.getConsoleframe().add(slotLabel);
 		User system = new User();
 		system.setUsername("SYSTEM");
-		this.setGame(new GameClient(system, 0));
+		this.setGame(new GameWindow(system, 0));
 	}
 
 	/**
@@ -228,9 +227,44 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		}
 		this.setRundenZahl(this.getRundenZahl() + 1);
 		this.setHit(true);
+		
+		System.out.println("Pl1: " + this.getScorePlayer1());
+		System.out.println("Pl2: " + this.getScorePlayer2());
 
 		return isHit;
 
+	}
+	
+	@Override
+	public void setHit(boolean isHit) throws RemoteException {
+		this.isHit = isHit;
+	}
+
+	@Override
+	public boolean isHit() throws RemoteException {
+		return isHit;
+	}
+
+	@Override
+	public int getScore(int playerNr) throws RemoteException {
+		int score = -2;
+		
+		if (playerNr == 0) {
+			score = this.getScorePlayer1();
+		} else if (playerNr == 1) {
+			score = this.getScorePlayer2();
+		}
+		
+		return score;
+	}
+
+	@Override
+	public void setScore(int playerNr, int score) throws RemoteException {
+		if (playerNr == 0) {
+			this.setScorePlayer1(score);
+		} else if (playerNr == 1) {
+			this.setScorePlayer2(score);
+		}
 	}
 
 	public JLabel getConsolelabel() {
@@ -257,11 +291,11 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.consoleframe = consoleframe;
 	}
 
-	public GameClient getGame() {
+	public GameWindow getGame() {
 		return game;
 	}
 
-	public void setGame(GameClient game) {
+	public void setGame(GameWindow game) {
 		this.game = game;
 	}
 
@@ -295,17 +329,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	public void setRundenZahl(int rundenZahl) {
 		this.rundenZahl = rundenZahl;
-	}
-
-
-	@Override
-	public void setHit(boolean isHit) throws RemoteException {
-		this.isHit = isHit;
-	}
-
-	@Override
-	public boolean isHit() throws RemoteException {
-		return isHit;
 	}
 
 }

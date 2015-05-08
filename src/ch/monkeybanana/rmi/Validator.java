@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import ch.monkeybanana.GameTest.Banana;
+import ch.monkeybanana.game.Banana;
 import ch.monkeybanana.model.User;
 
 public interface Validator extends Remote {
@@ -55,4 +55,8 @@ public interface Validator extends Remote {
 	public abstract boolean isHit() throws RemoteException;
 	
 	public abstract void setHit(boolean isHit) throws RemoteException;
+	
+	public abstract int getScore(int playerNr) throws RemoteException;
+	
+	public abstract void setScore(int playerNr, int score) throws RemoteException;
 }
