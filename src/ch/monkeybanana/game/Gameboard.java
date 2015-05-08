@@ -268,28 +268,42 @@ public class Gameboard extends JPanel implements ActionListener {
 		 */
 
 		/*
-		 * **LEGENDE** 0 = next Line 0-13 = Ground 14-29 = Border 14 =
-		 * corner_bottom_left 15 = corner_bottom_right 16 = corner_top_left 17 =
-		 * corner_top_right 18-20 = bottom 21-23 = left 24-26 = right 27-29 =
-		 * top 55 = Brick 56 = Brick_moss
+		 * **LEGENDE** 
+		 * 0 = next Line 
+		 * 0-13 = Ground 
+		 * 14-29 = Border
+		 	* 14 = corner_bottom_left 
+		 	* 15 = corner_bottom_right
+		 	* 16 = corner_top_left
+		 	* 17 = corner_top_right
+		 	* 18-20 = bottom
+		 	* 21-23 = left
+		 	* 24-26 = right
+		 	* 27-29 = top
+		 * 51 = pipe_up
+		 * 52 = pipe_down
+		 * 53 = pipe_right
+		 * 54 = pipe_left
+		 * 55 = Brick 
+		 * 56 = Brick_moss
 		 */
 		int[] map = { 40, 16, 29, 28, 27, 29, 27, 28, 27, 29, 28, 27, 29, 17, 40,  0,
 					  40, 22, 55, 56, 55, 55, 55, 56, 55, 56, 56, 55, 55, 25, 40,  0,
 					  40, 14, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 15, 40,  0,
-					  16, 27, 29, 28, 27, 29, 27, 27, 28, 29, 28, 29, 27, 29, 17,  0,
-					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-					  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
-					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-					  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
-					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-					  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
-					  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-					  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-					  14, 18, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 19, 15,  0  };
+					  16, 27, 29, 28, 27, 16, 52, 27, 28, 29, 28, 29, 27, 29, 17,  0,
+					  23,  1,  1,  1,  1, 30,  1,  1,  1,  1,  1, 30, 30, 30, 25,  0,
+					  21,  2, 30, 30,  1, 30,  1, 30, 30, 30,  1,  1,  1,  1, 26,  0,
+					  22,  3, 30,  1,  1, 30,  1,  1,  1, 30,  1, 30, 30,  1, 24,  0,
+					  54,  8,  1,  1, 30, 30,  1, 30,  1,  1,  1, 30,  1,  1, 53,  0,
+					  23, 12, 30,  1,  1,  1,  1, 30, 30, 30, 30, 30,  1, 30, 25,  0,
+					  24,  5, 30, 30, 30, 30,  1,  1,  1, 30,  1,  1,  1,  1, 24,  0,
+					  23,  9, 11, 30,  1,  1,  1, 30,  1, 30,  1, 30, 30,  1, 26,  0,
+					  21, 30,  7, 30,  1, 30, 30, 30,  1,  1,  1, 30,  1,  1, 25,  0,
+					  23, 30,  6,  1,  1,  1,  1, 30,  1, 30, 30, 30,  1, 30, 26,  0,
+					  23, 30,  2, 30, 30, 30,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
+					  22, 30,  5,  8, 30, 30,  1, 30, 30,  1, 30, 30, 30,  1, 26,  0,
+					  21, 30, 30,  6,  2, 13,  5, 30, 30,  1,  1,  1,  1,  1, 25,  0,
+					  14, 18, 19, 20, 19, 20, 51, 19, 18, 20, 18, 20, 19, 19, 15,  0  };
 
 		/* TEMPLATE */
 //		int[] map = { 40, 16, 29, 28, 27, 29, 27, 28, 27, 29, 28, 27, 29, 17, 40,  0,
@@ -343,10 +357,10 @@ public class Gameboard extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage().getImage(), kiste.getX(), kiste.getY(), this);
 			// Hitbox für Hindernis
-//			 g.setColor(Color.RED);
-//			 g.drawRect(kiste.getX(), kiste.getY(),
-//			 kiste.getImage().getImage().getWidth(null),
-//			 kiste.getImage().getImage().getHeight(null));
+			 g.setColor(Color.RED);
+			 g.drawRect(kiste.getX(), kiste.getY(),
+			 kiste.getImage().getImage().getWidth(null),
+			 kiste.getImage().getImage().getHeight(null));
 		}
 
 		/* Zeichnet die Bananen */
@@ -393,12 +407,12 @@ public class Gameboard extends JPanel implements ActionListener {
 		}
 
 		// Hitbox für player
-		// g.setColor(Color.GREEN);
-		// g.drawRect(player.getX(), player.getY() +
-		// player.getImage().getImage().getWidth(null) / 2,
-		// player.getImage().getImage().getWidth(null),
-		// player.getImage().getHeight(null) -
-		// player.getImage().getImage().getWidth(null) / 2);
+		 g.setColor(Color.GREEN);
+		 g.drawRect(p1.getX(), p1.getY() +
+		 p1.getImage().getImage().getWidth(null) / 2,
+		 p1.getImage().getImage().getWidth(null),
+		 p1.getImage().getImage().getHeight(null) -
+		 p1.getImage().getImage().getWidth(null) / 2);
 
 		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
 		g.setColor(Color.BLACK);
@@ -415,7 +429,7 @@ public class Gameboard extends JPanel implements ActionListener {
 		}
 		repaint();
 		checkBounds(15, 18);
-		checkBananaBounds(16, 18);
+		checkBananaBounds(15, 18);
 		generateBanana();
 		increaseBanana(10000);
 		checkBananaHit();
@@ -431,10 +445,10 @@ public class Gameboard extends JPanel implements ActionListener {
 	 * @author Dominic Pfister
 	 * @param feldBreite
 	 *            {@link int}
-	 * @param feldHöhe
+	 * @param feldHoehe
 	 *            {@link int}
 	 */
-	private void checkBounds(int feldBreite, int feldHöhe) {
+	private void checkBounds(int feldBreite, int feldHoehe) {
 		for (Player p : this.getPlayerArray()) {
 			Rectangle recPlayer = p.playerBounds();
 			try {
@@ -442,38 +456,21 @@ public class Gameboard extends JPanel implements ActionListener {
 					Rectangle recKiste = kiste.obstBounds();
 
 					/* **Normal kiste detection** */
-					if (kiste.getType() >= 14 && kiste.getType() <= 29) { /*
-																		 * Wenn
-																		 * der
-																		 * Typ 1
-																		 * oder
-																		 * 3
-																		 * ist,
-																		 * wird
-																		 * geprüft
-																		 * ob
-																		 * das
-																		 * Hindernis
-																		 * und
-																		 * der
-																		 * Spieler
-																		 * sich
-																		 * berühren
-																		 */
-
+					if (kiste.getType() >= 14 && kiste.getType() <= 50) { 
+						
+						/*
+						 * Wenn der Typ zwischen 14 und 29 liegt, 
+						 * wird geprüft ob das Hindernis und
+						 * der Spieler sich berühren
+						 */
 						if (recPlayer.intersects(recKiste)) {
 
 							if (recPlayer.getMaxY() - 1 <= recKiste.getMaxY() // TOP
-									&& !(recPlayer.getMinY() - 1 >= (recKiste
-											.getMaxY() - 4))
-									&& !(recPlayer.getMaxX() - 1 <= recKiste
-											.getMinX() + 4)
-									&& !(recPlayer.getMinX() - 1 >= recKiste
-											.getMaxX() - 4)) {
+									&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
+									&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
+									&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
 
-								p.setY((int) recKiste.getMinY()
-										- p.getImage().getImage()
-												.getHeight(null));
+								p.setY((int) recKiste.getMinY() - p.getImage().getImage().getHeight(null));
 							}
 							else if (recPlayer.getMinY() - 1 >= (recKiste
 									.getMaxY() - 4)) { // BOTTOM
@@ -495,39 +492,24 @@ public class Gameboard extends JPanel implements ActionListener {
 
 						/* **Pipe detection** */
 					}
-					else if (kiste.getType() == 51) { // TOP
-						if (!(recPlayer.getMinY() - 1 >= recKiste.getMaxY()
-								- (p.getImage().getImage().getWidth(null) * 0.5))) {
-							p.setY((feldHöhe - 2)
-									* p.getImage().getImage().getWidth(null)
-									- p.getImage().getImage().getWidth(null)
-									/ 4);
+					else if (kiste.getType() == 51 && !user.getUsername().equals("SYSTEM")) { // TOP
+						if (!(recPlayer.getMinY() + 84 <= recKiste.getMaxY())) {
+							p.setY(kiste.getY() - 609);
 						}
 					}
-					else if (kiste.getType() == 52) { // BOTTOM
-						if (!(recPlayer.getMaxY() - 1 <= recKiste.getMaxY()
-								- (p.getImage().getImage().getWidth(null) * 0.75))) {
-							p.setY(5
-									* p.getImage().getImage().getWidth(null)
-									- (int) (p.getImage().getImage()
-											.getWidth(null) * 0.9));
+					else if (kiste.getType() == 52 && !user.getUsername().equals("SYSTEM")) { // BOTTOM
+						if (!(recPlayer.getMinY() + 9 >= recKiste.getMaxY())) {
+							p.setY(kiste.getY() + 563);
 						}
 					}
-					else if (kiste.getType() == 53) { // RIGHT
-						if (!(recPlayer.getMaxX() - 1 <= recKiste.getMinX()
-								+ (p.getImage().getImage().getWidth(null) * 0.25))) {
-							p.setX((1 * p.getImage().getImage().getWidth(null))
-									- (int) (p.getImage().getImage()
-											.getWidth(null) * 0.25) + 1);
+					else if (kiste.getType() == 53 && !user.getUsername().equals("SYSTEM")) { // RIGHT
+						if (!(recPlayer.getMaxX()  - 12 <= recKiste.getMinX())) {
+							p.setX(kiste.getX() - 635);
 						}
 					}
-					else if (kiste.getType() == 54) { // LEFT
-						if (!(recPlayer.getMinX() - 1 >= recKiste.getMaxX()
-								- (p.getImage().getImage().getWidth(null) * 0.25))) {
-							p.setX((feldBreite - 2)
-									* p.getImage().getImage().getWidth(null)
-									+ (int) (p.getImage().getImage()
-											.getWidth(null) * 0.25));
+					else if (kiste.getType() == 54 && !user.getUsername().equals("SYSTEM")) { // LEFT
+						if (!(recPlayer.getMinX() + 12 >= recKiste.getMaxX())) {
+							p.setX(kiste.getX() + 635);
 						}
 					}
 				}
@@ -549,6 +531,7 @@ public class Gameboard extends JPanel implements ActionListener {
 	 */
 	private void checkBananaBounds(int feldBreite, int feldHöhe) {
 		boolean isRemoved = true;
+		try {
 		for (Banana banana : bananenArray) {
 			Rectangle recBanana = banana.bananaBounds();
 			for (Obstacle kiste : obstacleArray) {
@@ -562,49 +545,23 @@ public class Gameboard extends JPanel implements ActionListener {
 				}
 				else if (kiste.getType() >= 51 && kiste.getType() <= 54) {
 					if (kiste.getType() == 51) { // TOP
-						if (!(recBanana.getMinY() - 1 >= recKiste.getMaxY()
-								- (banana.getImage().getImage().getWidth(null) * 0.5))) {
-							banana.setY((feldHöhe - 2)
-									* this.getPlayerArray()
-											.get(this.getPlayerNr()).getImage()
-											.getImage().getWidth(null)
-									+ (int) (banana.getImage().getImage()
-											.getWidth(null) * 1.5));
+						if (!(recBanana.getMinY() + 65 <= recKiste.getMaxY())) {
+							banana.setY(kiste.getType() + 127);
 						}
 					}
 					else if (kiste.getType() == 52) { // BOTTOM
-						if (!(recBanana.getMaxY() - 1 <= recKiste.getMaxY()
-								- (banana.getImage().getImage().getWidth(null) * 1.6))) {
-							banana.setY(5
-									* this.getPlayerArray()
-											.get(this.getPlayerNr()).getImage()
-											.getImage().getWidth(null)
-									- (int) (banana.getImage().getImage()
-											.getWidth(null) * 0.62));
+						if (!(recBanana.getMaxY() - 15 >= recKiste.getMaxY())) {
+							banana.setY(kiste.getY() + 612);
 						}
 					}
 					else if (kiste.getType() == 53) { // RIGHT
-						if (!(recBanana.getMaxX() - 1 <= recKiste.getMinX()
-								+ (banana.getImage().getImage().getWidth(null) * 0.45))) {
-							banana.setX((1 * this.getPlayerArray()
-									.get(this.getPlayerNr()).getImage()
-									.getImage().getWidth(null))
-									- (int) (this.getPlayerArray()
-											.get(this.getPlayerNr()).getImage()
-											.getImage().getWidth(null) * 0.25)
-									+ 1);
+						if (!(recBanana.getMaxX() - 10 <= recKiste.getMinX())) {
+							banana.setX(kiste.getX() - 636);
 						}
 					}
 					else if (kiste.getType() == 54) { // LEFT
-						if (!(recBanana.getMinX() - 1 >= recKiste.getMaxX()
-								- (banana.getImage().getImage().getWidth(null) * 0.4))) {
-							banana.setX((feldBreite - 2)
-									* this.getPlayerArray()
-											.get(this.getPlayerNr()).getImage()
-											.getImage().getWidth(null)
-									- (int) (this.getPlayerArray()
-											.get(this.getPlayerNr()).getImage()
-											.getImage().getWidth(null) * 0.21));
+						if (!(recBanana.getMinX() + 12 >= recKiste.getMaxX())) {
+							banana.setX(kiste.getX() + 660);
 						}
 					}
 				}
@@ -612,6 +569,9 @@ public class Gameboard extends JPanel implements ActionListener {
 			if (isRemoved == false) {
 				break;
 			}
+		}
+		} catch (ConcurrentModificationException e) {
+			System.out.println(3);
 		}
 	}
 
