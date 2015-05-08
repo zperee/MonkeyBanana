@@ -223,6 +223,47 @@ public class Obstacle implements Serializable{
 				image =  new ImageIcon("images/brick_moss.png");
 				break;
 				
+			/* **WATER** */
+			case 57:
+				image =  new ImageIcon("images/water/deadEnd/bottom.png");
+				break;
+			case 58:
+				image =  new ImageIcon("images/water/deadEnd/left.png");
+				break;
+			case 59:
+				image =  new ImageIcon("images/water/deadEnd/right.png");
+				break;
+			case 60:
+				image =  new ImageIcon("images/water/deadEnd/top.png");
+				break;
+			case 61:
+				image =  new ImageIcon("images/water/stream/bottom_left.png");
+				break;
+			case 62:
+				image =  new ImageIcon("images/water/stream/bottom_middle.png");
+				break;
+			case 63:
+				image =  new ImageIcon("images/water/stream/bottom_right.png");
+				break;
+			case 64:
+				image =  new ImageIcon("images/water/stream/middle_left.png");
+				break;
+			case 65:
+				image =  new ImageIcon("images/water/stream/middle_middle.png");
+				break;
+			case 66:
+				image =  new ImageIcon("images/water/stream/middle_right.png");
+				break;
+			case 67:
+				image =  new ImageIcon("images/water/stream/top_left.png");
+				break;
+			case 68:
+				image =  new ImageIcon("images/water/stream/top_middle.png");
+				break;
+			case 69:
+				image =  new ImageIcon("images/water/stream/top_right.png");
+				break;
+				
 			default:
 				image =  new ImageIcon("images/dirt.png");
 			}

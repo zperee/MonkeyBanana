@@ -62,8 +62,8 @@ public class Gameboard extends JPanel implements ActionListener {
 		isModified = false;
 		refreshTimer = System.currentTimeMillis();
 
-		p1 = new Player(200, 300, 15, 500, 1, 48);
-		p2 = new Player(200, 300, 15, 500, 2, 48);
+		p1 = new Player(48, 168, 15, 500, 1, 48);
+		p2 = new Player(576, 696, 15, 500, 2, 48);
 		playerArray.add(this.getP1());
 		playerArray.add(this.getP2());
 
@@ -286,24 +286,25 @@ public class Gameboard extends JPanel implements ActionListener {
 		 * 54 = pipe_left
 		 * 55 = Brick 
 		 * 56 = Brick_moss
+		 * 57-69 = Water
 		 */
 		int[] map = { 40, 16, 29, 28, 27, 29, 27, 28, 27, 29, 28, 27, 29, 17, 40,  0,
 					  40, 22, 55, 56, 55, 55, 55, 56, 55, 56, 56, 55, 55, 25, 40,  0,
 					  40, 14, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 15, 40,  0,
-					  16, 27, 29, 28, 27, 16, 52, 27, 28, 29, 28, 29, 27, 29, 17,  0,
-					  23,  1,  1,  1,  1, 30,  1,  1,  1,  1,  1, 30, 30, 30, 25,  0,
-					  21,  2, 30, 30,  1, 30,  1, 30, 30, 30,  1,  1,  1,  1, 26,  0,
-					  22,  3, 30,  1,  1, 30,  1,  1,  1, 30,  1, 30, 30,  1, 24,  0,
-					  54,  8,  1,  1, 30, 30,  1, 30,  1,  1,  1, 30,  1,  1, 53,  0,
-					  23, 12, 30,  1,  1,  1,  1, 30, 30, 30, 30, 30,  1, 30, 25,  0,
-					  24,  5, 30, 30, 30, 30,  1,  1,  1, 30,  1,  1,  1,  1, 24,  0,
-					  23,  9, 11, 30,  1,  1,  1, 30,  1, 30,  1, 30, 30,  1, 26,  0,
-					  21, 30,  7, 30,  1, 30, 30, 30,  1,  1,  1, 30,  1,  1, 25,  0,
-					  23, 30,  6,  1,  1,  1,  1, 30,  1, 30, 30, 30,  1, 30, 26,  0,
-					  23, 30,  2, 30, 30, 30,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
-					  22, 30,  5,  8, 30, 30,  1, 30, 30,  1, 30, 30, 30,  1, 26,  0,
-					  21, 30, 30,  6,  2, 13,  5, 30, 30,  1,  1,  1,  1,  1, 25,  0,
-					  14, 18, 19, 20, 19, 20, 51, 19, 18, 20, 18, 20, 19, 19, 15,  0  };
+					  16, 27, 29, 28, 27, 34, 52, 33, 28, 29, 28, 17, 41, 40, 40,  0,
+					  23,  1,  1, 13, 1,  1,  1,  1,  1,   1,  1, 33, 27, 28, 17,  0,
+					  21,  2, 35, 18, 19, 36,  1, 35, 18, 36,  1,  1,  1,  1, 26,  0,
+					  34,  3, 33, 31, 17, 38,  1, 33, 31, 34,  1, 35, 36,  1, 33,  0,
+					  54,  8, 13,  7, 26, 22,  1,  1,  1,  1,  1, 25, 22,  1, 53,  0,
+					  18, 19, 36,  8, 24, 14, 36,  1, 35, 20, 18, 15, 21,  1, 35,  0,
+					  40, 39, 22,  1, 33, 30, 34,  1, 33, 32, 31, 30, 34,  1, 24,  0,
+					  40, 16, 34,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
+					  40, 23,  1,  1, 35, 36,  1, 35, 18, 19, 20, 36,  1, 35, 15,  0,
+					  40, 21,  1, 35, 15, 21,  1, 33, 28, 29, 17, 22,  1, 24, 40,  0,
+					  40, 23,  1, 33, 17, 22,  1,  1,  1,  1, 24, 23,  1, 26, 40,  0,
+					  40, 22,  1,  1, 33, 34,  1, 35, 36,  1, 33, 34,  1, 25, 40,  0,
+					  40, 14, 36,  1,  1,  1,  5, 37, 38,  1,  1,  1,  1, 24, 40,  0,
+					  40, 40, 14, 20, 19, 36, 51, 25, 14, 20, 18, 20, 19, 15, 40,  0  };
 
 		/* TEMPLATE */
 //		int[] map = { 40, 16, 29, 28, 27, 29, 27, 28, 27, 29, 28, 27, 29, 17, 40,  0,
@@ -357,10 +358,10 @@ public class Gameboard extends JPanel implements ActionListener {
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage().getImage(), kiste.getX(), kiste.getY(), this);
 			// Hitbox für Hindernis
-			 g.setColor(Color.RED);
-			 g.drawRect(kiste.getX(), kiste.getY(),
-			 kiste.getImage().getImage().getWidth(null),
-			 kiste.getImage().getImage().getHeight(null));
+//			 g.setColor(Color.RED);
+//			 g.drawRect(kiste.getX(), kiste.getY(),
+//			 kiste.getImage().getImage().getWidth(null),
+//			 kiste.getImage().getImage().getHeight(null));
 		}
 
 		/* Zeichnet die Bananen */
@@ -407,12 +408,12 @@ public class Gameboard extends JPanel implements ActionListener {
 		}
 
 		// Hitbox für player
-		 g.setColor(Color.GREEN);
-		 g.drawRect(p1.getX(), p1.getY() +
-		 p1.getImage().getImage().getWidth(null) / 2,
-		 p1.getImage().getImage().getWidth(null),
-		 p1.getImage().getImage().getHeight(null) -
-		 p1.getImage().getImage().getWidth(null) / 2);
+//		 g.setColor(Color.GREEN);
+//		 g.drawRect(p1.getX(), p1.getY() +
+//		 p1.getImage().getImage().getWidth(null) / 2,
+//		 p1.getImage().getImage().getWidth(null),
+//		 p1.getImage().getImage().getHeight(null) -
+//		 p1.getImage().getImage().getWidth(null) / 2);
 
 		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
 		g.setColor(Color.BLACK);
@@ -456,7 +457,7 @@ public class Gameboard extends JPanel implements ActionListener {
 					Rectangle recKiste = kiste.obstBounds();
 
 					/* **Normal kiste detection** */
-					if (kiste.getType() >= 14 && kiste.getType() <= 50) { 
+					if (kiste.getType() >= 14 && kiste.getType() <= 50 || kiste.getType() >= 57 && kiste.getType() <= 69) { 
 						
 						/*
 						 * Wenn der Typ zwischen 14 und 29 liegt, 
@@ -536,7 +537,7 @@ public class Gameboard extends JPanel implements ActionListener {
 			Rectangle recBanana = banana.bananaBounds();
 			for (Obstacle kiste : obstacleArray) {
 				Rectangle recKiste = kiste.obstBounds();
-				if (kiste.getType() >= 14 && kiste.getType() <= 29) {
+				if (kiste.getType() >= 14 && kiste.getType() <= 50 || kiste.getType() >= 57 && kiste.getType() <= 69) {
 					if (recBanana.intersects(recKiste)) {
 						bananenArray.remove(banana);
 						isRemoved = false;
@@ -622,13 +623,13 @@ public class Gameboard extends JPanel implements ActionListener {
 				catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			
-				p1.setX(400);
-				p1.setY(400);
+				
+				p1.setX(48);
+				p1.setY(168);
 				p1.setTotalBanana(15);
 				
-				p2.setX(100);
-				p2.setY(200);
+				p2.setX(576);
+				p2.setY(696);
 				p2.setTotalBanana(15);
 				
 				this.setRun(true);
