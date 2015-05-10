@@ -45,6 +45,7 @@ public interface Validator extends Remote {
 	public abstract void tellBanana(Banana banana) throws RemoteException;
 	
 	public abstract boolean score(int playerNr) throws RemoteException;
+	
 	/**
 	 * @param playerNr
 	 * @return
@@ -57,6 +58,8 @@ public interface Validator extends Remote {
 	public abstract void setHit(boolean isHit) throws RemoteException;
 	
 	public abstract int getScore(int playerNr) throws RemoteException;
+	
+	public abstract int[] getResult() throws RemoteException;
 	
 	public abstract void setScore(int playerNr, int score) throws RemoteException;
 }

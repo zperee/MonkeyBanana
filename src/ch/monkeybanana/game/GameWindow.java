@@ -29,7 +29,7 @@ public class GameWindow extends JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("MonkeyBanana Game");
         this.setResizable(false);
-        
+        u.setUsername("g");
         if (u.getUsername().equals("SYSTEM")) {
         	this.setVisible(false);
         } else {

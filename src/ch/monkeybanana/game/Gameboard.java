@@ -3,6 +3,7 @@ package ch.monkeybanana.game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -417,9 +419,29 @@ public class Gameboard extends JPanel implements ActionListener {
 
 		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
 		g.setColor(Color.BLACK);
+		Image banana_tree = Toolkit.getDefaultToolkit().getImage("images/banana_tree.png");
+		g.drawImage(banana_tree, 150, 55, this);
+		
 		g.drawString(
-				String.valueOf(this.getPlayerArray().get(this.getPlayerNr())
-						.getTotalBanana()), 200, 85);
+				String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 190, 85);
+		
+		Image player1 = Toolkit.getDefaultToolkit().getImage("images/monkeyBlue.png");
+		g.drawImage(player1, 480, 45, this);
+		
+		Image player2 = Toolkit.getDefaultToolkit().getImage("images/monkeyRed.png");
+		g.drawImage(player2, 380, 45, this);
+		
+		try {
+			int[] result = Client.getInstance().getConnect().getResult();
+			g.drawString(
+					String.valueOf(result[0]), 528, 85);
+			g.drawString(
+					String.valueOf(result[1]), 432, 85);
+			
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
 
 		Toolkit.getDefaultToolkit().sync();
 	}

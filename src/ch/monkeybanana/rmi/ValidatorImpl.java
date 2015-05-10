@@ -256,6 +256,17 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		}
 		
 		return score;
+		
+	}
+	
+	@Override
+	public int[] getResult() throws RemoteException {
+		int [] score = new int[2];
+		
+		score[0] = this.getScore(0);
+		score[1] = this.getScore(1);
+
+	return score;
 	}
 
 	@Override
