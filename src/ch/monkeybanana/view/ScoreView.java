@@ -2,7 +2,9 @@ package ch.monkeybanana.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -54,15 +56,14 @@ public class ScoreView extends JFrame {
 			contentPane.add(lblDuHastVerloren);
 		}
 		
-//		JLabel lblNewLabel = new JLabel("New label");
-//		lblNewLabel.setIcon(new ImageIcon("images/monkeyBlue.png"));
-//		lblNewLabel.setBounds(55, 94, 34, 67);
-//		contentPane.add(lblNewLabel);
-//		
-//		JLabel lblNewLabel_1 = new JLabel("New label");
-//		lblNewLabel_1.setIcon(new ImageIcon("images/monkeyRed.png"));
-//		lblNewLabel_1.setBounds(321, 95, 34, 67);
-//		contentPane.add(lblNewLabel_1);
+		JLabel player1 =  new JLabel(new ImageIcon("images/MonkeyBlue.png"));
+		JLabel player2 =  new JLabel(new ImageIcon("images/MonkeyRed.png"));
+		
+		player1.setBounds(55, 94, 34, 67);
+		contentPane.add(player1);
+
+		player2.setBounds(321, 95, 34, 67);
+		contentPane.add(player2);
 		
 		JLabel lblVs = new JLabel("vs");
 		lblVs.setFont(new Font("Tahoma", Font.PLAIN, 20));
