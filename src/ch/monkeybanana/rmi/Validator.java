@@ -38,6 +38,8 @@ public interface Validator extends Remote {
 	
 	public abstract int getSlots() throws RemoteException;
 	
+	public abstract void setSlots(int slots) throws RemoteException;
+	
 	public abstract void tellPosition(int x, int y, int ownPlayerNr) throws RemoteException;
 	
 	public abstract int getPosition(char XorY, int ownPlayerNr) throws RemoteException; 
@@ -68,4 +70,8 @@ public interface Validator extends Remote {
 	public abstract void setRundenzahl(int rundenzahl) throws RemoteException;
 	
 	public abstract void restartServer() throws RemoteException;
+	
+	public abstract boolean getFinishedGame() throws RemoteException;
+	
+	public abstract void setFinishedGame(boolean finishedGame) throws RemoteException;
 }

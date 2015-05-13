@@ -58,7 +58,6 @@ public class MBController {
 	 * @return 
 	 */
 	public User login(User user, JLabel console) {
-
 			console.setText(console.getText() + user.getUsername() + " hat den Server betreten." + "<br/>");
 			return user;
 	

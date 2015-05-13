@@ -173,16 +173,24 @@ public class HomeView extends JFrame implements ActionListener{
 			(new GameProzess()).start();
 			this.setStarted(true);
 			
-			
+			try {
+				Client.getInstance().getConnect().setFinishedGame(false);
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}
 	
 	public class GameProzess extends Thread {
 		public void run() {
-			while (true) {
-				doPlayer();
-				doBanana();
+			try {
+				while (!Client.getInstance().getConnect().getFinishedGame()) {
+					doPlayer();
+					doBanana();
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
 			}
 		}
 	}

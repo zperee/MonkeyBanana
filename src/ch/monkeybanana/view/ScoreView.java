@@ -1,22 +1,16 @@
 package ch.monkeybanana.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-import java.awt.Color;
-import java.rmi.RemoteException;
-
-import javax.swing.ImageIcon;
-
-import ch.monkeybanana.rmi.Client;
 
 public class ScoreView extends JFrame {
+	
+	private static final long serialVersionUID = 2002655073290070168L;
 	private int score1;
 	private int score2;
 	private String player1;
@@ -41,8 +35,9 @@ public class ScoreView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setVisible(true);
 		
-		if(winner){
+		if (winner) {
 		JLabel lblDuHastGewonnen = new JLabel("Du hast gewonnen");
 		
 		lblDuHastGewonnen.setForeground(Color.GREEN);
@@ -59,15 +54,15 @@ public class ScoreView extends JFrame {
 			contentPane.add(lblDuHastVerloren);
 		}
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("images/monkeyBlue.png"));
-		lblNewLabel.setBounds(55, 94, 34, 67);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("images/monkeyRed.png"));
-		lblNewLabel_1.setBounds(321, 95, 34, 67);
-		contentPane.add(lblNewLabel_1);
+//		JLabel lblNewLabel = new JLabel("New label");
+//		lblNewLabel.setIcon(new ImageIcon("images/monkeyBlue.png"));
+//		lblNewLabel.setBounds(55, 94, 34, 67);
+//		contentPane.add(lblNewLabel);
+//		
+//		JLabel lblNewLabel_1 = new JLabel("New label");
+//		lblNewLabel_1.setIcon(new ImageIcon("images/monkeyRed.png"));
+//		lblNewLabel_1.setBounds(321, 95, 34, 67);
+//		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblVs = new JLabel("vs");
 		lblVs.setFont(new Font("Tahoma", Font.PLAIN, 20));

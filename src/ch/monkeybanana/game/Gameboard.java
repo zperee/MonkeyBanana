@@ -17,10 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
+import ch.monkeybanana.view.ScoreView;
 
 /**
  * DESC
@@ -661,10 +661,37 @@ public class Gameboard extends JPanel implements ActionListener {
 				this.setRun(true);
 				Client.getInstance().getConnect().setHit(false);
 			} else if (Client.getInstance().getConnect().getRundenzahl() > 1) {
-				//TODO score window anzeigen
-				System.out.println("Game finished");
-				this.getFrame().dispose();
+				boolean winner;
+				int player2;
+				
 				timer.stop();
+				
+				if (this.getPlayerNr() == 0) {
+					player2 = 1;
+				} else {
+					player2 = 0;
+				}
+				
+				if (Client.getInstance().getConnect().getScore(this.getPlayerNr()) > 
+					Client.getInstance().getConnect().getScore(player2)) {
+					
+					winner = true;
+				} else {
+					winner = false;
+				}
+				
+				int[] score = Client.getInstance().getConnect().getResult();
+				new ScoreView(score[0], score[1], this.getUser().getUsername(), "Gegner", winner);
+				
+				System.out.println("Game finished");
+				
+				Client.getInstance().getConnect().setSlots(Client.getInstance().getConnect().getSlots() - 1);
+				System.out.println(Client.getInstance().getConnect().getSlots());
+				
+				if (this.getPlayerNr() == 0) {
+					Client.getInstance().getConnect().restartServer();
+				}
+				this.getFrame().dispose();
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -781,5 +808,13 @@ public class Gameboard extends JPanel implements ActionListener {
 
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
 	}
 }

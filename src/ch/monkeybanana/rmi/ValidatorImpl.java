@@ -33,10 +33,13 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private JLabel slotLabel;
 	private GameWindow game;
 	private List<Banana> bananen = new ArrayList<Banana>();
+	
 	private int scorePlayer1 = 0;
 	private int scorePlayer2 = 0;
 	private int rundenZahl = 0;
-
+	private int slots = 0;
+	
+	private boolean finishedGame;
 	private boolean isHit = false;
 
 	/**
@@ -57,12 +60,10 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.setConsolepanelRight(new JPanel());
 		this.getConsolepanelRight().add(this.getConsolelabel());
 
-		this.getConsoleframe().add(this.getConsolepanelRight(),
-				BorderLayout.WEST);
+		this.getConsoleframe().add(this.getConsolepanelRight(), BorderLayout.WEST);
 		this.getConsoleframe().setVisible(true);
 
-		slotLabel = new JLabel("Slots: "
-				+ MBController.getInstance().getSlotsBesetzt());
+		slotLabel = new JLabel("Slots: " + this.getSlots());
 		this.getConsoleframe().add(slotLabel);
 		User system = new User();
 		system.setUsername("SYSTEM");
@@ -78,8 +79,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public void registration(User newUser) throws RemoteException {
-		MBController.getInstance()
-				.registrieren(newUser, this.getConsolelabel());
+		MBController.getInstance().registrieren(newUser, this.getConsolelabel());
 	}
 
 	/**
@@ -113,15 +113,18 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	}
 
 	@Override
-	public synchronized void tellPosition(int x, int y, int ownPlayerNr)
-			throws RemoteException {
-		this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setX(x);
-		this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setY(y);
-
+	public synchronized void tellPosition(int x, int y, int ownPlayerNr) throws RemoteException {
+		try {
+			this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setX(x);
+			this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setY(y);
+		} catch (IndexOutOfBoundsException e) {
+			this.setFinishedGame(true);
+		}
 	}
 
 	@Override
 	public synchronized int getPosition(char XorY, int ownPlayerNr) throws RemoteException {
+		try {
 		if (ownPlayerNr == 0) {
 			if (XorY == 'x') {
 				return this.getGame().getEnt().getPlayerArray().get(1).getX();
@@ -139,6 +142,9 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 				return this.getGame().getEnt().getPlayerArray().get(0).getY();
 			}
 
+		}
+		} catch (IndexOutOfBoundsException e) {
+			this.setFinishedGame(true);
 		}
 
 		return 0;
@@ -177,44 +183,40 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 */
 	@Override
 	public void join(User user) throws RemoteException {
-		this.getConsolelabel().setText(
-				this.getConsolelabel().getText() + "Benutzer "
-						+ user.getUsername() + " hat das Spiel betreten."
-						+ "<br>");
-		MBController.getInstance().setSlotsBesetzt(
-				MBController.getInstance().getSlotsBesetzt() + 1);
-
-		slotLabel.setText("Slots: "
-				+ MBController.getInstance().getSlotsBesetzt());
+		this.getConsolelabel().setText(this.getConsolelabel().getText() + 
+				"Benutzer " + user.getUsername() + " hat das Spiel betreten." + "<br>");
+		
+		this.setSlots(this.getSlots() + 1);
+		slotLabel.setText("Slots: " + this.getSlots());
 	}
 
 	@Override
 	public void logoutServer(User user) throws RemoteException {
-		this.getConsolelabel().setText(
-				this.getConsolelabel().getText() + user.getUsername()
-						+ " hat den Server verlassen." + "<br>");
-		MBController.getInstance().setSlotsBesetzt(
-				MBController.getInstance().getSlotsBesetzt() - 1);
+		this.getConsolelabel().setText(this.getConsolelabel().getText() + user.getUsername() + 
+				" hat den Server verlassen." + "<br>");
+		
+		this.setSlots(this.getSlots() - 1);
 
-		slotLabel.setText("Slots: "
-				+ MBController.getInstance().getSlotsBesetzt());
+		slotLabel.setText("Slots: " + this.getSlots());
 	}
 
 	@Override
 	public void logoutSpiel(User user) throws RemoteException {
-		this.getConsolelabel().setText(
-				this.getConsolelabel().getText() + user.getUsername()
-						+ " hat das Spiel verlassen." + "<br>");
-		MBController.getInstance().setSlotsBesetzt(
-				MBController.getInstance().getSlotsBesetzt() - 1);
+		this.getConsolelabel().setText(this.getConsolelabel().getText() + user.getUsername() + 
+				" hat das Spiel verlassen." + "<br>");
+		this.setSlots(this.getSlots() - 1);
 
-		slotLabel.setText("Slots: "
-				+ MBController.getInstance().getSlotsBesetzt());
+		slotLabel.setText("Slots: " + this.getSlots());
 	}
 
 	@Override
 	public int getSlots() throws RemoteException {
-		return MBController.getInstance().getSlotsBesetzt();
+		return this.slots;
+	}
+	
+	@Override
+	public void setSlots(int slots) {
+		this.slots = slots;
 	}
 
 	@Override
@@ -248,7 +250,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	@Override
 	public int getScore(int playerNr) throws RemoteException {
-		int score = -2;
+		int score = 0;
 		
 		if (playerNr == 0) {
 			score = this.getScorePlayer1();
@@ -289,9 +291,28 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	
 	@Override
 	public void restartServer() throws RemoteException {
-		this.setGame(null);
+		User system = new User();
+		system.setUsername("SYSTEM");
+		
+		this.getGame().getEnt().getTimer().stop();
+		this.getGame().getEnt().getPlayerArray().clear();
+		this.setGame(new GameWindow(system, 0));
+		
+		this.setScorePlayer1(0);
+		this.setScorePlayer2(0);
+		this.setRundenzahl(0);
+	}
+	
+	@Override
+	public boolean getFinishedGame() throws RemoteException {
+		return this.finishedGame;
 	}
 
+	@Override
+	public void setFinishedGame(boolean finishedGame) throws RemoteException {
+		this.finishedGame = finishedGame;
+	}
+	
 	public JLabel getConsolelabel() {
 		return consolelabel;
 	}
@@ -354,6 +375,10 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	public void setRundenZahl(int rundenZahl) {
 		this.rundenZahl = rundenZahl;
+	}
+
+	public boolean isFinishedGame() {
+		return finishedGame;
 	}
 
 }
