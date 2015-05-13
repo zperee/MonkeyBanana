@@ -58,8 +58,9 @@ public class Gameboard extends JPanel implements ActionListener {
 	 * 
 	 * @author Dominic Pfister
 	 * @param spielerNr {@link int}
+	 * @throws RemoteException 
 	 */
-	public Gameboard(int spielerNr, User u, JFrame frame) {
+	public Gameboard(int spielerNr, User u, JFrame frame) throws RemoteException {
 		this.setPlayerNr(spielerNr);
 		setFocusable(true);
 		setDoubleBuffered(true);
@@ -74,6 +75,7 @@ public class Gameboard extends JPanel implements ActionListener {
 		p2 = new Player(576, 696, 15, 500, 2, 48);
 		playerArray.add(this.getP1());
 		playerArray.add(this.getP2());
+		
 
 		playerMaxBananas = 15;
 
@@ -88,8 +90,9 @@ public class Gameboard extends JPanel implements ActionListener {
 		timer = new Timer(10, this);
 		timer.start();
 
-		if (!isRestarted) {
+		if (!isRestarted && !this.getUser().getUsername().equals("SYSTEM")) {
 			generateMap(48);
+			Client.getInstance().getConnect().setPlayer(this.getUser().getUsername(), playerNr);
 		}
 	}
 
@@ -672,7 +675,7 @@ public class Gameboard extends JPanel implements ActionListener {
 					player2 = 0;
 				}
 				
-				if (Client.getInstance().getConnect().getScore(this.getPlayerNr()) > 
+				if (Client.getInstance().getConnect().getScore(this.getPlayerNr()) < 
 					Client.getInstance().getConnect().getScore(player2)) {
 					
 					winner = true;
@@ -681,7 +684,10 @@ public class Gameboard extends JPanel implements ActionListener {
 				}
 				
 				int[] score = Client.getInstance().getConnect().getResult();
-				new ScoreView(score[0], score[1], this.getUser().getUsername(), "Gegner", winner);
+				String pl1 = Client.getInstance().getConnect().getPlayer(0);
+				String pl2 = Client.getInstance().getConnect().getPlayer(1);
+				
+				new ScoreView(score[0], score[1], pl1, pl2, winner);
 				
 				System.out.println("Game finished");
 				

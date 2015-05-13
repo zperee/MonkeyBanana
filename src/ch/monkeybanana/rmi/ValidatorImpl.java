@@ -41,6 +41,9 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	
 	private boolean finishedGame;
 	private boolean isHit = false;
+	
+	private String playerName1;
+	private String playerName2;
 
 	/**
 	 * Konstrukor fuer ValidatorImpl
@@ -313,6 +316,28 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.finishedGame = finishedGame;
 	}
 	
+	@Override
+	public String getPlayer(int playerNr) throws RemoteException {
+
+		if (playerNr == 0) {
+			return this.playerName1;
+		} else if (playerNr == 1) {
+			return this.playerName2;
+		}
+		return null;
+	}
+
+	@Override
+	public void setPlayer(String name, int playerNr) throws RemoteException {
+
+		if (playerNr == 0) {
+			this.playerName1 = name;
+		} else if (playerNr == 1) {
+			this.playerName2 = name;
+		}
+		
+	}
+	
 	public JLabel getConsolelabel() {
 		return consolelabel;
 	}
@@ -379,6 +404,22 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	public boolean isFinishedGame() {
 		return finishedGame;
+	}
+
+	public String getPlayerName1() {
+		return playerName1;
+	}
+
+	public void setPlayerName1(String playerName1) {
+		this.playerName1 = playerName1;
+	}
+
+	public String getPlayerName2() {
+		return playerName2;
+	}
+
+	public void setPlayerName2(String playerName2) {
+		this.playerName2 = playerName2;
 	}
 
 }

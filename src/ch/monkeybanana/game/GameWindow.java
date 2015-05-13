@@ -22,7 +22,12 @@ public class GameWindow extends JFrame {
 
 	public GameWindow(User u, int playerNr) {
 		this.setU(u);
-        this.setEnt(new Gameboard(playerNr, u, this));
+		
+        try {
+			this.setEnt(new Gameboard(playerNr, u, this));
+		} catch (RemoteException e1) {
+			e1.printStackTrace();
+		}
        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(15 * 48 + 7,  18 * 48 - 19);

@@ -74,4 +74,8 @@ public interface Validator extends Remote {
 	public abstract boolean getFinishedGame() throws RemoteException;
 	
 	public abstract void setFinishedGame(boolean finishedGame) throws RemoteException;
+	
+	public abstract String getPlayer(int playerNr) throws RemoteException;
+	
+	public abstract void setPlayer(String name, int playerNr) throws RemoteException;
 }
