@@ -62,4 +62,10 @@ public interface Validator extends Remote {
 	public abstract int[] getResult() throws RemoteException;
 	
 	public abstract void setScore(int playerNr, int score) throws RemoteException;
+	
+	public abstract int getRundenzahl() throws RemoteException;
+	
+	public abstract void setRundenzahl(int rundenzahl) throws RemoteException;
+	
+	public abstract void restartServer() throws RemoteException;
 }

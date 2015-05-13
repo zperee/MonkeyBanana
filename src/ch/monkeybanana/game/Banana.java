@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public class Banana extends Obstacle implements Serializable{
+public class Banana extends Obstacle implements Serializable {
 
 	private static final long serialVersionUID = 8043746736772410176L;
 	private char direction;
@@ -22,6 +22,7 @@ public class Banana extends Obstacle implements Serializable{
 	 * @param type {@link int}
 	 * @param direction {@link char}
 	 * @param scale {@link int}
+	 * @param owner {@link int}
 	 */
 	public Banana (int x, int y, int type, char direction, int scale, int owner) {
 		super(x, y, type, scale);
@@ -29,8 +30,8 @@ public class Banana extends Obstacle implements Serializable{
 		this.setOwner(owner);
 		this.setDirection(direction);
 		
-		Image scaledImage = super.getImage().getImage(); // transform it 
-	    scaledImage = scaledImage.getScaledInstance(scale, scale,  java.awt.Image.SCALE_FAST); // scale it the smooth way  
+		Image scaledImage = super.getImage().getImage(); // transform it
+	    scaledImage = scaledImage.getScaledInstance(scale, scale,  java.awt.Image.SCALE_FAST); // scale it the smooth way
 	    super.setImage(new ImageIcon(scaledImage));  // transform it back
 	}
 

@@ -219,15 +219,16 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	@Override
 	public boolean score(int playerNr) throws RemoteException {
+		
 		if (playerNr == 0) {
 			this.setScorePlayer1(this.getScorePlayer1() + 1);
 		}
 		else if (playerNr == 1) {
 			this.setScorePlayer2(this.getScorePlayer2() + 1);
 		}
-		this.setRundenZahl(this.getRundenZahl() + 1);
 		this.setHit(true);
 		
+		System.out.println(this.getRundenZahl());
 		System.out.println("Pl1: " + this.getScorePlayer1());
 		System.out.println("Pl2: " + this.getScorePlayer2());
 
@@ -254,7 +255,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		} else if (playerNr == 1) {
 			score = this.getScorePlayer2();
 		}
-		
 		return score;
 		
 	}
@@ -265,7 +265,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		
 		score[0] = this.getScore(0);
 		score[1] = this.getScore(1);
-
 	return score;
 	}
 
@@ -276,6 +275,21 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		} else if (playerNr == 1) {
 			this.setScorePlayer2(score);
 		}
+	}
+	
+	@Override
+	public int getRundenzahl() throws RemoteException {
+		return this.rundenZahl;
+	}
+	
+	@Override
+	public void setRundenzahl(int rundenzahl) throws RemoteException {
+		this.rundenZahl = rundenzahl;
+	}
+	
+	@Override
+	public void restartServer() throws RemoteException {
+		this.setGame(null);
 	}
 
 	public JLabel getConsolelabel() {

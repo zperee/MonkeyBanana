@@ -22,14 +22,14 @@ public class GameWindow extends JFrame {
 
 	public GameWindow(User u, int playerNr) {
 		this.setU(u);
-        this.setEnt(new Gameboard(playerNr, u));
+        this.setEnt(new Gameboard(playerNr, u, this));
        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(15 * 48 + 7,  18 * 48 - 19);
         this.setLocationRelativeTo(null);
         this.setTitle("MonkeyBanana Game");
         this.setResizable(false);
-        u.setUsername("g");
+
         if (u.getUsername().equals("SYSTEM")) {
         	this.setVisible(false);
         } else {

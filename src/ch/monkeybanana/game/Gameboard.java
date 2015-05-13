@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
-import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
@@ -49,6 +50,8 @@ public class Gameboard extends JPanel implements ActionListener {
 	private boolean isModified;
 	private boolean isRestarted;
 	private User user;
+	
+	private JFrame frame;
 
 	/**
 	 * DESC
@@ -56,11 +59,14 @@ public class Gameboard extends JPanel implements ActionListener {
 	 * @author Dominic Pfister
 	 * @param spielerNr {@link int}
 	 */
-	public Gameboard(int spielerNr, User u) {
+	public Gameboard(int spielerNr, User u, JFrame frame) {
 		this.setPlayerNr(spielerNr);
 		setFocusable(true);
 		setDoubleBuffered(true);
-		user = u;
+		
+		this.setUser(u);
+		this.setFrame(frame);
+		
 		isModified = false;
 		refreshTimer = System.currentTimeMillis();
 
@@ -96,14 +102,9 @@ public class Gameboard extends JPanel implements ActionListener {
 	private void increaseBanana(long time) {
 		int i = 0;
 		if (refreshTimer + time <= System.currentTimeMillis()) {
-			while (this.getPlayerArray().get(this.getPlayerNr())
-					.getTotalBanana() < this.getPlayerMaxBananas()
+			while (this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() < this.getPlayerMaxBananas()
 					&& i < 5) {
-				this.getPlayerArray()
-						.get(this.getPlayerNr())
-						.setTotalBanana(
-								this.getPlayerArray().get(this.getPlayerNr())
-										.getTotalBanana() + 1);
+				this.getPlayerArray().get(this.getPlayerNr()).setTotalBanana(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() + 1);
 				i++;
 				this.setRefreshTimer(System.currentTimeMillis());
 			}
@@ -456,7 +457,7 @@ public class Gameboard extends JPanel implements ActionListener {
 		generateBanana();
 		increaseBanana(10000);
 		checkBananaHit();
-		if (!user.getUsername().equals("SYSTEM")) {
+		if (!this.getUser().getUsername().equals("SYSTEM")) {
 			restartGame();
 		}
 	}
@@ -617,6 +618,9 @@ public class Gameboard extends JPanel implements ActionListener {
 						try {
 							Client.getInstance().getConnect().score(playerNr);
 							Client.getInstance().getConnect().setHit(true);
+							if (!this.getUser().getUsername().equals("SYSTEM")) {
+								Client.getInstance().getConnect().setRundenzahl(Client.getInstance().getConnect().getRundenzahl() + 1);
+							}
 						} catch (RemoteException e) {
 							e.printStackTrace();
 						}
@@ -630,14 +634,14 @@ public class Gameboard extends JPanel implements ActionListener {
 
 	private void restartGame() {
 		try {
-			if (Client.getInstance().getConnect().isHit()) {
+			if (Client.getInstance().getConnect().isHit()
+				&& Client.getInstance().getConnect().getRundenzahl() <= 2) {
 				this.getBananenArray().clear();
-				// this.getPlayerArray().clear();
-				// this.setP1(null);
-				// this.setP2(null);
 				
 				System.out.println(Client.getInstance().getConnect().getScore(0) + " : "
 				+ Client.getInstance().getConnect().getScore(1));
+				
+				System.out.println(Client.getInstance().getConnect().getRundenzahl());
 				
 				try {
 					Thread.sleep(2000);
@@ -656,6 +660,11 @@ public class Gameboard extends JPanel implements ActionListener {
 				
 				this.setRun(true);
 				Client.getInstance().getConnect().setHit(false);
+			} else if (Client.getInstance().getConnect().getRundenzahl() > 1) {
+				//TODO score window anzeigen
+				System.out.println("Game finished");
+				this.getFrame().dispose();
+				timer.stop();
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -756,5 +765,21 @@ public class Gameboard extends JPanel implements ActionListener {
 
 	public void setRun(boolean run) {
 		this.run = run;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }
