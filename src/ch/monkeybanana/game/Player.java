@@ -6,19 +6,16 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 /**
- * Klasse um den Spieler zu erstellen (Bild)
  * 
  * @author Dominic Pfister, Elia Perenzin Player.java Copyright
- *         Berufsbildungscenter MonkeyBanana 2015
+ * Berufsbildungscenter MonkeyBanana 2015
  */
 
 public class Player extends Obstacle {
 
 	private static final long serialVersionUID = -2981485709358783707L;
 	public static final int SPEED = 3;
-	private int vX, vY;
-	private int totalBanana;
-	private int coolDown;
+	private int vX, vY, totalBanana, coolDown;
 
 	/**
 	 * Konstruktor der Klasse Player. Ein neuer Spieler wird an

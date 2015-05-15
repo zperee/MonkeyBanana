@@ -13,10 +13,9 @@ import ch.monkeybanana.rmi.Client;
 import ch.monkeybanana.view.RegistrierenView;
 
 /**
- * Hier sind alle Actionlistener fuer das Login
- * 
+ * In dieser Klasse befindenb sich alle Actionlistener fuer das Login
  * @author Dominic Pfister, Elia Perenzin LoginListener.java Copyright
- *         Berufsbildungscenter MonkeyBanana 2015
+ * Berufsbildungscenter MonkeyBanana 2015
  */
 public class LoginListener implements ActionListener, KeyListener{
 
@@ -28,10 +27,8 @@ public class LoginListener implements ActionListener, KeyListener{
 	/**
 	 * Konstruktor fuer LoginListner setzt den Username und das Passowrt in
 	 * Instanzvariablen + kann noch der Button hinzugefuegt werden
-	 * 
 	 * @author Elia Perenzin
-	 * @param username
-	 *            , password, button
+	 * @param usernam, password, button
 	 */
 	public LoginListener(JTextField username, JPasswordField password,
 			String button) {
@@ -48,8 +45,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	/**
 	 * ActionListener fuer den Knopf login und registrieren Erste if Schleife
 	 * fuehrt das Login durch die zweite Schleife erstellt ein neues
-	 * registrieren Fenster
-	 * 
+	 * registrieren Fenster 
 	 * @author Elia Perenzin
 	 */
 	@SuppressWarnings("deprecation")
@@ -64,9 +60,7 @@ public class LoginListener implements ActionListener, KeyListener{
 			loginUser.setUsername(user);
 
 			Client.getInstance().login(loginUser);
-		}
-
-		else if (button.equals("registrieren")) {
+		} else if (button.equals("registrieren")) {
 			new RegistrierenView();
 		}
 	}
@@ -94,7 +88,7 @@ public class LoginListener implements ActionListener, KeyListener{
 		
 	}
 
-	// Getter
+	/* **GETTER und SETTER** */
 	public JTextField getUser() {
 		return user;
 	}
@@ -106,8 +100,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	public String getButton() {
 		return button;
 	}
-
-	// Setter
+	
 	public void setButton(String button) {
 		this.button = button;
 	}

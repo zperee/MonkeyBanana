@@ -11,13 +11,17 @@ import javax.swing.JTextField;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
+/**
+ * In dieser Klasse befindenb sich sind alle Actionlistener fuer die Registration
+ * @author Dominic Pfister, Elia Perenzin
+ * RegistrierenListener.java
+ * Copyright Berufsbildungscenter MonkeyBanana 2015
+ */
 public class RegistrierenListener implements ActionListener, KeyListener{
 
 	//Instanzvariablen
-	private JTextField user = null;
-	private JPasswordField passwort1 = null;
-	private JPasswordField passwort2 = null;
-	private JTextField email = null;
+	private JTextField user = null, email = null;
+	private JPasswordField passwort1 = null, passwort2 = null;
 	
 	/**
 	 * Konstruktor fuer LoginListner setzt alle Parameter in Instanzvariablen
@@ -79,7 +83,7 @@ public class RegistrierenListener implements ActionListener, KeyListener{
 		
 	}
 
-	//Getter
+	/* **GETTER und SETTER** */
 	public JTextField getUser() {
 		return user;
 	}
@@ -96,7 +100,6 @@ public class RegistrierenListener implements ActionListener, KeyListener{
 		return email;
 	}
 
-	//Setter
 	public void setUser(JTextField user) {
 		this.user = user;
 	}

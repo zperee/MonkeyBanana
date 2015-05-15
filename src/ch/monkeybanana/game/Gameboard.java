@@ -31,10 +31,10 @@ import ch.monkeybanana.view.ScoreView;
 
 public class Gameboard extends JPanel implements ActionListener {
 
+	//Instanzvariablen
 	private static final long serialVersionUID = -8488779096979941350L;
 	private Timer timer;
-	private Player p1;
-	private Player p2;
+	private Player p1, p2;
 	private int playerNr;
 	private boolean run = true;
 
@@ -42,20 +42,16 @@ public class Gameboard extends JPanel implements ActionListener {
 	List<Banana> bananenArray = new ArrayList<Banana>();
 	List<Player> playerArray = new ArrayList<Player>();
 
-	private long coolDown;
-	private long refreshTimer;
-
+	private long coolDown, refreshTimer;
 	private int playerMaxBananas;
-
-	private boolean isModified;
-	private boolean isRestarted;
+	private boolean isModified, isRestarted;
 	private User user;
 	
 	private JFrame frame;
 
 	/**
 	 * DESC
-	 * 
+	 *
 	 * @author Dominic Pfister
 	 * @param spielerNr {@link int}
 	 * @throws RemoteException 
@@ -704,6 +700,7 @@ public class Gameboard extends JPanel implements ActionListener {
 		}
 	}
 
+	/* **GETTER und SETTER** */
 	public Player getP1() {
 		return p1;
 	}

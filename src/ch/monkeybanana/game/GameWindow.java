@@ -16,6 +16,8 @@ import ch.monkeybanana.rmi.Client;
  */
 
 public class GameWindow extends JFrame {
+	
+	//Instanzvariablen
 	private static final long serialVersionUID = -1599709363381584400L;
 	private User u;
 	private Gameboard ent;
@@ -54,11 +56,8 @@ public class GameWindow extends JFrame {
 	        }
 	    });
     }
-	
-//	public static void main(String[] args) {
-//		new GameClient();
-//	}
-	
+
+	/* **GETTER und SETTER** */
 	public User getU() {
 		return u;
 	}

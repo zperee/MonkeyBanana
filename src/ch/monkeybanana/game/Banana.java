@@ -6,11 +6,18 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
+/**
+ * 
+ * @author Dominic Pfister, Elia Perenzin Banana.java Copyright 
+ * Berufsbildungscenter MonkeyBanana 2015
+ */
 public class Banana extends Obstacle implements Serializable {
 
+	//Instanzvariablen
 	private static final long serialVersionUID = 8043746736772410176L;
 	private char direction;
 	private int owner;
+	
 	/**
 	 * Erstellt ein neues Banananen Objekt mit den Koordinaten
 	 * x, y und einem Typ. Die Bildgrösse wird durch scale 
@@ -35,10 +42,8 @@ public class Banana extends Obstacle implements Serializable {
 	    super.setImage(new ImageIcon(scaledImage));  // transform it back
 	}
 
-	
 	/**
 	 * Gibt die Hitbox der Banane zurueck
-	 * 
 	 * @author Dominic Pfister
 	 */
 	public Rectangle bananaBounds() {
@@ -53,13 +58,11 @@ public class Banana extends Obstacle implements Serializable {
 	public void setDirection(char direction) {
 		this.direction = direction;
 	}
-
-
+	
 	public int getOwner() {
 		return owner;
 	}
-
-
+	
 	public void setOwner(int owner) {
 		this.owner = owner;
 	}

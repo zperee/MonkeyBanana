@@ -4,20 +4,22 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+/**
+ * Dies ist die Klasse des Gameservers.
+ * @author Dominic Pfister, Elia Perenzin GameServer.java Copyright
+ * Berufsbildungscenter MonkeyBanana 2015
+ */
 public class GameServer {
 
 	public static void main(String[] args) {
 		try {
-
-			Registry reg = LocateRegistry.createRegistry(1258); //port
+			Registry reg = LocateRegistry.createRegistry(1258); // Port auf dem der Server lauft
 			Validator aValidator = new ValidatorImpl();
 
 			reg.rebind("validator", aValidator);
 
-		}
-		catch (RemoteException e) {
+		} catch (RemoteException e) {
 			System.err.println("Server konnte nicht gestartert werden");
 		}
-
 	}
 }

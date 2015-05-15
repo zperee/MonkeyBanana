@@ -18,13 +18,14 @@ import ch.monkeybanana.game.GameWindow;
 import ch.monkeybanana.model.User;
 
 /**
- * Implementierte Methoden des Interfaces Validator fuer Verbindung zu Server
- * 
+ * Implementierte Methoden des Interfaces Validator fuer die 
+ * Kommunikation ziwschen den Clients mit dem Server
  * @author Dominic Pfister, Elia Perenzin ValidatorImpl.java Copyright
- *         Berufsbildungscenter MonkeyBanana 2015
+ * Berufsbildungscenter MonkeyBanana 2015
  */
 public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
+	//Insanzvaroablen
 	private static final long serialVersionUID = -6227411205842232875L;
 	private JLabel consolelabel;
 	private JPanel consolepanelRight;
@@ -39,11 +40,9 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private int rundenZahl = 0;
 	private int slots = 0;
 	
-	private boolean finishedGame;
-	private boolean isHit = false;
+	private boolean finishedGame, isHit;
 	
-	private String playerName1;
-	private String playerName2;
+	private String playerName1, playerName2;
 
 	/**
 	 * Konstrukor fuer ValidatorImpl

@@ -5,10 +5,15 @@ import java.awt.event.KeyListener;
 
 import ch.monkeybanana.game.Player;
 
+/**
+ * Alle KeyListener fuer das Game
+ * @author Dominic Pfister, Elia Perenzin
+ * GameListener.java
+ * Copyright Berufsbildungscenter MonkeyBanana 2015
+ */
 public class GameListener implements KeyListener{
 
-	private static boolean up, down, left, right, isBananaPeel, isBananaThrown;
-	private static boolean allowBanana = true;
+	private static boolean up, down, left, right, isBananaPeel, isBananaThrown, allowBanana = true;
 	private Player player;
 	/* **LISTENER** */
 	public GameListener(Player p){
@@ -89,7 +94,7 @@ public class GameListener implements KeyListener{
 		}
 	}
 	
-
+	/* **GETTER und SETTER** */
 	public static boolean isUp() {
 		return up;
 	}

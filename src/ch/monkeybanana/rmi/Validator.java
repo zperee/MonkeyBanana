@@ -7,6 +7,13 @@ import java.util.List;
 import ch.monkeybanana.game.Banana;
 import ch.monkeybanana.model.User;
 
+/**
+ * Interface fuer die Kommunikation zwischen den 
+ * Clients und dem Server. Enthaelt alle abstrakten Methoden
+ * die dazu bennoetigt werden.
+ * @author Dominic Pfister, Elia Perenzin Validator.java Copyright 
+ * Berufsbildungscenter MonkeyBanana 2015
+ */
 public interface Validator extends Remote {
 
 	/**

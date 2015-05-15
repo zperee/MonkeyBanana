@@ -6,18 +6,18 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
+/**
+ * 
+ * @author Dominic Pfister, Elia Perenzin Obstacle.java Copyright 
+ * Berufsbildungscenter MonkeyBanana 2015
+ */
 public class Obstacle implements Serializable{
 	
-		/**
-	 * 
-	 */
+	//Instanzvariablen
 	private static final long serialVersionUID = -1575282248261096070L;
 
 		private ImageIcon image;
-		protected int x = 0;
-		protected int y = 0;
-		protected int scale;
-		private int type;
+		protected int x = 0, y = 0, scale, type;
 
 		/**
 		 * Erstellt ein neues Obstacle Objekt mit den Koordinaten
@@ -282,7 +282,6 @@ public class Obstacle implements Serializable{
 			return new Rectangle(this.getX(), this.getY(), image.getImage().getWidth(null), image.getImage().getHeight(null));
 		}
 		
-		
 		/* **GETTER SETTER** */
 		public int getX() {
 			return x;
@@ -323,5 +322,4 @@ public class Obstacle implements Serializable{
 		public void setScale(int scale) {
 			this.scale = scale;
 		}
-
 }

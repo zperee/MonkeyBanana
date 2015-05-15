@@ -19,37 +19,58 @@ import ch.monkeybanana.util.CryptUtils;
 import ch.monkeybanana.view.HomeView;
 import ch.monkeybanana.view.LoginView;
 
+/**
+ * 
+ * @author Dominic Pfister, Elia Perenzin Client.java Copyright
+ * Berufsbildungscenter MonkeyBanana 2015
+ */
 public class Client {
-
-	private static Client instance = new Client();
-
-	private static Client client;
-	private String ip;
-	private String port;
-	private Validator connect;
 	
+	//Instanzvariablen
+	private static Client instance = new Client();
+	private static Client client;
+	private String ip, port;
+	private Validator connect;
 	private static JFrame frame = new JFrame();
+
+	/**
+	 * 
+	 * @return
+	 */
 	public static Client getInstance() {
 		if (instance == null) {
 			instance = new Client();
 		}
 		return Client.instance;
 	}
-	
+
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		start();
 	}
-	
-	public static void start() { 
+
+	/**
+	 * 
+	 */
+	public static void start() {
 		setFrame(new LoginView());
 	}
-	
+
+	/**
+	 * 
+	 */
 	private Client() {
 
 		String filename = "Serverdata.csv"; // File mit allen Informationen
 		File file = new File(filename);
-		String [] server = new String[2];
 		
+		//Array indem alle Informationen gespeichert werden.
+		String[] server = new String[2];
+
+		//Liest alle Informationen aus dem CSV File und speichert sie in eine Liste
 		try {
 			Scanner inputStream = new Scanner(file);
 			int i = 0;
@@ -59,17 +80,15 @@ public class Client {
 				i++;
 			}
 			inputStream.close();
-		}
-		catch(FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			System.out.println("File nicht gefunden");
 		}
-		
 
 		try {
 			this.setIp(server[0]);
 			this.setPort(server[1]);
-			Remote remote = Naming.lookup("rmi://" + server[0] + ":"
-					+ server[1] + "/validator");
+			
+			Remote remote = Naming.lookup("rmi://" + server[0] + ":" + server[1] + "/validator");
 			Validator validator = (Validator) remote;
 			this.setConnect(validator);
 
@@ -81,60 +100,48 @@ public class Client {
 		} catch (RemoteException re) {
 			System.err.println(re.getMessage());
 		}
-
 	}
 
 	/**
 	 * Hier wird ueberprueft ob die eingaben des Users gueltig sind und wenn
-	 * dies zutrifft wird er in die DB eingetragen
+	 * dies zutrifft wird er in die DB eingetragen. Sequenzdiagramm ist in
+	 * der Dokumentation zu MonkeyBanana beigelegt
 	 * @author Elia Perenzin
-	 * @param newUser
-	 *            {@link User}
+	 * @param newUser {@link User}
 	 */
 	public void registrieren(User newUser) {
 		List<User> dbUsers = null;
 		boolean userAlreadyExists = true;
-		final Pattern pattern = Pattern
-				.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+		final Pattern pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 
 		if (newUser.getPasswort().isEmpty()) {
 			JOptionPane.showMessageDialog(null,
-					"Passwort muss ausgef\u00fcllt sein",
-                    "Warnung!",
-                    JOptionPane.ERROR_MESSAGE);
-		}
-		else {
+					"Passwort muss ausgef\u00fcllt sein", "Warnung!",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
 			newUser.setPasswort(CryptUtils.base64encode(newUser.getPasswort()));
 			newUser.setPasswort2(CryptUtils.base64encode(newUser.getPasswort2()));
 
 			if (newUser.getPasswort().equals(newUser.getPasswort2())) {
 				if (newUser.getUsername().isEmpty()) {
 					JOptionPane.showMessageDialog(null,
-                            "Username muss ausgef\u00fcllt sein!",
-                            "Warnung!",
-                            JOptionPane.ERROR_MESSAGE);
-				}
-				else {
+							"Username muss ausgef\u00fcllt sein!", "Warnung!",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
 					if (newUser.getEmail().isEmpty()) {
 						JOptionPane.showMessageDialog(null,
-	                            "Email muss ausgef\u00fcllt sein!",
-	                            "Warnung!",
-	                            JOptionPane.ERROR_MESSAGE);
-					}
-					else {
+								"Email muss ausgef\u00fcllt sein!", "Warnung!",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
 						if (!pattern.matcher(newUser.getEmail()).matches()) {
 							JOptionPane.showMessageDialog(null,
-		                            "Email ist ung\u00fcltig!",
-		                            "Warnung!",
-		                            JOptionPane.ERROR_MESSAGE);
-						}
-						else {
+									"Email ist ung\u00fcltig!", "Warnung!",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
 
 							try {
-								dbUsers = Client.getInstance().getConnect()
-										.getAllUser();
-							}
-							catch (RemoteException e1) {
+								dbUsers = Client.getInstance().getConnect().getAllUser();
+							} catch (RemoteException e1) {
 								e1.printStackTrace();
 							}
 
@@ -143,43 +150,40 @@ public class Client {
 										dbUser.getUsername())) {
 									JOptionPane.showMessageDialog(null,
 											"Username ist bereits vergeben",
-					                        "Warnung!",
-					                        JOptionPane.ERROR_MESSAGE);
+											"Warnung!",
+											JOptionPane.ERROR_MESSAGE);
 									userAlreadyExists = true;
 									break;
-								}
-								else {
+								} else {
 									userAlreadyExists = false;
 								}
 							}
 							if (userAlreadyExists == false) {
 								try {
-									Client.getInstance().getConnect()
-											.registration(newUser);
-								}
-								catch (RemoteException e) {
+									Client.getInstance().getConnect().registration(newUser);
+								} catch (RemoteException e) {
 									e.printStackTrace();
 								}
 								JOptionPane.showMessageDialog(null,
-				                        "Sie wurden erfolgreich registriert",
-				                        "Registration!",
-				                        JOptionPane.INFORMATION_MESSAGE);
+										"Sie wurden erfolgreich registriert",
+										"Registration!",
+										JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				JOptionPane.showMessageDialog(null,
-                        "Passw\u00f6rter stimmen nicht \u00fcberein",
-                        "Warnung!",
-                        JOptionPane.ERROR_MESSAGE);
+						"Passw\u00f6rter stimmen nicht \u00fcberein",
+						"Warnung!", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
 
 	/**
-	 * Hier wird ueberprueft ob die die Kombination aus Username und Passwort uebereinstimmen
+	 * Hier wird ueberprueft ob die die Kombination aus Username und Passwort
+	 * uebereinstimmen. Sequenzdiagramm ist in der Dokumentation zu MonkeyBanana 
+	 * beigelegt
 	 * @param user {@link User}
 	 * @return login Boolean
 	 */
@@ -190,36 +194,30 @@ public class Client {
 
 		if (user.getUsername().isEmpty()) {
 			JOptionPane.showMessageDialog(null,
-                    "Username muss ausgef\u00fcllt sein",
-                    "Warnung!",
-                    JOptionPane.ERROR_MESSAGE);
-		}
-		else {
+					"Username muss ausgef\u00fcllt sein", "Warnung!",
+					JOptionPane.ERROR_MESSAGE);
+		} else {
 			if (user.getPasswort().isEmpty()) {
 				JOptionPane.showMessageDialog(null,
-						"Passwort muss ausgef\u00fcllt sein",
-                        "Warnung!",
-                        JOptionPane.ERROR_MESSAGE);
-			}
-			else {
+						"Passwort muss ausgef\u00fcllt sein", "Warnung!",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
 				user.setPasswort(CryptUtils.base64encode(user.getPasswort()));
 
 				try {
 					dbUsers = Client.getInstance().getConnect().getAllUser();
-				}
-				catch (RemoteException e) {
+				} catch (RemoteException e) {
 					e.printStackTrace();
 				}
 
 				for (User dbUser : dbUsers) {
 					if (user.getUsername().equals(dbUser.getUsername())) {
 						if (user.getPasswort().equals(dbUser.getPasswort())) {
-							
+
 							try {
 								user2.setUsername(dbUser.getUsername());
 								Client.getInstance().getConnect().login(user2);
-							}
-							catch (RemoteException e) {
+							} catch (RemoteException e) {
 								e.printStackTrace();
 							}
 							login = true;
@@ -231,14 +229,13 @@ public class Client {
 				if (login == false) {
 					JOptionPane.showMessageDialog(null,
 							"Passwort und Username stimmen nicht \u00fcberein",
-	                        "Warnung!",
-	                        JOptionPane.ERROR_MESSAGE); 
+							"Warnung!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
 	}
 
-	// Getter
+	/* **GETTER und SETTER** */
 	public static Client getClient() {
 		return client;
 	}
@@ -255,7 +252,6 @@ public class Client {
 		return connect;
 	}
 
-	// Setter
 	public static void setClient(Client client) {
 		Client.client = client;
 	}
