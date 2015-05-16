@@ -13,7 +13,7 @@ public class GameServer {
 
 	public static void main(String[] args) {
 		try {
-			Registry reg = LocateRegistry.createRegistry(1258); // Port auf dem der Server lauft
+			Registry reg = LocateRegistry.createRegistry(1258); // Port auf dem der Server laeuft
 			Validator aValidator = new ValidatorImpl();
 
 			reg.rebind("validator", aValidator);

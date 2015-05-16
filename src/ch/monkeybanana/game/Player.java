@@ -6,9 +6,8 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 /**
- * 
- * @author Dominic Pfister, Elia Perenzin Player.java Copyright
- * Berufsbildungscenter MonkeyBanana 2015
+ * Klasse des Spielers mit einem ImageIcon.
+ * @author Dominic Pfister, Elia Perenzin
  */
 
 public class Player extends Obstacle {
@@ -20,7 +19,6 @@ public class Player extends Obstacle {
 	/**
 	 * Konstruktor der Klasse Player. Ein neuer Spieler wird an
 	 * der x und y Positionen erstellt.
-	 * 
 	 * @author Dominic Pfister
 	 * @param x {@link int}
 	 * @param y {@link int}
@@ -56,8 +54,8 @@ public class Player extends Obstacle {
 	}
 	
 	/**
-	 * Gibt die Hitbox des Spielers zurück
-	 * 
+	 * Gibt die Hitbox des Spielers zurueck. Wird von der
+	 * Super Klasse Obstacle vererbt.
 	 * @author Dominic Pfister
 	 */
 	public Rectangle playerBounds() {

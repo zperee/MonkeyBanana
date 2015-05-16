@@ -8,37 +8,35 @@ import javax.swing.ImageIcon;
 
 /**
  * 
- * @author Dominic Pfister, Elia Perenzin Obstacle.java Copyright 
- * Berufsbildungscenter MonkeyBanana 2015
+ * @author Dominic Pfister, Elia Perenzin
  */
 public class Obstacle implements Serializable{
 	
 	//Instanzvariablen
 	private static final long serialVersionUID = -1575282248261096070L;
+	private ImageIcon image;
+	protected int x = 0, y = 0, scale, type;
 
-		private ImageIcon image;
-		protected int x = 0, y = 0, scale, type;
-
-		/**
-		 * Erstellt ein neues Obstacle Objekt mit den Koordinaten
-		 * x, y und einem Typ.
-		 * 
-		 * @author Dominic Pfister
-		 * @param x {@link int}
-		 * @param y {@link int}
-		 * @param type {@link int}
-		 */
-		public Obstacle(int x, int y, int type, int scale) {
-			this.setType(type);
-			this.setX(x);
-			this.setY(y);
-			this.setScale(scale);
+	/**
+	 * Erstellt ein neues Obstacle Objekt mit den Koordinaten
+	 * x, y und einem Typ.
+	 * @author Dominic Pfister
+	 * @param x {@link int}
+	 * @param y {@link int}
+	 * @param type {@link int}
+	 * @param scale {@link int}
+	 */
+	public Obstacle(int x, int y, int type, int scale) {
+		this.setType(type);
+		this.setX(x);
+		this.setY(y);
+		this.setScale(scale);
 			
-			switch (type) {
+		switch (type) {
 			case 0:
 				image =  new ImageIcon("images/dirt.png");
 				break;
-				
+					
 			/* **BODEN** */
 			case 1:
 				image =  new ImageIcon("images/ground/ground_grass.png");
@@ -79,7 +77,7 @@ public class Obstacle implements Serializable{
 			case 13:
 				image =  new ImageIcon("images/ground/normal/ground8.png");
 				break;
-			
+				
 			/* **BORDER** */
 			case 14:
 				image =  new ImageIcon("images/borderPieces/corner_bottom_left.png");
@@ -92,8 +90,7 @@ public class Obstacle implements Serializable{
 				break;
 			case 17:
 				image =  new ImageIcon("images/borderPieces/corner_top_right.png");
-				break;
-				
+				break;		
 			case 18:
 				image =  new ImageIcon("images/borderPieces/bottom/bush_bottom1.png");
 				break;
@@ -103,7 +100,6 @@ public class Obstacle implements Serializable{
 			case 20:
 				image =  new ImageIcon("images/borderPieces/bottom/bush_bottom3.png");
 				break;
-				
 			case 21:
 				image =  new ImageIcon("images/borderPieces/left/bush_left1.png");
 				break;
@@ -112,8 +108,7 @@ public class Obstacle implements Serializable{
 				break;
 			case 23:
 				image =  new ImageIcon("images/borderPieces/left/bush_left3.png");
-				break;
-				
+				break;				
 			case 24:
 				image =  new ImageIcon("images/borderPieces/right/bush_right1.png");
 				break;
@@ -122,8 +117,7 @@ public class Obstacle implements Serializable{
 				break;
 			case 26:
 				image =  new ImageIcon("images/borderPieces/right/bush_right3.png");
-				break;
-				
+				break;				
 			case 27:
 				image =  new ImageIcon("images/borderPieces/top/bush_top1.png");
 				break;
@@ -133,7 +127,7 @@ public class Obstacle implements Serializable{
 			case 29:
 				image =  new ImageIcon("images/borderPieces/top/bush_top3.png");
 				break;
-				
+					
 			/* **HINDERNISSE** */
 			case 30:
 				image =  new ImageIcon("images/obstacle/bush/bottom1.png");
@@ -200,7 +194,7 @@ public class Obstacle implements Serializable{
 			case 50:
 				image =  new ImageIcon("images/obstacle/singleTree/tree3.png");
 				break;
-				
+					
 			/* **PIPES** */
 			case 51:
 				image =  new ImageIcon("images/Pipe_Up.png");
@@ -214,7 +208,7 @@ public class Obstacle implements Serializable{
 			case 54:
 				image =  new ImageIcon("images/Pipe_left.png");
 				break;
-				
+					
 			/* **BRICK** */
 			case 55:
 				image =  new ImageIcon("images/brick.png");
@@ -266,16 +260,15 @@ public class Obstacle implements Serializable{
 				
 			default:
 				image =  new ImageIcon("images/dirt.png");
-			}
+		}
 			Image scaledImage = image.getImage(); // Wandelt Bild um
-		    scaledImage = scaledImage.getScaledInstance(scale, scale,  java.awt.Image.SCALE_FAST); //Bild wird skaliert 
-		    image = new ImageIcon(scaledImage);  // Wandelt Bild zurück in ImageIcon um
+			scaledImage = scaledImage.getScaledInstance(scale, scale,  java.awt.Image.SCALE_FAST); //Bild wird skaliert 
+			image = new ImageIcon(scaledImage);  // Wandelt Bild zurück in ImageIcon um
 		}
 		
 		/**
 		 * Gibt die Hitbox des Obstacle Objektes
-		 * zurück
-		 * 
+		 * zurueck
 		 * @author Dominic Pfister
 		 */
 		public Rectangle obstBounds() {

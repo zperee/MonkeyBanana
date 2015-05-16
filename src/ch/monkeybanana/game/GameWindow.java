@@ -9,7 +9,11 @@ import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
 /**
- * Hauptklasse fÃ¼r den Spiel Client
+ * Hauptklasse fuer den Spiel Client. Erzeugt das JFrame und
+ * ein neues Spielbrett
+ * 
+ * @param u {@link User}
+ * @param playerNr {@link int}
  * @author Dominic Pfister, Elia Perenzin
  * GameClient.java
  * Copyright Berufsbildungscenter MonkeyBanana 2015
@@ -24,6 +28,14 @@ public class GameWindow extends JFrame {
 
 	public GameWindow(User u, int playerNr) {
 		this.setU(u);
+
+		/* Nur für Test ohne DB */
+		try {
+			if (u.getUsername().equals("SYSTEM")) {
+			}
+		} catch (NullPointerException e) {
+			u.setUsername("Gast");
+		}
 		
         try {
 			this.setEnt(new Gameboard(playerNr, u, this));
@@ -45,6 +57,7 @@ public class GameWindow extends JFrame {
         
         this.setEnabled(true);
         this.add(this.getEnt());
+        
         this.addWindowListener(new WindowAdapter() {
 	        @Override
 	        public void windowClosing(WindowEvent e) {

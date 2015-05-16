@@ -7,7 +7,7 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 /**
- * 
+ * Klasse um eine Banana mit einem ImageIcon zu erstellen.
  * @author Dominic Pfister, Elia Perenzin Banana.java Copyright 
  * Berufsbildungscenter MonkeyBanana 2015
  */
@@ -20,7 +20,7 @@ public class Banana extends Obstacle implements Serializable {
 	
 	/**
 	 * Erstellt ein neues Banananen Objekt mit den Koordinaten
-	 * x, y und einem Typ. Die Bildgrösse wird durch scale 
+	 * x, y und einem Typ. Die Bildgroesse wird durch scale 
 	 * gesetzt und dann halbiert.
 	 * 
 	 * @author Dominic Pfister
@@ -43,7 +43,8 @@ public class Banana extends Obstacle implements Serializable {
 	}
 
 	/**
-	 * Gibt die Hitbox der Banane zurueck
+	 * Gibt die Hitbox der Banane zurueck. Wird durch die
+	 * Super Klasse Obstacle vererbt.
 	 * @author Dominic Pfister
 	 */
 	public Rectangle bananaBounds() {

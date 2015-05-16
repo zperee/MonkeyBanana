@@ -23,10 +23,10 @@ import ch.monkeybanana.rmi.Client;
 import ch.monkeybanana.view.ScoreView;
 
 /**
- * DESC
- * 
- * @author Dominic Pfister, Elia Perenzin Entity.java Copyright
- *         Berufsbildungscenter MonkeyBanana 2015
+ * Klasse f�r den Inhalt des JFrames. Sendet Koordinaten
+ * der Spieler und Bananen an den Server und ist f�r
+ * die ganze Spiellogik zust�ndig.
+ * @author Dominic Pfister, Elia Perenzin
  */
 
 public class Gameboard extends JPanel implements ActionListener {
@@ -50,10 +50,11 @@ public class Gameboard extends JPanel implements ActionListener {
 	private JFrame frame;
 
 	/**
-	 * DESC
-	 *
-	 * @author Dominic Pfister
+	 * Erstellt ein neues Spielbrett.
+	 * @author Dominic Pfister, Elia Perenzin
 	 * @param spielerNr {@link int}
+	 * @param u {@link User}
+	 * @param frame {@link JFrame}
 	 * @throws RemoteException 
 	 */
 	public Gameboard(int spielerNr, User u, JFrame frame) throws RemoteException {
@@ -75,7 +76,7 @@ public class Gameboard extends JPanel implements ActionListener {
 
 		playerMaxBananas = 15;
 
-		/* Wartet für 100ms bis das Spieler Image neu skaliert wurde */
+		/* Wartet fuer 100ms bis das Spieler Image neu skaliert wurde */
 		try {
 			Thread.sleep(100);
 		}
@@ -93,8 +94,7 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Erhöht die Anzahl der Bananen des Spielers alle (time).
-	 * 
+	 * Erhoeht die Anzahl der Bananen des Spielers.
 	 * @author Dominic Pfister, Elia Perenzin
 	 * @param time {@link long}
 	 */
@@ -111,8 +111,8 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Erstellt neue Bananen wenn eine der beiden Tasten gedrückt wurde
-	 * 
+	 * Erstellt eine neue Banane und sendet diese
+	 * an den Server.
 	 * @author Dominic Pfister
 	 */
 	private void generateBanana() {
@@ -133,35 +133,22 @@ public class Gameboard extends JPanel implements ActionListener {
 		if (this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() > 0
 				&& coolDown <= System.currentTimeMillis()) {
 
-			if (GameListener.isBananaPeel()) { // key == e
+			if (GameListener.isBananaPeel()) {
 				type = 1;
-				xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
-						+ 1
-						+ this.getPlayerArray().get(this.getPlayerNr())
-								.getImage().getImage().getWidth(null) / 4;
+				xPos = this.getPlayerArray().get(this.getPlayerNr()).getX() 
+					   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 				yPos = this.getPlayerArray().get(this.getPlayerNr()).getY()
-						+ this.getPlayerArray().get(this.getPlayerNr())
-								.getImage().getImage().getWidth(null)
-						- this.getPlayerArray().get(this.getPlayerNr())
-								.getImage().getImage().getWidth(null) / 4;
+					   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+					   - this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 				owner = this.getPlayerNr();
 
-				Banana banana = new Banana(xPos, yPos, type, 'k', 48 / 2, owner); // k
-																					// steht
-																					// für
-																					// keine
-																					// direction
+				Banana banana = new Banana(xPos, yPos, type, 'k', 48 / 2, owner);
 				bananenArray.add(banana);
 
 				GameListener.setBananaPeel(false);
-				coolDown = (System.currentTimeMillis() + this.getPlayerArray()
-						.get(this.getPlayerNr()).getCoolDown());
-				this.getPlayerArray()
-						.get(this.getPlayerNr())
-						.setTotalBanana(
-								this.getPlayerArray().get(this.getPlayerNr())
-										.getTotalBanana() - 1);
 				GameListener.setAllowBanana(false);
+				coolDown = (System.currentTimeMillis() + this.getPlayerArray().get(this.getPlayerNr()).getCoolDown());
+				this.getPlayerArray().get(this.getPlayerNr()).setTotalBanana(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() - 1);
 
 				try {
 					Client.getInstance().getConnect().tellBanana(banana);
@@ -171,72 +158,53 @@ public class Gameboard extends JPanel implements ActionListener {
 				}
 
 			}
-			else if (GameListener.isBananaThrown()) { // key == r
+			else if (GameListener.isBananaThrown()) {
 				type = 2;
 				owner = this.getPlayerNr();
 
 				if (GameListener.isUp()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'u';
 				}
 				else if (GameListener.isDown()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null)
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+					       + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'd';
 				}
 				else if (GameListener.isRight()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null)
-							- this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+						   - this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'r';
 				}
 				else if (GameListener.isLeft()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					yPos = this.getPlayerArray().get(this.getPlayerNr()).getY()
-							+ this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null)
-							- this.getPlayerArray().get(this.getPlayerNr())
-									.getImage().getImage().getWidth(null) / 4;
+						   + this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null)
+						   - this.getPlayerArray().get(this.getPlayerNr()).getImage().getImage().getWidth(null) / 4;
 					dir = 'l';
 				}
 
 				if (xPos != 0 && xPos != 0) { // Achtet darauf, dass am Anfang
-												// keine
-												// Bananen geworfen werden
+										      // keine sBananen geworfen werden
 					owner = this.getPlayerNr();
-					Banana banana = new Banana(xPos, yPos, type, dir, 48 / 2,
-							owner);
+					Banana banana = new Banana(xPos, yPos, type, dir, 48 / 2,owner);
 					bananenArray.add(banana);
-					GameListener.setBananaThrown(false);
-					coolDown = (System.currentTimeMillis() + this
-							.getPlayerArray().get(this.getPlayerNr())
-							.getCoolDown());
-
-					this.getPlayerArray()
-							.get(this.getPlayerNr())
-							.setTotalBanana(
-									this.getPlayerArray()
-											.get(this.getPlayerNr())
-											.getTotalBanana() - 1);
 					GameListener.setAllowBanana(false);
+					GameListener.setBananaThrown(false);
+					coolDown = (System.currentTimeMillis()
+							    + this.getPlayerArray().get(this.getPlayerNr()).getCoolDown());
+
+					this.getPlayerArray().get(this.getPlayerNr()).setTotalBanana(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana() - 1);
 
 					try {
 						Client.getInstance().getConnect().tellBanana(banana);
@@ -258,10 +226,8 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Erstellt die Karte für das Spiel mit den Hindernissen
-	 * 
+	 * Erstellt die Karte fuer das Spiel mit den Hindernissen
 	 * @author Dominic Pfister
-	 * 
 	 * @param mapSize {@link int}
 	 */
 	private void generateMap(int mapSize) {
@@ -349,7 +315,6 @@ public class Gameboard extends JPanel implements ActionListener {
 
 	/**
 	 * Funktion um die Objekte zu zeichnen
-	 * 
 	 * @author Dominic Pfister
 	 * @param g {@link Graphics}
 	 */
@@ -359,7 +324,7 @@ public class Gameboard extends JPanel implements ActionListener {
 		/* Zeichnet die Hindernisse */
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage().getImage(), kiste.getX(), kiste.getY(), this);
-			// Hitbox für Hindernis
+			// Hitbox fuer Hindernis
 //			 g.setColor(Color.RED);
 //			 g.drawRect(kiste.getX(), kiste.getY(),
 //			 kiste.getImage().getImage().getWidth(null),
@@ -393,7 +358,7 @@ public class Gameboard extends JPanel implements ActionListener {
 			g.drawImage(banana.getImage().getImage(), banana.getX(),
 					banana.getY(), this);
 
-			// Hitbox für Bananen
+			// Hitbox fuer Bananen
 			// g.setColor(Color.ORANGE);
 			// g.drawRect(banana.getX(), banana.getY(),
 			// banana.getImage().getImage().getWidth(null),
@@ -401,15 +366,15 @@ public class Gameboard extends JPanel implements ActionListener {
 			
 		}
 		} catch (ConcurrentModificationException e){
-			System.out.println(1);
+			System.out.println("Fehler 1  //GameBoard 404");
 		}
 
-		/* Zeichnet den Spieler */
+		/* Zeichnet die Spieler */
 		for (Player p : playerArray) {
 			g.drawImage(p.getImage().getImage(), p.getX(), p.getY(), this);
 		}
 
-		// Hitbox für player
+		// Hitbox fuer player
 //		 g.setColor(Color.GREEN);
 //		 g.drawRect(p1.getX(), p1.getY() +
 //		 p1.getImage().getImage().getWidth(null) / 2,
@@ -417,26 +382,25 @@ public class Gameboard extends JPanel implements ActionListener {
 //		 p1.getImage().getImage().getHeight(null) -
 //		 p1.getImage().getImage().getWidth(null) / 2);
 
+		/* Zeichnet den Punktestand und die Bananen Anzahl */
 		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
 		g.setColor(Color.BLACK);
+		
+		//Bananen Anzahl
 		Image banana_tree = Toolkit.getDefaultToolkit().getImage("images/banana_tree.png");
 		g.drawImage(banana_tree, 150, 55, this);
+		g.drawString(String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 190, 85);
 		
-		g.drawString(
-				String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 190, 85);
-		
+		//Punktestand
 		Image player1 = Toolkit.getDefaultToolkit().getImage("images/monkeyBlue.png");
 		g.drawImage(player1, 480, 45, this);
-		
 		Image player2 = Toolkit.getDefaultToolkit().getImage("images/monkeyRed.png");
 		g.drawImage(player2, 380, 45, this);
 		
 		try {
 			int[] result = Client.getInstance().getConnect().getResult();
-			g.drawString(
-					String.valueOf(result[0]), 528, 85);
-			g.drawString(
-					String.valueOf(result[1]), 432, 85);
+			g.drawString(String.valueOf(result[0]), 528, 85);
+			g.drawString(String.valueOf(result[1]), 432, 85);
 			
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -446,6 +410,12 @@ public class Gameboard extends JPanel implements ActionListener {
 		Toolkit.getDefaultToolkit().sync();
 	}
 
+	/**
+	 * Zeichnet alle Objekte neu, pr�ft ob ein Objekt
+	 * an einem Hindernis anst�sst und prueft ob ein
+	 * Spieler bereits getroffen wurde.
+	 * @author Dominic Pfister, Elia Perenzin
+	 */
 	public void actionPerformed(ActionEvent e) {
 		for (Player p : playerArray) {
 			p.move();
@@ -462,14 +432,11 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich berühren. Die
-	 * Spieldfeldlänge wird als Paramter mitgegeben.
-	 * 
+	 * Es wird abgerufen ob der Spieler bzw. das Hindernis sich beruehren. Die
+	 * Spieldfeldlaenge wird als Paramter mitgegeben.
 	 * @author Dominic Pfister
-	 * @param feldBreite
-	 *            {@link int}
-	 * @param feldHoehe
-	 *            {@link int}
+	 * @param feldBreite {@link int}
+	 * @param feldHoehe {@link int}
 	 */
 	private void checkBounds(int feldBreite, int feldHoehe) {
 		for (Player p : this.getPlayerArray()) {
@@ -478,43 +445,31 @@ public class Gameboard extends JPanel implements ActionListener {
 				for (Obstacle kiste : obstacleArray) {
 					Rectangle recKiste = kiste.obstBounds();
 
-					/* **Normal kiste detection** */
+					/* **Normal Hindernis detection** */
 					if (kiste.getType() >= 14 && kiste.getType() <= 50 || kiste.getType() >= 57 && kiste.getType() <= 69) { 
-						
-						/*
-						 * Wenn der Typ zwischen 14 und 29 liegt, 
-						 * wird geprüft ob das Hindernis und
-						 * der Spieler sich berühren
-						 */
 						if (recPlayer.intersects(recKiste)) {
-
 							if (recPlayer.getMaxY() - 1 <= recKiste.getMaxY() // TOP
-									&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
-									&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
-									&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
-
+								&& !(recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4))
+								&& !(recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4)
+								&& !(recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4)) {
+								
 								p.setY((int) recKiste.getMinY() - p.getImage().getImage().getHeight(null));
 							}
-							else if (recPlayer.getMinY() - 1 >= (recKiste
-									.getMaxY() - 4)) { // BOTTOM
+							else if (recPlayer.getMinY() - 1 >= (recKiste.getMaxY() - 4)) { // BOTTOM
 								p.setY((int) recKiste.getMaxY()
-										- p.getImage().getImage()
-												.getHeight(null) / 3);
+						        - p.getImage().getImage().getHeight(null) / 3);
 							}
-							else if (recPlayer.getMaxX() - 1 <= recKiste
-									.getMinX() + 4) { // RIGHT
+							else if (recPlayer.getMaxX() - 1 <= recKiste.getMinX() + 4) { // RIGHT
 								p.setX((int) recKiste.getMinX()
-										- p.getImage().getImage()
-												.getWidth(null));
+								- p.getImage().getImage().getWidth(null));
 							}
-							else if (recPlayer.getMinX() - 1 >= recKiste
-									.getMaxX() - 4) { // LEFT
+							else if (recPlayer.getMinX() - 1 >= recKiste.getMaxX() - 4) { // LEFT
 								p.setX((int) recKiste.getMaxX());
 							}
 						}
-
-						/* **Pipe detection** */
 					}
+					
+					/* **Pipe detection** */
 					else if (kiste.getType() == 51 && !user.getUsername().equals("SYSTEM")) { // TOP
 						if (!(recPlayer.getMinY() + 84 <= recKiste.getMaxY())) {
 							p.setY(kiste.getY() - 609);
@@ -543,30 +498,29 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Es wird abgerufen ob die Banane bzw. das Hindernis sich berühren. Die
-	 * Spieldfeldlänge wird als Paramter mitgegeben.
-	 * 
+	 * Es wird abgerufen ob die Banane bzw. das Hindernis sich beruehren. Die
+	 * Spieldfeldlaenge wird als Paramter mitgegeben.
 	 * @author Dominic Pfister
-	 * @param feldBreite
-	 *            {@link int}
-	 * @param feldHöhe
-	 *            {@link int}
+	 * @param feldBreite {@link int}
+	 * @param feldHoehe {@link int}
 	 */
-	private void checkBananaBounds(int feldBreite, int feldHöhe) {
+	private void checkBananaBounds(int feldBreite, int feldHoehe) {
 		boolean isRemoved = true;
 		try {
 		for (Banana banana : bananenArray) {
 			Rectangle recBanana = banana.bananaBounds();
 			for (Obstacle kiste : obstacleArray) {
 				Rectangle recKiste = kiste.obstBounds();
+				
+				/* Normales Hindernis detection */
 				if (kiste.getType() >= 14 && kiste.getType() <= 50 || kiste.getType() >= 57 && kiste.getType() <= 69) {
 					if (recBanana.intersects(recKiste)) {
 						bananenArray.remove(banana);
 						isRemoved = false;
 					}
-					/* **Pipe detection** */
-				}
-				else if (kiste.getType() >= 51 && kiste.getType() <= 54) {
+					
+				/* **Pipe detection** */
+				} else if (kiste.getType() >= 51 && kiste.getType() <= 54) {
 					if (kiste.getType() == 51) { // TOP
 						if (!(recBanana.getMinY() + 65 <= recKiste.getMaxY())) {
 							banana.setY(kiste.getType() + 127);
@@ -594,10 +548,16 @@ public class Gameboard extends JPanel implements ActionListener {
 			}
 		}
 		} catch (ConcurrentModificationException e) {
-			System.out.println(3);
+			System.out.println("Fehler 2  //GameBoard 597");
 		}
 	}
 
+	/**
+	 * Funktion um zu pruefen ob einer der beiden
+	 * Spieler von einer gegnerischen Bananen
+	 * getroffen wurde.
+	 * @author Dominic Pfister, Elia Perenzin
+	 */
 	private void checkBananaHit() {
 		Rectangle recPlayer;
 		if (this.isRun()) {
@@ -625,22 +585,22 @@ public class Gameboard extends JPanel implements ActionListener {
 						}
 						break;
 					}
-
 				}
 			}
 		}
 	}
 
+	/**
+	 * Setzt das Spielfeld wieder auf die Ausgangslage zurueck.
+	 * Die Spieler werden zurueck teleportiert und die Bananen
+	 * auf die max Anzahl zurueck gesetzt.
+	 * @author Dominic Pfister, Elia Perenzin
+	 */
 	private void restartGame() {
 		try {
 			if (Client.getInstance().getConnect().isHit()
-				&& Client.getInstance().getConnect().getRundenzahl() <= 2) {
+				&& Client.getInstance().getConnect().getRundenzahl() <= 5) {
 				this.getBananenArray().clear();
-				
-				System.out.println(Client.getInstance().getConnect().getScore(0) + " : "
-				+ Client.getInstance().getConnect().getScore(1));
-				
-				System.out.println(Client.getInstance().getConnect().getRundenzahl());
 				
 				try {
 					Thread.sleep(2000);
@@ -649,17 +609,18 @@ public class Gameboard extends JPanel implements ActionListener {
 					e.printStackTrace();
 				}
 				
+				//Zuruecksetzen der Spieler
 				p1.setX(48);
 				p1.setY(168);
 				p1.setTotalBanana(15);
-				
 				p2.setX(576);
 				p2.setY(696);
 				p2.setTotalBanana(15);
 				
 				this.setRun(true);
 				Client.getInstance().getConnect().setHit(false);
-			} else if (Client.getInstance().getConnect().getRundenzahl() > 1) {
+				
+			} else if (Client.getInstance().getConnect().getRundenzahl() > 4) {
 				boolean winner;
 				int player2;
 				
@@ -670,29 +631,24 @@ public class Gameboard extends JPanel implements ActionListener {
 				} else {
 					player2 = 0;
 				}
-				
 				if (Client.getInstance().getConnect().getScore(this.getPlayerNr()) < 
 					Client.getInstance().getConnect().getScore(player2)) {
-					
 					winner = true;
 				} else {
 					winner = false;
 				}
-				
 				int[] score = Client.getInstance().getConnect().getResult();
 				String pl1 = Client.getInstance().getConnect().getPlayer(0);
 				String pl2 = Client.getInstance().getConnect().getPlayer(1);
 				
 				new ScoreView(score[0], score[1], pl1, pl2, winner);
 				
-				System.out.println("Game finished");
-				
 				Client.getInstance().getConnect().setSlots(Client.getInstance().getConnect().getSlots() - 1);
-				System.out.println(Client.getInstance().getConnect().getSlots());
 				
 				if (this.getPlayerNr() == 0) {
 					Client.getInstance().getConnect().restartServer();
 				}
+				
 				this.getFrame().dispose();
 			}
 		} catch (RemoteException e) {

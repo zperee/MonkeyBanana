@@ -29,7 +29,11 @@ public class HomeView extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private User u;
 	private JFrame waitframe;
+	JButton btnSpielen = new JButton("Spielen");
+	
 	private Timer timer = new Timer(500, this);
+	private Timer slotTimer;
+	
 	private boolean isModified = false;
 	private int playerNr = 0;
 	private boolean isStarted = false;
@@ -56,10 +60,10 @@ public class HomeView extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public HomeView(User u) {
+		slotTimer = new Timer(100, freeSlots);
+		slotTimer.start();
 		
 		setResizable(false);
-
-		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 635, 650);
@@ -78,7 +82,6 @@ public class HomeView extends JFrame implements ActionListener{
 		lblNewLabel_1.setBounds(10, 11, 93, 25);
 		panel_1.add(lblNewLabel_1);
 		
-		JButton btnSpielen = new JButton("Spielen");
 		btnSpielen.setBounds(50, 247, 89, 23);
 		btnSpielen.addActionListener(this);
 		panel_1.add(btnSpielen);
@@ -124,6 +127,27 @@ public class HomeView extends JFrame implements ActionListener{
 	    });
 	}
 
+	/**
+	 * ActionListener für den SlotTimer. Wird alle 100ms aufgerufen
+	 * und geprüft ob ein Slot auf dem Server frei ist.
+	 * @author Dominic Pfister
+	 */
+	ActionListener freeSlots = new ActionListener() {
+		
+		public void actionPerformed(ActionEvent e) {
+			try {
+				if (Client.getInstance().getConnect().getSlots() < 2) {
+					btnSpielen.setEnabled(true);
+				} else if (Client.getInstance().getConnect().getSlots() >= 2) {
+					btnSpielen.setEnabled(false);
+				}
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+		}
+	};
+	
+	
 	public void actionPerformed(ActionEvent e) {
 		int slots = 0;
 		JFrame waitFrame = new JFrame();
@@ -164,7 +188,7 @@ public class HomeView extends JFrame implements ActionListener{
 		waitFrame.add(waitSlots);
 		
 		if (slots == 2) {
-			GameWindow gc = new GameWindow(u, this.getPlayerNr());
+			GameWindow gc = new GameWindow(this.getU(), this.getPlayerNr());
 			gc.getEnt().addKeyListener((KeyListener) (new GameListener(gc.getEnt().getPlayerArray().get(this.getPlayerNr()))));
 			waitSlots.setVisible(false);
 			getWaitframe().dispose();
@@ -269,5 +293,29 @@ public class HomeView extends JFrame implements ActionListener{
 
 	public void setGc(GameWindow gc) {
 		this.gc = gc;
+	}
+
+	public JButton getBtnSpielen() {
+		return btnSpielen;
+	}
+
+	public void setBtnSpielen(JButton btnSpielen) {
+		this.btnSpielen = btnSpielen;
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
+	public Timer getSlotTimer() {
+		return slotTimer;
+	}
+
+	public void setSlotTimer(Timer slotTimer) {
+		this.slotTimer = slotTimer;
 	}
 }

@@ -173,16 +173,13 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 			}	
 			} catch (Exception e) {
-				System.out.println("2");
+				System.out.println("Fehler 3  //ValidatorImpl 176");
 			}
 		
 		}
 		return null;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public void join(User user) throws RemoteException {
 		this.getConsolelabel().setText(this.getConsolelabel().getText() + 
@@ -231,13 +228,9 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 			this.setScorePlayer2(this.getScorePlayer2() + 1);
 		}
 		this.setHit(true);
-		
-		System.out.println(this.getRundenZahl());
-		System.out.println("Pl1: " + this.getScorePlayer1());
-		System.out.println("Pl2: " + this.getScorePlayer2());
+
 
 		return isHit;
-
 	}
 	
 	@Override
