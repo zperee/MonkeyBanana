@@ -243,4 +243,14 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 */
 	public abstract boolean getServerReady() throws RemoteException;
+	
+	/**
+	 * Abstrakte Getter Methode fuer die angemeldeten Spieler.
+	 * @author Dominic Pfister
+	 * @return
+	 * @throws RemoteException
+	 */
+	public abstract List<String> getOnlinePlayers() throws RemoteException;
+	
+	public abstract void addOnlinePlayer(String player) throws RemoteException;
 }

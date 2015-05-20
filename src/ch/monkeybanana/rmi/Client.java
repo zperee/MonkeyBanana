@@ -216,16 +216,18 @@ public class Client {
 							try {
 								user2.setUsername(dbUser.getUsername());
 								Client.getInstance().getConnect().login(user2);
+								Client.getInstance().getConnect().addOnlinePlayer(user.getUsername());
 							} catch (RemoteException e) {
 								e.printStackTrace();
 							}
+							
 							login = true;
 							getFrame().dispose();
 							new HomeView(user2);
 						}
 					}
 				}
-				if (login == false) {
+				if (!login) {
 					JOptionPane.showMessageDialog(null,
 							"Passwort und Username stimmen nicht \u00fcberein",
 							"Warnung!", JOptionPane.ERROR_MESSAGE);

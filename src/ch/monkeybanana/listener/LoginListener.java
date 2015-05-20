@@ -30,8 +30,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	 * @author Elia Perenzin
 	 * @param usernam, password, button
 	 */
-	public LoginListener(JTextField username, JPasswordField password,
-			String button) {
+	public LoginListener(JTextField username, JPasswordField password, String button) {
 		this.setUser(username);
 		this.setPasswort(password);
 		this.setButton(button);

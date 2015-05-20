@@ -20,6 +20,7 @@ import ch.monkeybanana.rmi.Client;
 
 public class WaitingScreen extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Timer slotsTimer;
 	private JLabel slotLabel;

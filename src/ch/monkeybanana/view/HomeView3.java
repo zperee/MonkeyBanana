@@ -24,7 +24,7 @@ import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
-public class HomeView extends JFrame implements ActionListener{
+public class HomeView3 extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 3784778276460922250L;
 	private JPanel contentPane;
 	private User u;
@@ -46,7 +46,7 @@ public class HomeView extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomeView frame = new HomeView(new User());
+					HomeView3 frame = new HomeView3(new User());
 					frame.setVisible(true);
 				}
 				catch (Exception e) {
@@ -59,7 +59,7 @@ public class HomeView extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public HomeView(User u) {
+	public HomeView3(User u) {
 		slotTimer = new Timer(100, freeSlots);
 		slotTimer.start();
 		
@@ -78,7 +78,7 @@ public class HomeView extends JFrame implements ActionListener{
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Online");
-		lblNewLabel_1.setIcon(new ImageIcon(HomeView.class.getResource("/images/online.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(HomeView3.class.getResource("/images/online.png")));
 		lblNewLabel_1.setBounds(10, 11, 93, 25);
 		panel_1.add(lblNewLabel_1);
 		
@@ -109,7 +109,7 @@ public class HomeView extends JFrame implements ActionListener{
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(HomeView.class.getResource("/images/Banner.png")));
+		lblNewLabel.setIcon(new ImageIcon(HomeView3.class.getResource("/images/Banner.png")));
 		lblNewLabel.setBounds(10, 11, 609, 256);
 		contentPane.add(lblNewLabel);
 		this.setU(u);

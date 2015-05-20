@@ -43,6 +43,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private boolean finishedGame, isHit, serverReady;
 	
 	private String playerName1, playerName2;
+	
+	private List<String> onlinePlayers = new ArrayList<String>();
 
 	/**
 	 * Konstrukor fuer ValidatorImpl
@@ -340,6 +342,17 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		return this.serverReady;
 	}
 	
+	@Override
+	public List<String> getOnlinePlayers() throws RemoteException {
+		return this.onlinePlayers;
+	}
+	
+	@Override
+	public void addOnlinePlayer(String player) throws RemoteException {
+		this.onlinePlayers.add(player);
+		
+	}
+	
 	public JLabel getConsolelabel() {
 		return consolelabel;
 	}
@@ -431,4 +444,9 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	public void setServerReady(boolean serverReady) {
 		this.serverReady = serverReady;
 	}
+
+	public void setOnlinePlayers(List<String> onlinePlayers) {
+		this.onlinePlayers = onlinePlayers;
+	}
+
 }

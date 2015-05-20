@@ -12,9 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
 import ch.monkeybanana.listener.HomeListener;
@@ -23,10 +25,11 @@ import ch.monkeybanana.rmi.Client;
 
 public class HomeView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnNewButton_1;
-	private JLabel lblServer;
-	private Timer slotsTimer;
+	private JButton spielenBtnSrv1;
+	private JLabel onlineSpieler, slotLabelSrv1;
+	private Timer slotsTimer, spielerTimer;
 	private User u;
 
 	/**
@@ -61,27 +64,30 @@ public class HomeView extends JFrame {
 		contentPane.setLayout(null);
 		this.setU(u);
 		
-		slotsTimer = new Timer(100, freeSlotsButton);
+		slotsTimer = new Timer(100, freeSlotListener);
 		slotsTimer.start();
+		
+		this.setSpielerTime(new Timer(100, onlineListener));
+		this.getSpielerTime().start();
 
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 414, 125);
 		contentPane.add(panel);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel_1.setBounds(10, 147, 300, 118);
+		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(10, 147, 300, 126);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblSpielernameStatistik = new JLabel("Spielername Statistik");
+		JLabel lblSpielernameStatistik = new JLabel(u.getUsername() + ": Statistik");
 		lblSpielernameStatistik.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblSpielernameStatistik.setBounds(10, 11, 183, 14);
 		panel_1.add(lblSpielernameStatistik);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 276, 300, 144);
+		panel_2.setBounds(10, 284, 300, 149);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -90,15 +96,48 @@ public class HomeView extends JFrame {
 		lblServerListe.setBounds(10, 11, 89, 14);
 		panel_2.add(lblServerListe);
 		
-		lblServer = new JLabel("Server 01 0/2");
-		lblServer.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblServer.setBounds(10, 41, 110, 14);
-		panel_2.add(lblServer);
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel_4.setBounds(10, 36, 280, 41);
+		panel_2.add(panel_4);
+		panel_4.setLayout(null);
 		
-		btnNewButton_1 = new JButton("Spielen");
-		btnNewButton_1.setBounds(201, 38, 89, 23);
-		btnNewButton_1.addActionListener(new HomeListener(u, "Spielen", this));
-		panel_2.add(btnNewButton_1);
+		spielenBtnSrv1 = new JButton("Spielen");
+		spielenBtnSrv1.setBounds(181, 9, 89, 23);
+		spielenBtnSrv1.setFocusable(false);
+		spielenBtnSrv1.addActionListener(new HomeListener(u, "Spielen", this));
+		panel_4.add(spielenBtnSrv1);
+		
+		JLabel lblServer = new JLabel("Server 01");
+		lblServer.setBounds(10, 14, 110, 14);
+		panel_4.add(lblServer);
+		lblServer.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		slotLabelSrv1 = new JLabel("0/2");
+		slotLabelSrv1.setBounds(130, 14, 46, 14);
+		panel_4.add(slotLabelSrv1);
+		slotLabelSrv1.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setLayout(null);
+		panel_5.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel_5.setBounds(10, 88, 280, 41);
+		panel_2.add(panel_5);
+		
+		JButton spielenBtnSrv2 = new JButton("Spielen");
+		spielenBtnSrv2.setBounds(181, 9, 89, 23);
+		spielenBtnSrv2.setEnabled(false);
+		panel_5.add(spielenBtnSrv2);
+		
+		JLabel lblServer_1 = new JLabel("Server 02");
+		lblServer_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblServer_1.setBounds(10, 14, 110, 14);
+		panel_5.add(lblServer_1);
+		
+		JLabel slotLabelSrv2 = new JLabel("0/0");
+		slotLabelSrv2.setHorizontalAlignment(SwingConstants.RIGHT);
+		slotLabelSrv2.setBounds(130, 14, 46, 14);
+		panel_5.add(slotLabelSrv2);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -108,13 +147,19 @@ public class HomeView extends JFrame {
 		
 		JLabel lblSpieler = new JLabel("Spieler");
 		lblSpieler.setFont(new Font("Tahoma", Font.BOLD, 14));        
-		lblSpieler.setBounds(10, 11, 46, 14);
+		lblSpieler.setBounds(10, 11, 83, 24);
 		panel_3.add(lblSpieler);
 		
-		JButton btnNewButton = new JButton("Verlassen");
-		btnNewButton.setBounds(320, 380, 104, 23);
-		btnNewButton.addActionListener(new HomeListener(this.getU(), "Verlassen", this));
-		contentPane.add(btnNewButton);
+		onlineSpieler = new JLabel("<html>");
+		onlineSpieler.setVerticalAlignment(SwingConstants.TOP);
+		onlineSpieler.setBounds(10, 46, 83, 164);
+		panel_3.add(onlineSpieler);
+	
+		JButton verlassenBtn = new JButton("Verlassen");
+		verlassenBtn.setBounds(320, 388, 104, 23);
+		verlassenBtn.setFocusable(false);
+		verlassenBtn.addActionListener(new HomeListener(this.getU(), "Verlassen", this));
+		contentPane.add(verlassenBtn);
 		
 		addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
@@ -133,16 +178,35 @@ public class HomeView extends JFrame {
 	 * und geprueft ob ein Slot auf dem Server frei ist.
 	 * @author Dominic Pfister
 	 */
-	ActionListener freeSlotsButton = new ActionListener() {
+	ActionListener freeSlotListener = new ActionListener() {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
 				if (Client.getInstance().getConnect().getSlots() < 2) {
-					btnNewButton_1.setEnabled(true);
-					lblServer.setText(String.valueOf(Client.getInstance().getConnect().getSlots() + "/2 Slots besetzt"));
+					spielenBtnSrv1.setEnabled(true);
+					slotLabelSrv1.setText(String.valueOf(Client.getInstance().getConnect().getSlots() + "/2"));
 				} else if (Client.getInstance().getConnect().getSlots() >= 2) {
-					btnNewButton_1.setEnabled(false);
-					lblServer.setText(String.valueOf(Client.getInstance().getConnect().getSlots() + "/2 Slots besetzt"));
+					spielenBtnSrv1.setEnabled(false);
+					slotLabelSrv1.setText(String.valueOf(Client.getInstance().getConnect().getSlots() + "/2"));
+				}
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+		}
+	};
+	
+	/**
+	 * ActionListener für den spielerTimer. Wird alle 100ms aufgerufen
+	 * und das JLabel mit den angemeldeten Spielern aktualisiert.
+	 * @author Dominic Pfister
+	 */
+	ActionListener onlineListener = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			onlineSpieler.removeAll();
+			onlineSpieler.setText("<html>");
+			try {
+				for (String spieler : Client.getInstance().getConnect().getOnlinePlayers()) {
+					onlineSpieler.setText(onlineSpieler.getText() + spieler + "<br>");
 				}
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
@@ -156,5 +220,13 @@ public class HomeView extends JFrame {
 
 	public void setU(User u) {
 		this.u = u;
+	}
+
+	public Timer getSpielerTime() {
+		return spielerTimer;
+	}
+
+	public void setSpielerTime(Timer spielerTime) {
+		this.spielerTimer = spielerTime;
 	}
 }

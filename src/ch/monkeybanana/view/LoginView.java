@@ -63,18 +63,15 @@ public class LoginView extends JFrame {
 		this.add(password);
 
 		registrierenButton.setBounds(160, 120, 106, 23);
-		registrierenButton.addActionListener(new LoginListener(username, password,
-				"registrieren"));
+		registrierenButton.addActionListener(new LoginListener(username, password, "registrieren"));
 		this.add(registrierenButton);
 
 		loginbButton.setBounds(273, 120, 84, 23);
-		loginbButton.addActionListener(new LoginListener(username, password,
-				"login"));
+		loginbButton.addActionListener(new LoginListener(username, password, "login"));
 		loginbButton.addKeyListener(new LoginListener(username, password));
 		this.add(loginbButton);
 		
 		this.setVisible(true);
-
 	}
 	
 }
