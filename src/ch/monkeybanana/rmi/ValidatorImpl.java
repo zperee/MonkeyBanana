@@ -198,9 +198,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	public void logoutServer(User user) throws RemoteException {
 		this.getConsolelabel().setText(this.getConsolelabel().getText() + user.getUsername() + 
 				" hat den Server verlassen." + "<br>");
-		
-		this.setSlots(this.getSlots() - 1);
-
 		slotLabel.setText("Slots: " + this.getSlots());
 	}
 
@@ -353,6 +350,12 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		
 	}
 	
+	@Override
+	public void removeOnlinePlayer(String player) throws RemoteException {
+		this.onlinePlayers.remove(player);
+	}
+
+	
 	public JLabel getConsolelabel() {
 		return consolelabel;
 	}
@@ -448,5 +451,4 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	public void setOnlinePlayers(List<String> onlinePlayers) {
 		this.onlinePlayers = onlinePlayers;
 	}
-
 }

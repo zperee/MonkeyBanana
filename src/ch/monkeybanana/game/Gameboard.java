@@ -672,10 +672,9 @@ public class Gameboard extends JPanel implements ActionListener {
 				
 				new ScoreView(score[0], score[1], pl1, pl2, winner, isForfait);
 				
-				Client.getInstance().getConnect().setSlots(Client.getInstance().getConnect().getSlots() - 1);
-				
 				if (this.getPlayerNr() == 0 || isForfait) {
 					Client.getInstance().getConnect().restartServer();
+					Client.getInstance().getConnect().setSlots(Client.getInstance().getConnect().getSlots() - 2);
 					MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1);
 				}
 				

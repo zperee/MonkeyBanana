@@ -252,5 +252,19 @@ public interface Validator extends Remote {
 	 */
 	public abstract List<String> getOnlinePlayers() throws RemoteException;
 	
+	/**
+	 * Fügt einen Spieler in die onlinePlayers Liste hinzu.
+	 * @author Dominic Pfister
+	 * @param player {@link String}
+	 * @throws RemoteException
+	 */
 	public abstract void addOnlinePlayer(String player) throws RemoteException;
+	
+	/**
+	 * Entfernt den Spieler aus der onlinePlayers Liste.
+	 * @author Dominic Pfister
+	 * @param player {@link String}
+	 * @throws RemoteException
+	 */
+	public abstract void removeOnlinePlayer(String player) throws RemoteException;
 }
