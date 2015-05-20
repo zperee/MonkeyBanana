@@ -2,7 +2,6 @@ package ch.monkeybanana.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,9 +21,16 @@ public class ScoreView extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @author Dominic Pfister, Elia Perenzin
+	 * @param score1 {@link int}
+	 * @param score2 {@link int}
+	 * @param user1 {@link String}
+	 * @param user2 {@link String}
+	 * @param winner {@link boolean}
+	 * @param isForfait {@link boolean}
 	 */
 	
-	public ScoreView(int score1, int score2, String user1, String user2, boolean winner) {
+	public ScoreView(int score1, int score2, String user1, String user2, boolean winner, boolean isForfait) {
 		this.setScore1(score1);
 		this.setScore2(score2);
 		this.setPlayer1(user1);
@@ -39,13 +45,20 @@ public class ScoreView extends JFrame {
 		contentPane.setLayout(null);
 		setVisible(true);
 		
-		if (winner) {
-		JLabel lblDuHastGewonnen = new JLabel("Du hast gewonnen");
-		
-		lblDuHastGewonnen.setForeground(Color.GREEN);
-		lblDuHastGewonnen.setFont(new Font("Tekton Pro Ext", Font.PLAIN, 21));
-		lblDuHastGewonnen.setBounds(109, 28, 215, 39);
-		contentPane.add(lblDuHastGewonnen);
+		if (isForfait) {
+			JLabel lblDuHastGewonnen = new JLabel("Du gewinnst forfait");
+			
+			lblDuHastGewonnen.setForeground(Color.GREEN);
+			lblDuHastGewonnen.setFont(new Font("Tekton Pro Ext", Font.PLAIN, 21));
+			lblDuHastGewonnen.setBounds(109, 28, 250, 39);
+			contentPane.add(lblDuHastGewonnen);
+		} else if (winner) {
+			JLabel lblDuHastGewonnen = new JLabel("Du hast gewonnen");
+			
+			lblDuHastGewonnen.setForeground(Color.GREEN);
+			lblDuHastGewonnen.setFont(new Font("Tekton Pro Ext", Font.PLAIN, 21));
+			lblDuHastGewonnen.setBounds(109, 28, 215, 39);
+			contentPane.add(lblDuHastGewonnen);
 		
 		} else if (!winner) {
 			JLabel lblDuHastVerloren = new JLabel("Du hast verloren");
