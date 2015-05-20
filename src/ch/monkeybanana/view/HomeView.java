@@ -128,8 +128,8 @@ public class HomeView extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * ActionListener für den SlotTimer. Wird alle 100ms aufgerufen
-	 * und geprüft ob ein Slot auf dem Server frei ist.
+	 * ActionListener fuer den SlotTimer. Wird alle 100ms aufgerufen
+	 * und geprueft ob ein Slot auf dem Server frei ist.
 	 * @author Dominic Pfister
 	 */
 	ActionListener freeSlots = new ActionListener() {
@@ -153,6 +153,18 @@ public class HomeView extends JFrame implements ActionListener{
 		JFrame waitFrame = new JFrame();
 		JLabel waitSlots = new JLabel("0 / 2", SwingConstants.CENTER);
 		timer.start();
+		
+		waitFrame.addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowClosing(WindowEvent e) {
+	            try {
+	            	Client.getInstance().getConnect().logoutServer(getU());
+				} catch (RemoteException e2) {
+					e2.printStackTrace();
+				}
+	            e.getWindow().dispose();
+	        }
+	    });
 		
 		if (!isModified) {
 			try {

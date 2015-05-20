@@ -40,7 +40,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private int rundenZahl = 0;
 	private int slots = 0;
 	
-	private boolean finishedGame, isHit;
+	private boolean finishedGame, isHit, serverReady;
 	
 	private String playerName1, playerName2;
 
@@ -70,6 +70,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		User system = new User();
 		system.setUsername("SYSTEM");
 		this.setGame(new GameWindow(system, 0));
+		
+		this.setServerReady(true);
 	}
 
 	/**
@@ -116,6 +118,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	@Override
 	public synchronized void tellPosition(int x, int y, int ownPlayerNr) throws RemoteException {
+		this.setServerReady(false);
 		try {
 			this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setX(x);
 			this.getGame().getEnt().getPlayerArray().get(ownPlayerNr).setY(y);
@@ -296,6 +299,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.setScorePlayer1(0);
 		this.setScorePlayer2(0);
 		this.setRundenzahl(0);
+		
+		this.setServerReady(true);
 	}
 	
 	@Override
@@ -328,6 +333,11 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 			this.playerName2 = name;
 		}
 		
+	}
+	
+	@Override
+	public boolean getServerReady() throws RemoteException {
+		return this.serverReady;
 	}
 	
 	public JLabel getConsolelabel() {
@@ -414,4 +424,11 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.playerName2 = playerName2;
 	}
 
+	public boolean isServerReady() {
+		return serverReady;
+	}
+
+	public void setServerReady(boolean serverReady) {
+		this.serverReady = serverReady;
+	}
 }

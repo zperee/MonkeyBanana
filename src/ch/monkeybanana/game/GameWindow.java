@@ -29,13 +29,13 @@ public class GameWindow extends JFrame {
 	public GameWindow(User u, int playerNr) {
 		this.setU(u);
 
-		/* Nur für Test ohne DB */
-		try {
-			if (u.getUsername().equals("SYSTEM")) {
-			}
-		} catch (NullPointerException e) {
-			u.setUsername("Gast");
-		}
+		/* Nur fuer Test ohne DB */
+//		try {
+//			if (u.getUsername().equals("SYSTEM")) {
+//			}
+//		} catch (NullPointerException e) {
+//			u.setUsername("Gast");
+//		}
 		
         try {
 			this.setEnt(new Gameboard(playerNr, u, this));

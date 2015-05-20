@@ -21,8 +21,7 @@ import ch.monkeybanana.view.LoginView;
 
 /**
  * 
- * @author Dominic Pfister, Elia Perenzin Client.java Copyright
- * Berufsbildungscenter MonkeyBanana 2015
+ * @author Dominic Pfister, Elia Perenzin
  */
 public class Client {
 	

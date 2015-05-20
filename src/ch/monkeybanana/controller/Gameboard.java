@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
@@ -414,8 +413,8 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Zeichnet alle Objekte neu, prueft ob ein Objekt
-	 * an einem Hindernis anstoesst und prueft ob ein
+	 * Zeichnet alle Objekte neu, pr�ft ob ein Objekt
+	 * an einem Hindernis anst�sst und prueft ob ein
 	 * Spieler bereits getroffen wurde.
 	 * @author Dominic Pfister, Elia Perenzin
 	 */
@@ -676,7 +675,6 @@ public class Gameboard extends JPanel implements ActionListener {
 				
 				if (this.getPlayerNr() == 0 || isForfait) {
 					Client.getInstance().getConnect().restartServer();
-					MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1);
 				}
 				
 				this.getFrame().dispose();
