@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import javax.swing.JLabel;
 
+import ch.monkeybanana.dao.Game_StatisticDao;
+import ch.monkeybanana.dao.Game_StatisticJDBCDao;
 import ch.monkeybanana.dao.UserDao;
 import ch.monkeybanana.dao.UserJDBCDao;
 import ch.monkeybanana.model.User;
@@ -20,6 +22,7 @@ public class MBController {
 	//Instanzvariablen
 	private static MBController instance = new MBController();
 	private final static UserDao USER_DAO = new UserJDBCDao();
+	private final static Game_StatisticDao GAME_STATISTIC_DAO = new Game_StatisticJDBCDao();
 
 	private int slotsBesetzt = 0;
 
@@ -51,8 +54,24 @@ public class MBController {
 		try{
 			USER_DAO.registrieren(newUser);
 			console.setText(console.getText() + "Benutzer "+ newUser.getUsername() + " hat sich registriert." + "<br>");
+		} catch(SQLException e){
+			e.printStackTrace();
 		}
-		catch(SQLException e){
+	}
+	
+	/**
+	 * TODO
+	 * @param player1
+	 * @param player2
+	 * @param score1
+	 * @param score2
+	 * @param map
+	 * @param modus
+	 */
+	public void setResult(int score1, int score2, String player1, String player2, int map, int modus){
+		try{
+			GAME_STATISTIC_DAO.setResult(score1, score2, player1, player2, map, modus);
+		} catch (SQLException e){
 			e.printStackTrace();
 		}
 	}

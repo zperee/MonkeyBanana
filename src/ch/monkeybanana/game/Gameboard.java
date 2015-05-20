@@ -17,15 +17,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 import ch.monkeybanana.view.ScoreView;
 
 /**
- * Klasse für den Inhalt des JFrames. Sendet Koordinaten
- * der Spieler und Bananen an den Server und ist für
- * die ganze Spiellogik zuständig.
+ * Klasse fï¿½r den Inhalt des JFrames. Sendet Koordinaten
+ * der Spieler und Bananen an den Server und ist fï¿½r
+ * die ganze Spiellogik zustï¿½ndig.
  * @author Dominic Pfister, Elia Perenzin
  */
 
@@ -411,8 +412,8 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Zeichnet alle Objekte neu, prüft ob ein Objekt
-	 * an einem Hindernis anstösst und prueft ob ein
+	 * Zeichnet alle Objekte neu, prï¿½ft ob ein Objekt
+	 * an einem Hindernis anstï¿½sst und prueft ob ein
 	 * Spieler bereits getroffen wurde.
 	 * @author Dominic Pfister, Elia Perenzin
 	 */
@@ -647,6 +648,7 @@ public class Gameboard extends JPanel implements ActionListener {
 				
 				if (this.getPlayerNr() == 0) {
 					Client.getInstance().getConnect().restartServer();
+					MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1);
 				}
 				
 				this.getFrame().dispose();

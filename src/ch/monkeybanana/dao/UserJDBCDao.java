@@ -16,14 +16,8 @@ public class UserJDBCDao extends Database implements UserDao {
 	//Variable fuer Verbindung
 	private Connection con = null;
 	
-	/**
-	 * Auslesen aller User aus der DB
-	 * @author Elia Perenzin
-	 * @return Liste mit allen User {@link User}
-	 * @throws SQLException
-	 */
 	public List<User> findAllUsers() throws SQLException {
-		String sql = "SELECT * FROM USER"; //Query
+		String sql = "SELECT * FROM user"; //Query
 		List<User> p = new ArrayList<User>();
 		
 		con = getCon(); //holt alle infos zu DB verbindung 
@@ -40,14 +34,8 @@ public class UserJDBCDao extends Database implements UserDao {
 		return p;
 	}
 
-	/**
-	 * Eintragen eines neuen Users in DB
-	 * @author Elia Perenzin
-	 * @param user {@link User}
-	 * @throws SQLException
-	 */
 	public void registrieren(User user) throws SQLException {
-		String sql = "INSERT INTO USER (ID_User, Email, Passwort) VALUES (?, ?, ?)"; //Query
+		String sql = "INSERT INTO user (ID_User, Email, Passwort) VALUES (?, ?, ?)"; //Query
 		
 		con = getCon(); //holt alle Infos zur DB verbindung
 		ps = con.prepareStatement(sql);
