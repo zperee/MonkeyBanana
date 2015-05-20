@@ -19,9 +19,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 
+import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.listener.HomeListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
+
+import javax.swing.JProgressBar;
 
 public class HomeView extends JFrame {
 
@@ -80,10 +83,36 @@ public class HomeView extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
+		int[] result = MBController.getInstance().getResult(u);
+		
+		int winLose = 0;
+		if(!(result[0] == 0) || !(result[1] == 0)){
+			winLose = 100 / result[1] * result[0];
+		}
+		
 		JLabel lblSpielernameStatistik = new JLabel(u.getUsername() + ": Statistik");
 		lblSpielernameStatistik.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblSpielernameStatistik.setBounds(10, 11, 183, 14);
 		panel_1.add(lblSpielernameStatistik);
+		
+		JLabel lblGespielteSpiele = new JLabel("Gespielte Spiele: " + result[1]);
+		lblGespielteSpiele.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblGespielteSpiele.setBounds(10, 38, 129, 37);
+		panel_1.add(lblGespielteSpiele);
+		
+		JLabel lblGewonneneSpiele = new JLabel("Gewonnene Spiele: " + result[0]);
+		lblGewonneneSpiele.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblGewonneneSpiele.setBounds(149, 31, 141, 50);
+		panel_1.add(lblGewonneneSpiele);
+		
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setValue(winLose);
+		progressBar.setBounds(10, 101, 280, 14);
+		panel_1.add(progressBar);
+		
+		JLabel lblGewonnenverloren = new JLabel("Gewonnen/Verloren:");
+		lblGewonnenverloren.setBounds(10, 73, 126, 25);
+		panel_1.add(lblGewonnenverloren);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -160,6 +189,10 @@ public class HomeView extends JFrame {
 		verlassenBtn.setFocusable(false);
 		verlassenBtn.addActionListener(new HomeListener(this.getU(), "Verlassen", this));
 		contentPane.add(verlassenBtn);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(172, 179, 200, 50);
+		contentPane.add(lblNewLabel);
 		
 		addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
