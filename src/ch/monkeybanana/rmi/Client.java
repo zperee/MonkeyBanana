@@ -1,5 +1,6 @@
 package ch.monkeybanana.rmi;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
@@ -195,45 +196,66 @@ public class Client {
 			JOptionPane.showMessageDialog(null,
 					"Username muss ausgef\u00fcllt sein", "Warnung!",
 					JOptionPane.ERROR_MESSAGE);
-		} else {
-			if (user.getPasswort().isEmpty()) {
-				JOptionPane.showMessageDialog(null,
-						"Passwort muss ausgef\u00fcllt sein", "Warnung!",
-						JOptionPane.ERROR_MESSAGE);
-			} else {
-				user.setPasswort(CryptUtils.base64encode(user.getPasswort()));
+		} else if (user.getPasswort().isEmpty()) {
+			JOptionPane.showMessageDialog(null,
+					"Passwort muss ausgef\u00fcllt sein", "Warnung!",
+					JOptionPane.ERROR_MESSAGE);
+		} else
+			try {
+				if (Client.getInstance().getConnect().getOnlinePlayers().contains(user.getUsername())) {
+					JOptionPane.showMessageDialog(null,
+							"Der Benutzer "  + user.getUsername() + " ist bereits angemeldet!", "Warnung!",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					user.setPasswort(CryptUtils.base64encode(user.getPasswort()));
 
-				try {
-					dbUsers = Client.getInstance().getConnect().getAllUser();
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
+					try {
+						dbUsers = Client.getInstance().getConnect().getAllUser();
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
 
-				for (User dbUser : dbUsers) {
-					if (user.getUsername().equals(dbUser.getUsername())) {
-						if (user.getPasswort().equals(dbUser.getPasswort())) {
-
-							try {
-								user2.setUsername(dbUser.getUsername());
-								Client.getInstance().getConnect().login(user2);
-								Client.getInstance().getConnect().addOnlinePlayer(user.getUsername());
-							} catch (RemoteException e) {
-								e.printStackTrace();
+					for (User dbUser : dbUsers) {
+						if (user.getUsername().equals(dbUser.getUsername())) {
+							if (user.getPasswort().equals(dbUser.getPasswort())) {
+								try {
+									user2.setUsername(dbUser.getUsername());
+									Client.getInstance().getConnect().login(user2);
+									Client.getInstance().getConnect().addOnlinePlayer(user.getUsername());
+								} catch (RemoteException e) {
+									e.printStackTrace();
+								}
+								
+								/*
+								 * Entfernt den Spieler aus der onlinePlayers Liste, wenn dieser
+								 * die Verbindung trennt.
+								 */
+								Runtime.getRuntime().addShutdownHook(new Thread() {
+									public void run() {
+										try {
+											Client.getInstance().getConnect().removeOnlinePlayer(user.getUsername());
+										} catch (RemoteException e) {
+											e.printStackTrace();
+										}
+									}
+								});
+								
+								login = true;
+								getFrame().dispose();
+								new HomeView(user2);
 							}
-							
-							login = true;
-							getFrame().dispose();
-							new HomeView(user2);
 						}
 					}
-				}
-				if (!login) {
-					JOptionPane.showMessageDialog(null,
+					if (!login) {
+						JOptionPane.showMessageDialog(null,
 							"Passwort und Username stimmen nicht \u00fcberein",
 							"Warnung!", JOptionPane.ERROR_MESSAGE);
+					}
 				}
+			} catch (HeadlessException | RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
 	}
 
 	/* **GETTER und SETTER** */
