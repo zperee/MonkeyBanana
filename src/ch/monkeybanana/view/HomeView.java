@@ -1,5 +1,6 @@
 package ch.monkeybanana.view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -85,11 +86,6 @@ public class HomeView extends JFrame {
 		
 		int[] result = MBController.getInstance().getResult(u);
 		
-		int winLose = 0;
-		if(!(result[0] == 0) || !(result[1] == 0)){
-			winLose = 100 / result[1] * result[0];
-		}
-		
 		JLabel lblSpielernameStatistik = new JLabel(u.getUsername() + ": Statistik");
 		lblSpielernameStatistik.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblSpielernameStatistik.setBounds(10, 11, 183, 14);
@@ -106,8 +102,19 @@ public class HomeView extends JFrame {
 		panel_1.add(lblGewonneneSpiele);
 		
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(winLose);
 		progressBar.setBounds(10, 101, 280, 14);
+		
+		int winLose = 0;
+		if(!(result[0] == 0) || !(result[1] == 0)){
+			winLose = 100 / result[1] * result[0];
+			Color bColor = new Color(0x1FE813);
+			Color aColor = new Color(0xFF1624);
+			progressBar.setBackground(aColor);
+			progressBar.setForeground(bColor);
+		}
+		
+		progressBar.setBorder(null);
+		progressBar.setValue(winLose);
 		panel_1.add(progressBar);
 		
 		JLabel lblGewonnenverloren = new JLabel("Gewonnen/Verloren:");
