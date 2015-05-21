@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -49,33 +50,45 @@ public class LoginListener implements ActionListener, KeyListener{
 	 */
 	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
-		if (button.equals("login")) {
-			User loginUser = new User();
-
-			String user = this.getUser().getText();
-			String passwort = this.getPasswort().getText();
-
-			loginUser.setPasswort(passwort);
-			loginUser.setUsername(user);
-
-			Client.getInstance().login(loginUser);
-		} else if (button.equals("registrieren")) {
-			new RegistrierenView();
+		try {
+			if (button.equals("login")) {
+				User loginUser = new User();
+	
+				String user = this.getUser().getText();
+				String passwort = this.getPasswort().getText();
+	
+				loginUser.setPasswort(passwort);
+				loginUser.setUsername(user);
+	
+				Client.getInstance().login(loginUser);
+			} else if (button.equals("registrieren")) {
+				new RegistrierenView();
+			}
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null,
+					"Es konnte keine Verbindung zu dem Server hergestellt werden.", "Warnung!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			User loginUser = new User();
-
-			String user = this.getUser().getText();
-			String passwort = this.getPasswort().getText();
-
-			loginUser.setPasswort(passwort);
-			loginUser.setUsername(user);
-
-			Client.getInstance().login(loginUser);
+		try {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				User loginUser = new User();
+	
+				String user = this.getUser().getText();
+				String passwort = this.getPasswort().getText();
+	
+				loginUser.setPasswort(passwort);
+				loginUser.setUsername(user);
+	
+				Client.getInstance().login(loginUser);
+			}
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null,
+					"Es konnte keine Verbindung zu dem Server hergestellt werden.", "Warnung!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
