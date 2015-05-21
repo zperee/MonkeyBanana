@@ -3,6 +3,7 @@ package ch.monkeybanana.dao;
 import java.sql.SQLException;
 
 import ch.monkeybanana.game.Player;
+import ch.monkeybanana.model.User;
 
 public interface Game_StatisticDao {
 	
@@ -18,7 +19,7 @@ public interface Game_StatisticDao {
 	 * @param modus {@link int}
 	 * @throws SQLException
 	 */
-	public abstract void setResult (int score1, int score2, String player1, String player2, int map, int modus) throws SQLException;
+	public abstract void setResult (int score1, int score2, String player1, String player2, int map, int modus, String winner) throws SQLException;
 	
 	/**
 	 * Hier werden die Resultate eines Players aus der DB
@@ -26,5 +27,5 @@ public interface Game_StatisticDao {
 	 * @param player {@link Player}
 	 * @throws SQLException
 	 */
-	public abstract void getResult(Player player) throws SQLException;
+	public abstract int[] getResult(User user) throws SQLException;
 }

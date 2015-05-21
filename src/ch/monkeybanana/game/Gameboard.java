@@ -676,10 +676,12 @@ public class Gameboard extends JPanel implements ActionListener {
 					Client.getInstance().getConnect().restartServer();
 					Client.getInstance().getConnect().setSlots(Client.getInstance().getConnect().getSlots() - 2);
 					
-					if(!winner){
+					if (winner) {
+						System.out.println(user.getUsername() + " gewinnt!");
 						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, user.getUsername());
 					} else {
-						Client.getInstance().getConnect().getPlayer(1);
+						System.out.println(Client.getInstance().getConnect().getPlayer(1) + " gewinnt!");
+						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, Client.getInstance().getConnect().getPlayer(1));
 					}
 					
 				}
