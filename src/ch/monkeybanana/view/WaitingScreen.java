@@ -1,7 +1,6 @@
 package ch.monkeybanana.view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,24 +31,6 @@ public class WaitingScreen extends JFrame implements ActionListener {
 	private GameWindow gw;
 	private boolean isModified = false;
 	private int playerNr = 0;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					User u = new User();
-					WaitingScreen frame = new WaitingScreen(u);
-					frame.setVisible(true);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

@@ -1,7 +1,6 @@
 package ch.monkeybanana.view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
@@ -25,8 +25,6 @@ import ch.monkeybanana.listener.HomeListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
 
-import javax.swing.JProgressBar;
-
 public class HomeView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -35,24 +33,6 @@ public class HomeView extends JFrame {
 	private JLabel onlineSpieler, slotLabelSrv1;
 	private Timer slotsTimer, spielerTimer;
 	private User u;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					User u = new User();
-					HomeView frame = new HomeView(u);
-					frame.setVisible(true);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
