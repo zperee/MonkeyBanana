@@ -33,8 +33,8 @@ public class ScoreView extends JFrame {
 	public ScoreView(int score1, int score2, String user1, String user2, boolean winner, boolean isForfait) {
 		this.setScore1(score1);
 		this.setScore2(score2);
-		this.setPlayer1(user1);
-		this.setPlayer2(user2);
+		this.setPlayer1(user2);
+		this.setPlayer2(user1);
 		this.setWinner(winner);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
