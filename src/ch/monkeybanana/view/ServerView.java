@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +23,7 @@ import javax.swing.border.TitledBorder;
 import ch.monkeybanana.rmi.Client;
 
 /**
+ * JFrame fuer den Server.
  * @author Dominic Pfister
  */
 public class ServerView extends JFrame implements ActionListener {
@@ -41,6 +43,7 @@ public class ServerView extends JFrame implements ActionListener {
 	 * @author Dominic Pfister
 	 */
 	public ServerView() {
+		this.setTimer(new Timer(300, this));
 		this.getTimer().start();
 		
 		setTitle("MonkeyBanana - Server");
@@ -113,14 +116,23 @@ public class ServerView extends JFrame implements ActionListener {
 		srv1_pl2.setBounds(12, 40, 126, 16);
 		spielerPanelSrv1.add(srv1_pl2);
 		
-		JButton restartSrv1 = new JButton("");
-		restartSrv1.setIcon(null);
-		restartSrv1.setBounds(174, 42, 32, 32);
+		JButton restartSrv1 = new JButton(new ImageIcon("images/restart.png"));
+		restartSrv1.setBorderPainted(false);
+		restartSrv1.setContentAreaFilled(false);
+		restartSrv1.setBounds(174, 113, 32, 32);
 		server1Panel.add(restartSrv1);
 		
-		JButton shutdownSrv1 = new JButton("");
-		shutdownSrv1.setBounds(174, 113, 32, 32);
+		JButton shutdownSrv1 = new JButton(new ImageIcon("images/shutdown.png"));
+		shutdownSrv1.setBorderPainted(false);
+		shutdownSrv1.setContentAreaFilled(false);
+		shutdownSrv1.setBounds(174, 42, 32, 32);
 		server1Panel.add(shutdownSrv1);
+		
+		JButton startSrv1 = new JButton(new ImageIcon("images/start.png"));
+		startSrv1.setBorderPainted(false);
+		startSrv1.setContentAreaFilled(false);
+		startSrv1.setBounds(174, 77, 32, 32);
+		server1Panel.add(startSrv1);
 		
 		setSlots1 = new JTextField();
 		setSlots1.setBounds(87, 123, 54, 22);
@@ -131,9 +143,6 @@ public class ServerView extends JFrame implements ActionListener {
 		lblNewLabel_2.setBounds(12, 124, 66, 21);
 		server1Panel.add(lblNewLabel_2);
 		
-		JButton startSrv1 = new JButton("");
-		startSrv1.setBounds(174, 77, 32, 32);
-		server1Panel.add(startSrv1);
 		
 		JLabel lblServerListe = new JLabel("Server Liste");
 		lblServerListe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -174,12 +183,18 @@ public class ServerView extends JFrame implements ActionListener {
 		srv2_pl2.setBounds(12, 40, 126, 16);
 		spielerPanelSrv2.add(srv2_pl2);
 		
-		JButton restartSrv2 = new JButton("");
-		restartSrv2.setBounds(174, 42, 32, 32);
+		JButton restartSrv2 = new JButton(new ImageIcon("images/restart.png"));
+		restartSrv2.setBorderPainted(false);
+		restartSrv2.setContentAreaFilled(false);
+		restartSrv2.setBounds(174, 113, 32, 32);
+		restartSrv2.setEnabled(false);
 		server2Panel.add(restartSrv2);
 		
-		JButton startSrv2 = new JButton("");
+		JButton startSrv2 = new JButton(new ImageIcon("images/start.png"));
+		startSrv2.setBorderPainted(false);
+		startSrv2.setContentAreaFilled(false);
 		startSrv2.setBounds(174, 79, 32, 32);
+		startSrv2.setEnabled(false);
 		server2Panel.add(startSrv2);
 		
 		setSlots2 = new JTextField();
@@ -191,8 +206,11 @@ public class ServerView extends JFrame implements ActionListener {
 		label_6.setBounds(12, 124, 66, 21);
 		server2Panel.add(label_6);
 		
-		JButton shutdownSrv2 = new JButton("");
-		shutdownSrv2.setBounds(174, 113, 32, 32);
+		JButton shutdownSrv2 = new JButton(new ImageIcon("images/shutdown.png"));
+		shutdownSrv2.setBorderPainted(false);
+		shutdownSrv2.setContentAreaFilled(false);
+		shutdownSrv2.setEnabled(false);
+		shutdownSrv2.setBounds(174, 42, 32, 32);
 		server2Panel.add(shutdownSrv2);
 		
 		setVisible(true);
@@ -201,6 +219,7 @@ public class ServerView extends JFrame implements ActionListener {
 	}
 	
 	/**
+	 * ActionListener fuer das ganze Server GUI. Wird alle 300ms aufgerufen
 	 * und aktualisiert die Komponenten.
 	 * @author Dominic Pfister
 	 */
