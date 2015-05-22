@@ -16,6 +16,7 @@ import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.game.Banana;
 import ch.monkeybanana.game.GameWindow;
 import ch.monkeybanana.model.User;
+import ch.monkeybanana.view.ServerView;
 
 /**
  * Implementierte Methoden des Interfaces Validator fuer die 
@@ -42,7 +43,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	
 	private boolean finishedGame, isHit, serverReady;
 	
-	private String playerName1, playerName2;
+	private String playerName1;
+	private String playerName2;
 	
 	private List<String> onlinePlayers = new ArrayList<String>();
 
@@ -53,10 +55,13 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public ValidatorImpl() throws RemoteException {
-		this.setConsoleframe(new JFrame());
+		this.setPlayerName1("null");
+		this.setPlayerName2("null");
+		
+		this.setConsoleframe(new ServerView());
 		this.getConsoleframe().setTitle("Server Console");
 		this.getConsoleframe().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.getConsoleframe().setSize(500, 300);
+//		this.getConsoleframe().setSize(500, 300);
 
 		this.setConsolelabel(new JLabel("<html>"));
 		this.getConsolelabel().setHorizontalTextPosition(SwingConstants.LEFT);
@@ -294,6 +299,10 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.getGame().getEnt().getTimer().stop();
 		this.getGame().getEnt().getPlayerArray().clear();
 		this.setGame(new GameWindow(system, 0));
+		
+		this.setSlots(0);
+		this.setPlayerName1("null");
+		this.setPlayerName2("null");
 		
 		this.setScorePlayer1(0);
 		this.setScorePlayer2(0);

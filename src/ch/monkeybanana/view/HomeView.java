@@ -36,6 +36,7 @@ public class HomeView extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @author Dominic Pfister, Elia Perenzin
 	 */
 	public HomeView(User u) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,7 +86,7 @@ public class HomeView extends JFrame {
 		progressBar.setBounds(10, 101, 280, 14);
 		
 		int winLose = 0;
-		if(!(result[0] == 0) || !(result[1] == 0)){
+		if(!(result[0] == 0) || !(result[1] == 0)) {
 			winLose = 100 / result[1] * result[0];
 			Color bColor = new Color(0x1FE813);
 			Color aColor = new Color(0xFF1624);

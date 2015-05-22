@@ -607,6 +607,7 @@ public class Gameboard extends JPanel implements ActionListener {
 			if (Client.getInstance().getConnect().getRundenzahl() != 5 
 					&& Client.getInstance().getConnect().getSlots() != 2
 					&& !Client.getInstance().getConnect().getServerReady()) {
+				Client.getInstance().getConnect().restartServer();
 				JOptionPane.showMessageDialog(null, "Du gewinnst da dein Gegner das Spiel verlassen hat.", "MonkeyBanana", JOptionPane.INFORMATION_MESSAGE);
 				this.restartGame(true);
 			}
@@ -673,17 +674,15 @@ public class Gameboard extends JPanel implements ActionListener {
 				new ScoreView(score[0], score[1], pl1, pl2, winner, isForfait);
 				
 				if (this.getPlayerNr() == 0 || isForfait) {
-					Client.getInstance().getConnect().restartServer();
-					Client.getInstance().getConnect().setSlots(Client.getInstance().getConnect().getSlots() - 2);
-					
-					if (winner) {
-						System.out.println(user.getUsername() + " gewinnt!");
-						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, user.getUsername());
-					} else {
-						System.out.println(Client.getInstance().getConnect().getPlayer(1) + " gewinnt!");
-						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, Client.getInstance().getConnect().getPlayer(1));
+					if (!isForfait) {
+						Client.getInstance().getConnect().restartServer();
 					}
 					
+					if (winner) {
+						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, user.getUsername());
+					} else {
+						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, Client.getInstance().getConnect().getPlayer(1));
+					}
 				}
 				
 				this.getFrame().dispose();

@@ -50,6 +50,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	 */
 	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
+		
 		try {
 			if (button.equals("login")) {
 				User loginUser = new User();
@@ -65,9 +66,10 @@ public class LoginListener implements ActionListener, KeyListener{
 				new RegistrierenView();
 			}
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(null,
-					"Es konnte keine Verbindung zu dem Server hergestellt werden.", "Warnung!",
+			 JOptionPane.showMessageDialog(null,
+					"Es konnte keine Verbindung zum Server hergestellt werden.", "Warnung!",
 					JOptionPane.ERROR_MESSAGE);
+			 System.exit(0);
 		}
 	}
 	
@@ -87,8 +89,9 @@ public class LoginListener implements ActionListener, KeyListener{
 			}
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(null,
-					"Es konnte keine Verbindung zu dem Server hergestellt werden.", "Warnung!",
+					"Es konnte keine Verbindung zum Server hergestellt werden.", "Warnung!",
 					JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
 	}
 	
