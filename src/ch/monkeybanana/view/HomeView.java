@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 
 import javax.swing.JButton;
@@ -181,17 +179,6 @@ public class HomeView extends JFrame {
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(172, 179, 200, 50);
 		contentPane.add(lblNewLabel);
-		
-		addWindowListener(new WindowAdapter() {
-	        public void windowClosing(WindowEvent e) {
-	            try {
-	            	Client.getInstance().getConnect().logoutServer(getU());
-				} catch (RemoteException e2) {
-					e2.printStackTrace();
-				}
-	            e.getWindow().dispose();
-	        }
-	    });
 	}
 	
 	/**

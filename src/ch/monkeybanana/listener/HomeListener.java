@@ -22,15 +22,9 @@ public class HomeListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(this.getButton().equals("Verlassen")){
-			  try {
-	            	Client.getInstance().getConnect().logoutServer(getU());
-				} catch (RemoteException e2) {
-					e2.printStackTrace();
-				}
-			  this.getWindow().dispose();
-	        } 
-		else if(this.getButton().equals("Spielen")){
+		if (this.getButton().equals("Verlassen")) {
+			this.getWindow().dispose();
+	    } else if(this.getButton().equals("Spielen")) {
 			try {
 				Client.getInstance().getConnect().setSlots(Client.getInstance().getConnect().getSlots() + 1);
 				new WaitingScreen(getU());

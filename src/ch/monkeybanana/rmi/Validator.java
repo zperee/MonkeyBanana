@@ -40,31 +40,13 @@ public interface Validator extends Remote {
 	public abstract List<User> getAllUser() throws RemoteException;
 	
 	/**
-	 * Abstrakte Methode um auf dem Server die Join Nachricht beim
-	 * Beitreten des Spieles anzuzeigen.
-	 * @param user {@link User}
-	 * @throws RemoteException
-	 * @author Elia Perenzin
-	 */
-	public abstract void join(User user) throws RemoteException;
-	
-	/**
-	 * Abstrakte Methode um auf dem Server die LogOut Nachricht
-	 * beim Verlassen des Servers anzuzeigen.
-	 * @param user {@link User}
-	 * @throws RemoteException
-	 * @author Elia Perenzin
-	 */
-	public abstract void logoutServer(User user) throws RemoteException;
-	
-	/**
 	 * Abstrakte Methode um auf dem Server die LogOut Nachricht
 	 * beim Verlassen des Spieles anzuzeigen.
 	 * @param user {@link User}
 	 * @throws RemoteException
 	 * @author Dominic Pfister
 	 */
-	public abstract void logoutSpiel(User user) throws RemoteException;
+	public abstract void logoutSpiel() throws RemoteException;
 	
 	/**
 	 * Abstrakte Getter Methode. Gibt die Slot Anzahl auf

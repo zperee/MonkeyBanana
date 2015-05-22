@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.game.Banana;
 import ch.monkeybanana.game.GameWindow;
@@ -25,10 +22,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	//Insanzvaroablen
 	private static final long serialVersionUID = -6227411205842232875L;
-	private JLabel consolelabel;
-	private JPanel consolepanelRight;
 
-	private JLabel slotLabel;
 	private GameWindow game;
 	private List<Banana> bananen = new ArrayList<Banana>();
 	
@@ -165,26 +159,11 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 			}	
 			} catch (Exception e) {
-				System.err.println("Fehler 3  //ValidatorImpl 186");
+				System.err.println("Fehler 3  //ValidatorImpl 168");
 			}
 		
 		}
 		return null;
-	}
-
-	@Override
-	public void join(User user) throws RemoteException {
-		this.setSlots(this.getSlots() + 1);
-	}
-
-	@Override
-	public void logoutServer(User user) throws RemoteException {
-		slotLabel.setText("Slots: " + this.getSlots());
-	}
-
-	@Override
-	public void logoutSpiel(User user) throws RemoteException {
-		this.setSlots(this.getSlots() - 1);
 	}
 
 	@Override
@@ -314,6 +293,11 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		}
 		
 	}
+
+	@Override
+	public void logoutSpiel() throws RemoteException {
+		this.setSlots(this.getSlots() - 1);
+	}
 	
 	@Override
 	public boolean getServerReady() throws RemoteException {
@@ -334,23 +318,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	@Override
 	public void removeOnlinePlayer(String player) throws RemoteException {
 		this.onlinePlayers.remove(player);
-	}
-
-	
-	public JLabel getConsolelabel() {
-		return consolelabel;
-	}
-
-	public void setConsolelabel(JLabel consolelabel) {
-		this.consolelabel = consolelabel;
-	}
-
-	public JPanel getConsolepanelRight() {
-		return consolepanelRight;
-	}
-
-	public void setConsolepanelRight(JPanel consolepanelRight) {
-		this.consolepanelRight = consolepanelRight;
 	}
 
 	public GameWindow getGame() {

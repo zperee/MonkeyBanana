@@ -69,7 +69,7 @@ public class WaitingScreen extends JFrame implements ActionListener {
 		addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
 	            try {
-	            	Client.getInstance().getConnect().logoutSpiel(getU());
+	            	Client.getInstance().getConnect().logoutSpiel();
 				} catch (RemoteException e2) {
 					e2.printStackTrace();
 				}
