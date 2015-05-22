@@ -52,7 +52,7 @@ public class RegistrierenListener implements ActionListener, KeyListener{
 		newUser.setPasswort(passwort1);
 		newUser.setPasswort2(passwort2);
 		newUser.setEmail(email);
-
+		
 		Client.getInstance().registrieren(newUser);
 	}
 	

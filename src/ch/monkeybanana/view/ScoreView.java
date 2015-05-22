@@ -13,8 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import ch.monkeybanana.model.User;
 
-	public class ScoreView extends JFrame implements ActionListener {
+
+	public class ScoreView extends JFrame {
 		
 		private static final long serialVersionUID = 2002655073290070168L;
 		private int score1;
@@ -34,8 +36,7 @@ import javax.swing.border.EmptyBorder;
 		 * @param winner {@link boolean}
 		 * @param isForfait {@link boolean}
 		 */
-		
-		public ScoreView(int score1, int score2, String user1, String user2, boolean winner, boolean isForfait) {
+		public ScoreView(User user, int score1, int score2, String user1, String user2, boolean winner, boolean isForfait) {
 			setResizable(false);
 			this.setScore1(score1);
 			this.setScore2(score2);
@@ -50,6 +51,7 @@ import javax.swing.border.EmptyBorder;
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 			setVisible(true);
+			setTitle("MonkeyBanana - Score");
 			
 			if (isForfait) {
 				JLabel resultMsg = new JLabel("Du gewinnst forfait");
@@ -86,6 +88,12 @@ import javax.swing.border.EmptyBorder;
 			JButton btnZumMenu = new JButton("zum Men\u00FC");
 			btnZumMenu.setBounds(173, 227, 114, 23);
 			contentPane.add(btnZumMenu);
+			btnZumMenu.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		        	dispose();
+		        	new HomeView(user);
+		        }
+		    });
 			
 			JPanel panel = new JPanel();
 			panel.setBounds(180, 147, 90, 33);
@@ -139,12 +147,6 @@ import javax.swing.border.EmptyBorder;
 			label_3.setHorizontalAlignment(SwingConstants.CENTER);
 			label_3.setBounds(10, 11, 69, 95);
 			panel_2.add(label_3);
-		}
-		
-		//TODO
-		public void actionPerformed(ActionEvent e) {
-			new HomeView(null);
-			
 		}
 
 		public int getScore1() {

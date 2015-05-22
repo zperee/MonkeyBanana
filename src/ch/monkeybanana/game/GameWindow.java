@@ -1,9 +1,12 @@
 package ch.monkeybanana.game;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
 
 import ch.monkeybanana.model.User;
+import ch.monkeybanana.rmi.Client;
 
 /**
  * Hauptklasse fuer den Spiel Client. Erzeugt das JFrame und
@@ -43,7 +46,7 @@ public class GameWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(15 * 48 + 7,  18 * 48 - 19);
         this.setLocationRelativeTo(null);
-        this.setTitle("MonkeyBanana Game");
+        this.setTitle("MonkeyBanana - Game");
         this.setResizable(false);
 
         if (u.getUsername().equals("SYSTEM")) {
@@ -54,6 +57,17 @@ public class GameWindow extends JFrame {
         
         this.setEnabled(true);
         this.add(this.getEnt());
+        
+		this.addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowClosing(WindowEvent e) {
+	            try {
+	            	Client.getInstance().getConnect().logoutSpiel();
+				} catch (RemoteException e2) {
+					e2.printStackTrace();
+				}
+	        }
+	    });
     }
 
 	/* **GETTER und SETTER** */

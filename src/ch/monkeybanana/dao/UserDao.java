@@ -13,12 +13,22 @@ import ch.monkeybanana.model.User;
 public interface UserDao {
 
 	/**
-	 * Methode um auslesen aller User
-	 * @author Elia Perenzin
-	 * @return Liste mit allen User {@link User}
+	 * Methode um alle Benutzernamen aus der DB zu lesen.
+	 * @author Elia Perenzin, Dominic Pfister
+	 * @return Liste mit allen Usernamen {@link String}
 	 * @throws SQLException
 	 */
-	public abstract List<User> findAllUsers() throws SQLException;
+	public abstract List<String> findAllUsernames() throws SQLException;
+	
+	/**
+	 * Methode um alle Benutzer aus der DB zu lesen. Für jeden
+	 * User wird ein neues User Objekt erstellt.
+	 * @author Elia Perenzin, Dominic Pfister
+	 * @return Liste mit allen Usernamen {@link User}
+	 * @param username {@link String}
+	 * @throws SQLException
+	 */
+	public abstract User login(String username) throws SQLException;
 	
 	/**
 	 * Methode um einen neuen User einzutragen

@@ -29,7 +29,7 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 * @author Elia Perenzin
 	 */
-	public abstract void login(User user) throws RemoteException;
+	public abstract void login(String username) throws RemoteException;
 	
 	/**
 	 * Abstrakte Methode um alle User aus der DB zulesen
@@ -37,7 +37,7 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 * @author Elia Perenzin
 	 */
-	public abstract List<User> getAllUser() throws RemoteException;
+	public abstract List<String> getAllUser() throws RemoteException;
 	
 	/**
 	 * Abstrakte Methode um auf dem Server die LogOut Nachricht
@@ -141,9 +141,9 @@ public interface Validator extends Remote {
 	 */
 	public abstract int getScore(int playerNr) throws RemoteException;
 	
-	/** ================================================================================================================
-	 * TODO
-	 * @return
+	/**
+	 * Gibt die Liste mit den beiden Spielerpunktzahlen zurueck.
+	 * @return int[]
 	 * @throws RemoteException
 	 * @author Elia Perenzin
 	 */
@@ -219,14 +219,6 @@ public interface Validator extends Remote {
 	public abstract void setPlayer(String name, int playerNr) throws RemoteException;
 	
 	/**
-	 * Abstrakte Getter Methode fuer den Boolean serverReady.
-	 * @author Dominic Pfister
-	 * @return
-	 * @throws RemoteException
-	 */
-	public abstract boolean getServerReady() throws RemoteException;
-	
-	/**
 	 * Abstrakte Getter Methode fuer die angemeldeten Spieler.
 	 * @author Dominic Pfister
 	 * @return
@@ -249,4 +241,28 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 */
 	public abstract void removeOnlinePlayer(String player) throws RemoteException;
+	
+	/**
+	 * Abstrakte Setter Methode fuer den Boolean serverStatus.
+	 * @author Dominic Pfister, Elia Perenzin
+	 * @param ready
+	 * @throws RemoteException
+	 */
+	public abstract void setServerStatus(boolean ready) throws RemoteException;
+	
+	/**
+	 * Abstrakte Getter Methode fuer den Boolean serverStatus.
+	 * @author Dominic Pfister, Elia Perenzin
+	 * @param ready
+	 * @throws RemoteException
+	 */
+	public abstract boolean isServerStatus() throws RemoteException;
+	
+	/**
+	 * Abstrakte Getter Methode fuer den Boolean serverReady.
+	 * @return boolean
+	 * @author Dominic Pfister, Elia Perenzin
+	 * @throws RemoteException
+	 */
+	public abstract boolean isServerReady() throws RemoteException;
 }

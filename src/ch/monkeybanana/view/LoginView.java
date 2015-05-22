@@ -37,7 +37,7 @@ public class LoginView extends JFrame {
 	protected JLabel titelLabel = new JLabel("MonkeyBanana Login");
 
 	public LoginView() {
-		this.setTitle("MonkeyBanana");
+		this.setTitle("MonkeyBanana - Login");
 		this.setBounds(500, 400, 419, 238);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);

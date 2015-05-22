@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
@@ -45,6 +46,7 @@ public class HomeView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setTitle("MonkeyBanana - Menu");
 		this.setU(u);
 		
 		slotsTimer = new Timer(100, freeSlotListener);
@@ -173,7 +175,22 @@ public class HomeView extends JFrame {
 		JButton verlassenBtn = new JButton("Verlassen");
 		verlassenBtn.setBounds(320, 388, 104, 23);
 		verlassenBtn.setFocusable(false);
-		verlassenBtn.addActionListener(new HomeListener(this.getU(), "Verlassen", this));
+		verlassenBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int confirmationPane = JOptionPane.showConfirmDialog(null, "Möchten Sie sich wirklich abmelden?", "MonkeyBanana - Abmelden", JOptionPane.YES_NO_OPTION);
+		        if (confirmationPane == JOptionPane.YES_OPTION) {
+					try {
+						Client.getInstance().getConnect().removeOnlinePlayer(u.getUsername());
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}
+					dispose();
+					Client.start();
+		        }
+		        else {
+		        }
+			}
+		});
 		contentPane.add(verlassenBtn);
 		
 		JLabel lblNewLabel = new JLabel("New label");
@@ -190,10 +207,10 @@ public class HomeView extends JFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if (Client.getInstance().getConnect().getSlots() < 2) {
+				if (Client.getInstance().getConnect().getSlots() < 2 && Client.getInstance().getConnect().isServerStatus()) {
 					spielenBtnSrv1.setEnabled(true);
 					slotLabelSrv1.setText(String.valueOf(Client.getInstance().getConnect().getSlots() + "/2"));
-				} else if (Client.getInstance().getConnect().getSlots() >= 2) {
+				} else if (Client.getInstance().getConnect().getSlots() >= 2 || !Client.getInstance().getConnect().isServerStatus()) {
 					spielenBtnSrv1.setEnabled(false);
 					slotLabelSrv1.setText(String.valueOf(Client.getInstance().getConnect().getSlots() + "/2"));
 				}

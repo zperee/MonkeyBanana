@@ -16,9 +16,10 @@ public class UserJDBCDao extends Database implements UserDao {
 	//Variable fuer Verbindung
 	private Connection con = null;
 	
-	public List<User> findAllUsers() throws SQLException {
-		String sql = "SELECT * FROM user"; //Query
-		List<User> p = new ArrayList<User>();
+	
+	public List<String> findAllUsernames() throws SQLException {
+		String sql = "SELECT ID_User FROM user"; //Query
+		List<String> users = new ArrayList<String>();
 		
 		con = getCon(); //holt alle infos zu DB verbindung 
 		ps = con.prepareStatement(sql);
@@ -27,11 +28,10 @@ public class UserJDBCDao extends Database implements UserDao {
 		while (rs.next()) {
 			User user = new User();
 			user.setUsername(rs.getString("ID_User"));
-			user.setPasswort(rs.getString("Passwort"));
-			p.add(user);
+			users.add(user.getUsername());
 		}
 		closeCon(); //schliesst die Verbindugn zur DB wieder
-		return p;
+		return users;
 	}
 
 	public void registrieren(User user) throws SQLException {
@@ -45,5 +45,23 @@ public class UserJDBCDao extends Database implements UserDao {
 		ps.executeUpdate();
 		
 		closeCon(); //schliesst die Verbindugn zur DB
+	}
+
+	@Override
+	public User login(String username) throws SQLException {
+		String sql = "SELECT ID_User, Passwort FROM user where ID_User = ?;"; //Query
+		
+		con = getCon(); //holt alle infos zu DB verbindung 
+		ps = con.prepareStatement(sql);
+		ps.setString(1, username);
+		rs = ps.executeQuery();
+
+		rs.next();
+		User user = new User();
+		user.setUsername(rs.getString("ID_User"));
+		user.setPasswort(rs.getString("Passwort"));
+		
+		closeCon(); //schliesst die Verbindugn zur DB wieder
+		return user;
 	}
 }

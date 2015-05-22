@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.rmi.RemoteException;
 
 import javax.swing.ImageIcon;
@@ -35,6 +37,7 @@ public class ServerView extends JFrame implements ActionListener {
 	private JLabel srv1_pl1, srv1_pl2, srv2_pl1, srv2_pl2;
 	private JLabel slotLabelSrv1, slotLabelSrv2;
 	private JLabel onlinePlayers;
+	private JButton startSrv1, shutdownSrv1, restartSrv1;
 	
 	private Timer timer;
 
@@ -72,6 +75,7 @@ public class ServerView extends JFrame implements ActionListener {
 		playersPanel.add(spielerTitle);
 		
 		JSeparator separator = new JSeparator();
+		separator.setForeground(Color.LIGHT_GRAY);
 		separator.setBounds(12, 30, 101, 2);
 		playersPanel.add(separator);
 		
@@ -98,8 +102,9 @@ public class ServerView extends JFrame implements ActionListener {
 		server1Panel.add(lblServer1);
 		
 		slotLabelSrv1 = new JLabel("0/2");
+		slotLabelSrv1.setHorizontalAlignment(SwingConstants.RIGHT);
 		slotLabelSrv1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		slotLabelSrv1.setBounds(137, 13, 25, 16);
+		slotLabelSrv1.setBounds(108, 13, 54, 16);
 		server1Panel.add(slotLabelSrv1);
 		
 		JPanel spielerPanelSrv1 = new JPanel();
@@ -116,27 +121,86 @@ public class ServerView extends JFrame implements ActionListener {
 		srv1_pl2.setBounds(12, 40, 126, 16);
 		spielerPanelSrv1.add(srv1_pl2);
 		
-		JButton restartSrv1 = new JButton(new ImageIcon("images/restart.png"));
+		restartSrv1 = new JButton(new ImageIcon("images/restart.png"));
 		restartSrv1.setBorderPainted(false);
 		restartSrv1.setContentAreaFilled(false);
 		restartSrv1.setBounds(174, 113, 32, 32);
+		restartSrv1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Client.getInstance().getConnect().restartServer();
+					Client.getInstance().getConnect().setServerStatus(false);
+					Thread.sleep(1000);
+					Client.getInstance().getConnect().setServerStatus(true);
+				} catch (RemoteException | InterruptedException e1) {
+				}
+			}
+		});
 		server1Panel.add(restartSrv1);
-		
-		JButton shutdownSrv1 = new JButton(new ImageIcon("images/shutdown.png"));
+
+		shutdownSrv1 = new JButton(new ImageIcon("images/shutdown.png"));
 		shutdownSrv1.setBorderPainted(false);
 		shutdownSrv1.setContentAreaFilled(false);
 		shutdownSrv1.setBounds(174, 42, 32, 32);
+		shutdownSrv1.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	try {
+					Client.getInstance().getConnect().restartServer();
+					Client.getInstance().getConnect().setServerStatus(false);
+					startSrv1.setEnabled(true);
+					shutdownSrv1.setEnabled(false);
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
+				}
+	        }
+	    });
 		server1Panel.add(shutdownSrv1);
 		
-		JButton startSrv1 = new JButton(new ImageIcon("images/start.png"));
+		startSrv1 = new JButton(new ImageIcon("images/start.png"));
 		startSrv1.setBorderPainted(false);
 		startSrv1.setContentAreaFilled(false);
+		startSrv1.setEnabled(false);
 		startSrv1.setBounds(174, 77, 32, 32);
+		startSrv1.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	try {
+					Client.getInstance().getConnect().setServerStatus(true);
+					startSrv1.setEnabled(false);
+					shutdownSrv1.setEnabled(true);
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
+				}
+	        }
+	    });
 		server1Panel.add(startSrv1);
 		
 		setSlots1 = new JTextField();
 		setSlots1.setBounds(87, 123, 54, 22);
 		server1Panel.add(setSlots1);
+		setSlots1.addKeyListener((new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER) {
+					try {
+						System.out.println(1);
+						Client.getInstance().getConnect().setSlots(Integer.valueOf(setSlots1.getText()));
+						setSlots1.setText("");
+					} catch (NumberFormatException | RemoteException | NullPointerException e1) {
+					}
+				}
+			}
+	    }));
+		
 		setSlots1.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Set Slots:");
@@ -151,6 +215,7 @@ public class ServerView extends JFrame implements ActionListener {
 		serversPanel.add(lblServerListe);
 		
 		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(Color.LIGHT_GRAY);
 		separator_1.setBounds(40, 30, 162, 2);
 		serversPanel.add(separator_1);
 		
@@ -165,8 +230,9 @@ public class ServerView extends JFrame implements ActionListener {
 		server2Panel.add(lblServer2);
 		
 		slotLabelSrv2 = new JLabel("0/0");
+		slotLabelSrv2.setHorizontalAlignment(SwingConstants.RIGHT);
 		slotLabelSrv2.setFont(new Font("Tahoma", Font.BOLD, 13));
-		slotLabelSrv2.setBounds(137, 13, 25, 16);
+		slotLabelSrv2.setBounds(102, 13, 60, 16);
 		server2Panel.add(slotLabelSrv2);
 		
 		JPanel spielerPanelSrv2 = new JPanel();
@@ -246,6 +312,8 @@ public class ServerView extends JFrame implements ActionListener {
 		} catch (RemoteException e1) {
 		}
 	}
+	
+	
 
 	/* **GETTER und SETTER** */
 	public Timer getTimer() {

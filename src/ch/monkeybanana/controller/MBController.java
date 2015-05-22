@@ -95,8 +95,13 @@ public class MBController {
 	 *            {@link User}
 	 * @return user {@link User}
 	 */
-	public User login(User user) {
-		return user;
+	public User login(String username) {
+		try {
+			return USER_DAO.login(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/* **GETTER und SETTER** */

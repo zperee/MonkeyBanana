@@ -23,6 +23,7 @@ import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
 import ch.monkeybanana.rmi.Client;
+import ch.monkeybanana.view.HomeView;
 import ch.monkeybanana.view.ScoreView;
 
 /**
@@ -600,15 +601,18 @@ public class Gameboard extends JPanel implements ActionListener {
 	 * @author Dominic Pfister
 	 */
 	private void checkForfait() {
-		/*
-		 * TODO in DB eintragen, dass er "forfait" gewonnen hat
-		 */
 		try {
-			if (Client.getInstance().getConnect().getRundenzahl() != 5 
+			if (!Client.getInstance().getConnect().isServerStatus()) {
+				timer.stop();
+				this.getFrame().dispose();
+				JOptionPane.showMessageDialog(null, "Der Server wurde heruntergefahren.", "MonkeyBanana - Server Restarted", JOptionPane.INFORMATION_MESSAGE);
+				new HomeView(this.getUser());
+			}
+			else if (Client.getInstance().getConnect().getRundenzahl() != 5 
 					&& Client.getInstance().getConnect().getSlots() != 2
-					&& !Client.getInstance().getConnect().getServerReady()) {
+					&& !Client.getInstance().getConnect().isServerReady()) {
 				Client.getInstance().getConnect().setSlots(0);
-				JOptionPane.showMessageDialog(null, "Du gewinnst da dein Gegner das Spiel verlassen hat.", "MonkeyBanana", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Du gewinnst da dein Gegner das Spiel verlassen hat.", "MonkeyBanana - Forfait", JOptionPane.INFORMATION_MESSAGE);
 				this.restartGame(true);
 			}
 		} catch (HeadlessException | RemoteException e) {
@@ -671,13 +675,13 @@ public class Gameboard extends JPanel implements ActionListener {
 				String pl1 = Client.getInstance().getConnect().getPlayer(0);
 				String pl2 = Client.getInstance().getConnect().getPlayer(1);
 				
-				new ScoreView(score[0], score[1], pl1, pl2, winner, isForfait);
+				new ScoreView(this.getUser(), score[0], score[1], pl1, pl2, winner, isForfait);
 				
 				if (this.getPlayerNr() == 0 || isForfait) {
 					if (winner) {
-						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, Client.getInstance().getConnect().getPlayer(1));
+						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, this.getUser().getUsername());
 					} else {
-						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, user.getUsername());
+						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, Client.getInstance().getConnect().getPlayer(1));
 					}
 					Client.getInstance().getConnect().restartServer();
 				}

@@ -41,7 +41,7 @@ public class RegistrierenView extends JFrame {
 	protected JLabel passwordConfirmLabel = new JLabel("Passwort best\u00E4tigen");
 
 	public RegistrierenView() {
-		this.setTitle("Registration MonkeyBanana");
+		this.setTitle("MonkeyBanana - Registrieren");
 		this.setBounds(500, 400, 419, 238);
 		this.getContentPane().setLayout(null);
 		this.setResizable(false);

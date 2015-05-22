@@ -32,6 +32,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private int slots = 0;
 	
 	private boolean finishedGame, isHit, serverReady;
+	private boolean serverStatus = true;
 	
 	private String playerName1;
 	private String playerName2;
@@ -77,9 +78,11 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 *            {@link User}
 	 * @throws RemoteException
 	 */
-	public synchronized void login(User user) throws RemoteException {
-		MBController.getInstance().login(user);
+	@Override
+	public void login(String username) throws RemoteException {
+		MBController.getInstance().login(username);	
 	}
+
 
 	/**
 	 * Methode um alle User aus der DB zulesen
@@ -88,9 +91,9 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @return List<{@link User}>
 	 * @throws RemoteException
 	 */
-	public synchronized List<User> getAllUser() throws RemoteException {
+	public synchronized List<String> getAllUser() throws RemoteException {
 		try {
-			return MBController.getUserDao().findAllUsers();
+			return MBController.getUserDao().findAllUsernames();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -300,11 +303,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	}
 	
 	@Override
-	public boolean getServerReady() throws RemoteException {
-		return this.serverReady;
-	}
-	
-	@Override
 	public List<String> getOnlinePlayers() throws RemoteException {
 		return this.onlinePlayers;
 	}
@@ -318,6 +316,21 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	@Override
 	public void removeOnlinePlayer(String player) throws RemoteException {
 		this.onlinePlayers.remove(player);
+	}
+
+	@Override
+	public boolean isServerReady() throws RemoteException {
+		return this.serverReady;
+	}
+	
+	@Override
+	public void setServerStatus(boolean status) throws RemoteException {
+		this.serverStatus = status;
+	}
+
+	@Override
+	public boolean isServerStatus() throws RemoteException {
+		return this.serverStatus;
 	}
 
 	public GameWindow getGame() {
@@ -380,15 +393,12 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.playerName2 = playerName2;
 	}
 
-	public boolean isServerReady() {
-		return serverReady;
-	}
-
-	public void setServerReady(boolean serverReady) {
-		this.serverReady = serverReady;
-	}
-
 	public void setOnlinePlayers(List<String> onlinePlayers) {
 		this.onlinePlayers = onlinePlayers;
 	}
+	
+	private void setServerReady(boolean ready) {
+		this.serverReady = ready;
+	}
+
 }
