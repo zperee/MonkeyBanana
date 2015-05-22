@@ -2,8 +2,6 @@ package ch.monkeybanana.controller;
 
 import java.sql.SQLException;
 
-import javax.swing.JLabel;
-
 import ch.monkeybanana.dao.Game_StatisticDao;
 import ch.monkeybanana.dao.Game_StatisticJDBCDao;
 import ch.monkeybanana.dao.UserDao;
@@ -32,7 +30,6 @@ public class MBController {
 	 * singelton Klasse ist.
 	 */
 	private MBController() {
-
 	}
 
 	/**
@@ -54,11 +51,9 @@ public class MBController {
 	 * @param newUser
 	 *            {@link User}
 	 */
-	public void registrieren(User newUser, JLabel console) {
+	public void registrieren(User newUser) {
 		try {
 			USER_DAO.registrieren(newUser);
-			console.setText(console.getText() + "Benutzer "
-					+ newUser.getUsername() + " hat sich registriert." + "<br>");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -100,9 +95,7 @@ public class MBController {
 	 *            {@link User}
 	 * @return user {@link User}
 	 */
-	public User login(User user, JLabel console) {
-		console.setText(console.getText() + user.getUsername()
-				+ " hat den Server betreten." + "<br/>");
+	public User login(User user) {
 		return user;
 	}
 

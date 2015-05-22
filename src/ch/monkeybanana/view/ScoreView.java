@@ -120,7 +120,7 @@ import javax.swing.border.EmptyBorder;
 			namePlayer1.setBounds(0, 117, 89, 24);
 			panel_1.add(namePlayer1);
 			
-			JLabel lblNewLabel_2 = new JLabel(new ImageIcon("images/MonkeyBlue.png"));
+			JLabel lblNewLabel_2 = new JLabel(new ImageIcon("images/MonkeyRed.png"));
 			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2.setBounds(10, 11, 69, 95);
 			panel_1.add(lblNewLabel_2);
@@ -135,7 +135,7 @@ import javax.swing.border.EmptyBorder;
 			namePlayer2.setBounds(0, 117, 89, 24);
 			panel_2.add(namePlayer2);
 			
-			JLabel label_3 = new JLabel(new ImageIcon("images/MonkeyRed.png"));
+			JLabel label_3 = new JLabel(new ImageIcon("images/MonkeyBlue.png"));
 			label_3.setHorizontalAlignment(SwingConstants.CENTER);
 			label_3.setBounds(10, 11, 69, 95);
 			panel_2.add(label_3);

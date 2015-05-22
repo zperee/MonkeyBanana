@@ -1,16 +1,13 @@
 package ch.monkeybanana.rmi;
 
-import java.awt.BorderLayout;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.game.Banana;
@@ -31,7 +28,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private JLabel consolelabel;
 	private JPanel consolepanelRight;
 
-	private JFrame consoleframe;
 	private JLabel slotLabel;
 	private GameWindow game;
 	private List<Banana> bananen = new ArrayList<Banana>();
@@ -58,22 +54,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.setPlayerName1("null");
 		this.setPlayerName2("null");
 		
-		this.setConsoleframe(new ServerView());
-		this.getConsoleframe().setTitle("Server Console");
-		this.getConsoleframe().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.getConsoleframe().setSize(500, 300);
-
-		this.setConsolelabel(new JLabel("<html>"));
-		this.getConsolelabel().setHorizontalTextPosition(SwingConstants.LEFT);
-
-		this.setConsolepanelRight(new JPanel());
-		this.getConsolepanelRight().add(this.getConsolelabel());
-
-		this.getConsoleframe().add(this.getConsolepanelRight(), BorderLayout.WEST);
-		this.getConsoleframe().setVisible(true);
-
-		slotLabel = new JLabel("Slots: " + this.getSlots());
-		this.getConsoleframe().add(slotLabel);
+		new ServerView();
+		
 		User system = new User();
 		system.setUsername("SYSTEM");
 		this.setGame(new GameWindow(system, 0));
@@ -90,7 +72,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public void registration(User newUser) throws RemoteException {
-		MBController.getInstance().registrieren(newUser, this.getConsolelabel());
+		MBController.getInstance().registrieren(newUser);
 	}
 
 	/**
@@ -102,7 +84,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public synchronized void login(User user) throws RemoteException {
-		MBController.getInstance().login(user, this.getConsolelabel());
+		MBController.getInstance().login(user);
 	}
 
 	/**
@@ -183,7 +165,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 			}	
 			} catch (Exception e) {
-				System.out.println("Fehler 3  //ValidatorImpl 176");
+				System.err.println("Fehler 3  //ValidatorImpl 186");
 			}
 		
 		}
@@ -192,27 +174,17 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	@Override
 	public void join(User user) throws RemoteException {
-		this.getConsolelabel().setText(this.getConsolelabel().getText() + 
-				"Benutzer " + user.getUsername() + " hat das Spiel betreten." + "<br>");
-		
 		this.setSlots(this.getSlots() + 1);
-		slotLabel.setText("Slots: " + this.getSlots());
 	}
 
 	@Override
 	public void logoutServer(User user) throws RemoteException {
-		this.getConsolelabel().setText(this.getConsolelabel().getText() + user.getUsername() + 
-				" hat den Server verlassen." + "<br>");
 		slotLabel.setText("Slots: " + this.getSlots());
 	}
 
 	@Override
 	public void logoutSpiel(User user) throws RemoteException {
-		this.getConsolelabel().setText(this.getConsolelabel().getText() + user.getUsername() + 
-				" hat das Spiel verlassen." + "<br>");
 		this.setSlots(this.getSlots() - 1);
-
-		slotLabel.setText("Slots: " + this.getSlots());
 	}
 
 	@Override
@@ -379,14 +351,6 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 
 	public void setConsolepanelRight(JPanel consolepanelRight) {
 		this.consolepanelRight = consolepanelRight;
-	}
-
-	public JFrame getConsoleframe() {
-		return consoleframe;
-	}
-
-	public void setConsoleframe(JFrame consoleframe) {
-		this.consoleframe = consoleframe;
 	}
 
 	public GameWindow getGame() {
