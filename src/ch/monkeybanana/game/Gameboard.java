@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import ch.monkeybanana.audio.AudioPlayer;
 import ch.monkeybanana.controller.MBController;
 import ch.monkeybanana.listener.GameListener;
 import ch.monkeybanana.model.User;
@@ -50,8 +52,10 @@ public class Gameboard extends JPanel implements ActionListener {
 	private int playerMaxBananas;
 	private boolean isModified, isRestarted;
 	private User user;
+	private HashMap<String, AudioPlayer> sfx;
 	
 	private JFrame frame;
+	private AudioPlayer backgroundMusic;
 
 	/**
 	 * Erstellt ein neues Spielbrett.
@@ -65,6 +69,15 @@ public class Gameboard extends JPanel implements ActionListener {
 		this.setPlayerNr(spielerNr);
 		setFocusable(true);
 		setDoubleBuffered(true);
+		
+		if(!(u.getUsername().equals("SYSTEM"))){
+			backgroundMusic = new AudioPlayer("/audio/deep_forest.mp3");
+			backgroundMusic.playLoop();
+		}
+		
+		sfx = new HashMap <String, AudioPlayer>();
+		sfx.put("banana_shot", new AudioPlayer("/audio/banana_shot.mp3"));
+		sfx.put("banana_over", new AudioPlayer("/audio/banana_over.mp3"));
 		
 		this.setUser(u);
 		this.setFrame(frame);
@@ -165,6 +178,7 @@ public class Gameboard extends JPanel implements ActionListener {
 			else if (GameListener.isBananaThrown()) {
 				type = 2;
 				owner = this.getPlayerNr();
+				sfx.get("banana_shot").play();
 
 				if (GameListener.isUp()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
@@ -328,6 +342,7 @@ public class Gameboard extends JPanel implements ActionListener {
 		/* Zeichnet die Hindernisse */
 		for (Obstacle kiste : obstacleArray) {
 			g.drawImage(kiste.getImage().getImage(), kiste.getX(), kiste.getY(), this);
+			
 			// Hitbox fuer Hindernis
 //			 g.setColor(Color.RED);
 //			 g.drawRect(kiste.getX(), kiste.getY(),
@@ -340,7 +355,6 @@ public class Gameboard extends JPanel implements ActionListener {
 		for (Banana banana : bananenArray) { // Erhöht die Koordinaten für
 												// geworfene Bananen
 			if (banana.getType() == 2) {
-
 				char dir = banana.getDirection(); // Erhöht Positionen der
 													// Bananen
 				switch (dir) {
@@ -572,9 +586,11 @@ public class Gameboard extends JPanel implements ActionListener {
 					Rectangle recBanana = b.bananaBounds();
 					if (playerNr == 0) {
 						recPlayer = p1.playerBounds();
+						sfx.get("banana_over").play();
 					}
 					else {
 						recPlayer = p2.playerBounds();
+						sfx.get("banana_over").play();
 					}
 
 					if (recPlayer.intersects(recBanana)) {
@@ -676,6 +692,9 @@ public class Gameboard extends JPanel implements ActionListener {
 				String pl2 = Client.getInstance().getConnect().getPlayer(1);
 				
 				new ScoreView(this.getUser(), score[0], score[1], pl1, pl2, winner, isForfait);
+				
+				backgroundMusic.stop();
+				backgroundMusic.close();
 				
 				if (this.getPlayerNr() == 0 || isForfait) {
 					if (winner) {
