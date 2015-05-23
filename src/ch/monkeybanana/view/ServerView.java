@@ -46,7 +46,7 @@ public class ServerView extends JFrame implements ActionListener {
 	 * @author Dominic Pfister
 	 */
 	public ServerView() {
-		this.setTimer(new Timer(300, this));
+		this.setTimer(new Timer(500, this));
 		this.getTimer().start();
 		
 		setTitle("MonkeyBanana - Server");
