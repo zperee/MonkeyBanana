@@ -9,11 +9,15 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -44,9 +48,9 @@ public class Gameboard extends JPanel implements ActionListener {
 	private int playerNr;
 	private boolean run = true;
 
-	List<Obstacle> obstacleArray = new ArrayList<Obstacle>();
-	List<Banana> bananenArray = new ArrayList<Banana>();
-	List<Player> playerArray = new ArrayList<Player>();
+	private List<Obstacle> obstacleArray = new ArrayList<Obstacle>();
+	private List<Banana> bananenArray = new ArrayList<Banana>();
+	private List<Player> playerArray = new ArrayList<Player>();
 
 	private long coolDown, refreshTimer;
 	private int playerMaxBananas;
@@ -56,6 +60,8 @@ public class Gameboard extends JPanel implements ActionListener {
 	
 	private JFrame frame;
 	private AudioPlayer backgroundMusic;
+	
+	private List<Integer> map = new ArrayList<Integer>();
 
 	/**
 	 * Erstellt ein neues Spielbrett.
@@ -244,15 +250,77 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
+	 * Waehlt eine zufaellige Zahl aus.
+	 * @author Dominic Pfister
+	 * @param maxZahl {@link int} 
+	 * @return int
+	 */
+	public int randomZahl(int maxZahl) { 
+		Random r;
+		r = new Random();
+		return r.nextInt(maxZahl) + 1;
+	}
+	
+	/**
+	 * Laedt die Karte aus einem File in eine Integer ArrayList.
+	 * @author Dominic Pfister
+	 */
+	private void mapLoader(String file) {
+		Scanner s;
+		try {
+			s = new Scanner(new File(file));
+			while (s.hasNext()) {
+				int character = Integer.parseInt(s.next());
+				this.getMap().add(character);
+			}
+		} catch (FileNotFoundException e) {
+			System.err.println("Die Karte konnte nicht gefunden werden.");
+		}
+	}
+	
+	/**
 	 * Erstellt die Karte fuer das Spiel mit den Hindernissen
 	 * @author Dominic Pfister
 	 * @param mapSize {@link int}
 	 */
 	private void generateMap(int mapSize) {
+		String karte = "kartenPfad";
+		
 		/*
-		 * TODO !KannZiel map einlesen (verschiedene Maps)
+		 * Waehlt zufaellig eine Karte aus und sendet diese an den Server.
+		 * Spieler2 ladet diese dann vom Server.
 		 */
-
+		if (this.getPlayerNr() == 0) {
+			if (randomZahl(2) == 1) {
+				karte = "maps/Karte1.txt";
+				try {
+					Client.getInstance().getConnect().setKarte(karte);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			} else {
+				karte = "maps/Karte1.txt";
+			}
+			
+			try {
+				Client.getInstance().getConnect().setKarte(karte);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			try {
+				karte = Client.getInstance().getConnect().getKarte();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		mapLoader(karte);
 		/*
 		 * **LEGENDE** 
 		 * 0 = next Line 
@@ -274,48 +342,12 @@ public class Gameboard extends JPanel implements ActionListener {
 		 * 56 = Brick_moss
 		 * 57-69 = Water
 		 */
-		int[] map = { 40, 16, 29, 28, 27, 29, 27, 28, 27, 29, 28, 27, 29, 17, 40,  0,
-					  40, 22, 55, 56, 55, 55, 55, 56, 55, 56, 56, 55, 55, 25, 40,  0,
-					  40, 14, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 15, 40,  0,
-					  16, 27, 29, 28, 27, 34, 52, 33, 28, 29, 28, 17, 41, 40, 40,  0,
-					  23,  1,  1, 13, 1,  1,  1,  1,  1,   1,  1, 33, 27, 28, 17,  0,
-					  21,  2, 35, 18, 19, 36,  1, 35, 18, 36,  1,  1,  1,  1, 26,  0,
-					  34,  3, 33, 31, 17, 38,  1, 33, 31, 34,  1, 35, 36,  1, 33,  0,
-					  54,  8, 13,  7, 26, 22,  1,  1,  1,  1,  1, 25, 22,  1, 53,  0,
-					  18, 19, 36,  8, 24, 14, 36,  1, 35, 20, 18, 15, 21,  1, 35,  0,
-					  40, 39, 22,  1, 33, 30, 34,  1, 33, 32, 31, 30, 34,  1, 24,  0,
-					  40, 16, 34,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-					  40, 23,  1,  1, 35, 36,  1, 35, 18, 19, 20, 36,  1, 35, 15,  0,
-					  40, 21,  1, 35, 15, 21,  1, 33, 28, 29, 17, 22,  1, 24, 40,  0,
-					  40, 23,  1, 33, 17, 22,  1,  1,  1,  1, 24, 23,  1, 26, 40,  0,
-					  40, 22,  1,  1, 33, 34,  1, 35, 36,  1, 33, 34,  1, 25, 40,  0,
-					  40, 14, 36,  1,  1,  1,  5, 37, 38,  1,  1,  1,  1, 24, 40,  0,
-					  40, 40, 14, 20, 19, 36, 51, 25, 14, 20, 18, 20, 19, 15, 40,  0  };
-
-		/* TEMPLATE */
-//		int[] map = { 40, 16, 29, 28, 27, 29, 27, 28, 27, 29, 28, 27, 29, 17, 40,  0,
-//				  	  40, 22, 55, 56, 55, 55, 55, 56, 55, 56, 56, 55, 55, 25, 40,  0,
-//				  	  40, 14, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 15, 40,  0,
-//				  	  16, 27, 29, 28, 27, 29, 27, 27, 28, 29, 28, 29, 27, 29, 17,  0,
-//				  	  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-//				  	  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-//				  	  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
-//				  	  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-//				  	  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-//				  	  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
-//				  	  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-//				  	  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-//				  	  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-//				  	  23,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 24,  0,
-//				  	  22,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26,  0,
-//				  	  21,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 25,  0,
-//				  	  14, 18, 19, 20, 19, 20, 18, 19, 18, 20, 18, 20, 19, 19, 15,  0  };
-
+		
 		int posX = 0;
 		int posY = 0;
 
 		// Generiert Karte aufgrund von int[] map
-		for (int s : map) {
+		for (int s : this.getMap()) {
 			Obstacle kiste = new Obstacle(posX, posY, s, 48);
 			if (!isModified) {
 				obstacleArray.add(kiste);
@@ -612,7 +644,7 @@ public class Gameboard extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Prüft ob einer der beiden Spieler den Server bereits verlassen hat. Dadurch gewinnt der andere Spieler
+	 * Prueft ob einer der beiden Spieler den Server bereits verlassen hat. Dadurch gewinnt der andere Spieler
 	 * automatisch. Ihm wird ein neues ScoreView angezeigt.
 	 * @author Dominic Pfister
 	 */
@@ -831,5 +863,13 @@ public class Gameboard extends JPanel implements ActionListener {
 
 	public void setTimer(Timer timer) {
 		this.timer = timer;
+	}
+
+	public List<Integer> getMap() {
+		return map;
+	}
+
+	public void setMap(List<Integer> map) {
+		this.map = map;
 	}
 }

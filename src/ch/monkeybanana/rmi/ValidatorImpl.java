@@ -37,6 +37,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private String playerName1;
 	private String playerName2;
 	
+	private String karte;
+	
 	private String version;
 	
 	private List<String> onlinePlayers = new ArrayList<String>();
@@ -258,6 +260,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 		this.getGame().getEnt().getPlayerArray().clear();
 		this.setGame(new GameWindow(system, 0));
 		
+		this.karte = "null";
+		
 		this.setSlots(0);
 		this.setPlayerName1("null");
 		this.setPlayerName2("null");
@@ -340,6 +344,16 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	@Override
 	public String getVersion() throws RemoteException {
 		return version;
+	}
+	
+	@Override
+	public void setKarte(String karte) throws RemoteException {
+		this.karte = karte;
+	}
+
+	@Override
+	public String getKarte() throws RemoteException {
+		return this.karte;
 	}
 
 	public GameWindow getGame() {

@@ -273,4 +273,20 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 */
 	public abstract String getVersion() throws RemoteException;
+	
+	/**
+	 * Abstrakte Setter Methode fuer die Karte des Spieles.
+	 * @author Dominic Pfister
+	 * @param karte {@link String}
+	 * @throws RemoteException
+	 */
+	public abstract void setKarte(String karte) throws RemoteException;
+	
+	/**
+	 * Abstrakte Getter Methode fuer die Karte des Spieles.
+	 * @author Dominic Pfister
+	 * @return String
+	 * @throws RemoteException
+	 */
+	public abstract String getKarte() throws RemoteException;
 }

@@ -34,7 +34,7 @@ public class Client {
 	private static JFrame frame = new JFrame();
 
 	/**
-	 * Gibt die Instanz eines Clients zurück.
+	 * Gibt die Instanz eines Clients zurueck.
 	 * @author Dominic Pfister, Elia Perenzin
 	 */
 	public static Client getInstance() {
@@ -118,10 +118,6 @@ public class Client {
 			JOptionPane.showMessageDialog(null,
 					"Username muss ausgef\u00fcllt sein!", "Warnung!",
 					JOptionPane.ERROR_MESSAGE);
-		} else if (newUser.getUsername().length() > 12) {
-				JOptionPane.showMessageDialog(null,
-						"Username nicht mehr als 12 Zeichen haben", "Warnung!",
-						JOptionPane.ERROR_MESSAGE);	
 		} else if (newUser.getEmail().isEmpty()) {
 			JOptionPane.showMessageDialog(null,
 					"Email muss ausgef\u00fcllt sein!", "Warnung!",
@@ -164,6 +160,7 @@ public class Client {
 	 * @author Elia Perenzin
 	 */
 	public void login(User user) {
+
 		if (user.getUsername().isEmpty()) {
 			JOptionPane.showMessageDialog(null,
 					"Username muss ausgef\u00fcllt sein", "Warnung!",
