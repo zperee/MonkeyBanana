@@ -284,11 +284,11 @@ public class Gameboard extends JPanel implements ActionListener {
 	 * @param mapSize {@link int}
 	 */
 	private void generateMap(int mapSize) {
-		String karte = "kartenPfad";
+		String karte = "null";
 		
 		/*
 		 * Waehlt zufaellig eine Karte aus und sendet diese an den Server.
-		 * Spieler2 ladet diese dann vom Server.
+		 * Spieler2 laedt diese dann vom Server.
 		 */
 		if (this.getPlayerNr() == 0) {
 			if (randomZahl(2) == 1) {
@@ -296,27 +296,25 @@ public class Gameboard extends JPanel implements ActionListener {
 				try {
 					Client.getInstance().getConnect().setKarte(karte);
 				} catch (RemoteException e) {
+					System.err.println("Karte 1 wurde ausgewählt. ERROR");
 					e.printStackTrace();
 				}
 			} else {
-				karte = "maps/Karte1.txt";
-			}
-			
-			try {
-				Client.getInstance().getConnect().setKarte(karte);
-			} catch (RemoteException e) {
-				e.printStackTrace();
+				karte = "maps/Karte2.txt";
+				try {
+					Client.getInstance().getConnect().setKarte(karte);
+				} catch (RemoteException e) {
+					System.err.println("Karte 2 wurde ausgewählt. ERROR");
+					e.printStackTrace();
+				}
 			}
 		} else {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			try {
-				karte = Client.getInstance().getConnect().getKarte();
-			} catch (RemoteException e) {
-				e.printStackTrace();
+			while (karte.equals("null")) {
+				try {
+					karte = Client.getInstance().getConnect().getKarte();
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		

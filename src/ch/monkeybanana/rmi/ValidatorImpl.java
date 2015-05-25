@@ -50,7 +50,7 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public ValidatorImpl() throws RemoteException {
-		version = new String("1.0");
+		version = new String("1.1b");
 		
 		this.setPlayerName1("null");
 		this.setPlayerName2("null");

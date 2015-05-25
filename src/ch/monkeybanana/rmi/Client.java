@@ -107,7 +107,7 @@ public class Client {
 		final Pattern pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 
 		/*
-		 * Verschlüsselt die 2 Passwörter des
+		 * Verschluesselt die 2 Passwoerter des
 		 * Benutzers mit Base64 und weist diese
 		 * dem Benutzer zu.
 		 */
