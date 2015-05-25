@@ -49,17 +49,28 @@ public class UserJDBCDao extends Database implements UserDao {
 
 	@Override
 	public User login(String username) throws SQLException {
+		boolean hasRows = false;
+		User user = new User();
 		String sql = "SELECT ID_User, Passwort FROM user where ID_User = ?;"; //Query
 		
 		con = getCon(); //holt alle infos zu DB verbindung 
 		ps = con.prepareStatement(sql);
 		ps.setString(1, username);
 		rs = ps.executeQuery();
+		
+		while(rs.next()){
+		  hasRows = true;
+			user.setUsername(rs.getString("ID_User"));
+			user.setPasswort(rs.getString("Passwort"));
+		}
 
-		rs.next();
-		User user = new User();
-		user.setUsername(rs.getString("ID_User"));
-		user.setPasswort(rs.getString("Passwort"));
+		if(!hasRows)
+		{
+			user.setUsername(" ");
+			user.setPasswort(" ");
+		}
+	
+		
 		
 		closeCon(); //schliesst die Verbindugn zur DB wieder
 		return user;
