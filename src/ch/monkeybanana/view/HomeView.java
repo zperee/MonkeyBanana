@@ -177,7 +177,7 @@ public class HomeView extends JFrame {
 		verlassenBtn.setFocusable(false);
 		verlassenBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int confirmationPane = JOptionPane.showConfirmDialog(null, "MÃ¶chten Sie sich wirklich abmelden?", "MonkeyBanana - Abmelden", JOptionPane.YES_NO_OPTION);
+				int confirmationPane = JOptionPane.showConfirmDialog(null, "Möchten Sie sich wirklich abmelden?", "MonkeyBanana - Abmelden", JOptionPane.YES_NO_OPTION);
 		        if (confirmationPane == JOptionPane.YES_OPTION) {
 					try {
 						Client.getInstance().getConnect().removeOnlinePlayer(u.getUsername());

@@ -181,6 +181,10 @@ public class Client {
 						JOptionPane.showMessageDialog(null,
 							"Passwort und Username stimmen nicht \u00fcberein",
 							"Warnung!", JOptionPane.ERROR_MESSAGE);
+					} else if (!user.getVersion().equals(Client.getInstance().getConnect().getVersion())) {
+						JOptionPane.showMessageDialog(null,
+								"Bitte aktualisiere die Anwendung auf die neuste Version (" 
+								+ Client.getInstance().getConnect().getVersion() + ")", "Warnung!", JOptionPane.ERROR_MESSAGE);
 					} else {
 						/*
 						 * Entfernt den Spieler aus der onlinePlayers Liste, wenn dieser
@@ -197,7 +201,7 @@ public class Client {
 						});
 						
 						/*
-						 * Fügt den neuen Spieler in die onlinePlayers
+						 * Fuegt den neuen Spieler in die onlinePlayers
 						 * Liste hinzu.
 						 */
 						Client.getInstance().getConnect().addOnlinePlayer(user.getUsername());

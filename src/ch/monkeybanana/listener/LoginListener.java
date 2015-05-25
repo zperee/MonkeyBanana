@@ -59,6 +59,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	
 				loginUser.setPasswort(passwort);
 				loginUser.setUsername(user);
+				loginUser.setVersion("1.0");
 	
 				Client.getInstance().login(loginUser);
 			} else if (button.equals("registrieren")) {
@@ -83,6 +84,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	
 				loginUser.setPasswort(passwort);
 				loginUser.setUsername(user);
+				loginUser.setVersion("1.0");
 	
 				Client.getInstance().login(loginUser);
 			}

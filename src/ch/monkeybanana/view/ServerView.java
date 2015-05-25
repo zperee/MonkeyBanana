@@ -36,7 +36,7 @@ public class ServerView extends JFrame implements ActionListener {
 	private JTextField setSlots2;
 	private JLabel srv1_pl1, srv1_pl2, srv2_pl1, srv2_pl2;
 	private JLabel slotLabelSrv1, slotLabelSrv2;
-	private JLabel onlinePlayers;
+	private JLabel onlinePlayers, versionLabel;
 	private JButton startSrv1, shutdownSrv1, restartSrv1;
 	
 	private Timer timer;
@@ -58,7 +58,7 @@ public class ServerView extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(12, 13, 403, 412);
+		panel.setBounds(12, 13, 415, 432);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -279,6 +279,17 @@ public class ServerView extends JFrame implements ActionListener {
 		shutdownSrv2.setBounds(174, 42, 32, 32);
 		server2Panel.add(shutdownSrv2);
 		
+		JLabel lblNewLabel = new JLabel("Version:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setBounds(300, 412, 57, 16);
+		panel.add(lblNewLabel);
+		
+		versionLabel = new JLabel("");
+		versionLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		versionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		versionLabel.setBounds(347, 412, 44, 16);
+		panel.add(versionLabel);
+		
 		setVisible(true);
 		setEnabled(true);
 		setResizable(false);
@@ -293,6 +304,7 @@ public class ServerView extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			slotLabelSrv1.setText(Client.getInstance().getConnect().getSlots() + "/2");
+			versionLabel.setText(Client.getInstance().getConnect().getVersion());
 			
 			onlinePlayers.removeAll();
 			onlinePlayers.setText("<html>");

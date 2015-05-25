@@ -16,6 +16,7 @@ public class User implements Serializable{
 	private String email = null;
 	private String passwort = null;
 	private String passwort2 = null;
+	private String version = null;
 	
 	/* **GETTER und SETTER** */
 	public String getUsername() {
@@ -30,7 +31,10 @@ public class User implements Serializable{
 	public String getPasswort2() {
 		return passwort2;
 	}
-
+	public String getVersion() {
+		return version;
+	}
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -43,5 +47,7 @@ public class User implements Serializable{
 	public void setPasswort2(String passwort2) {
 		this.passwort2 = passwort2;
 	}
-	
+	public void setVersion(String version) {
+		this.version = version;
+	}
 }

@@ -402,7 +402,7 @@ public class Gameboard extends JPanel implements ActionListener {
 
 		/* Zeichnet den Punktestand und die Bananen Anzahl */
 		g.setFont(new Font("TimesRoman", Font.BOLD, 42));
-		g.setColor(Color.BLACK);
+		g.setColor(Color.GREEN);
 		
 		//Bananen Anzahl
 		Image banana_tree = Toolkit.getDefaultToolkit().getImage("images/banana_tree.png");

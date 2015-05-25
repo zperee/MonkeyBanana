@@ -37,6 +37,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private String playerName1;
 	private String playerName2;
 	
+	private String version;
+	
 	private List<String> onlinePlayers = new ArrayList<String>();
 
 	/**
@@ -46,6 +48,8 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	 * @throws RemoteException
 	 */
 	public ValidatorImpl() throws RemoteException {
+		version = new String("1.0");
+		
 		this.setPlayerName1("null");
 		this.setPlayerName2("null");
 		
@@ -332,6 +336,11 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	public boolean isServerStatus() throws RemoteException {
 		return this.serverStatus;
 	}
+	
+	@Override
+	public String getVersion() throws RemoteException {
+		return version;
+	}
 
 	public GameWindow getGame() {
 		return game;
@@ -400,5 +409,4 @@ public class ValidatorImpl extends UnicastRemoteObject implements Validator {
 	private void setServerReady(boolean ready) {
 		this.serverReady = ready;
 	}
-
 }

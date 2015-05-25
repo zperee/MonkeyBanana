@@ -265,4 +265,12 @@ public interface Validator extends Remote {
 	 * @throws RemoteException
 	 */
 	public abstract boolean isServerReady() throws RemoteException;
+	
+	/**
+	 * Abstrakte Getter Methode fuer die Version des Servers.
+	 * @author Dominic Pfister
+	 * @return String
+	 * @throws RemoteException
+	 */
+	public abstract String getVersion() throws RemoteException;
 }
