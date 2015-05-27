@@ -30,7 +30,7 @@ public class Client {
 	//Instanzvariablen
 	private static Client instance = new Client();
 	private String ip, port;
-	private Validator connect;
+	private Communication connect;
 	private static JFrame frame = new JFrame();
 
 	/**
@@ -85,7 +85,7 @@ public class Client {
 			this.setPort(server[1]);
 			
 			Remote remote = Naming.lookup("rmi://" + server[0] + ":" + server[1] + "/validator");
-			Validator validator = (Validator) remote;
+			Communication validator = (Communication) remote;
 			this.setConnect(validator);
 
 		} catch (MalformedURLException me) {
@@ -225,7 +225,7 @@ public class Client {
 		return port;
 	}
 
-	public Validator getConnect() {
+	public Communication getConnect() {
 		return connect;
 	}
 
@@ -237,7 +237,7 @@ public class Client {
 		this.port = port;
 	}
 
-	public void setConnect(Validator connect) {
+	public void setConnect(Communication connect) {
 		this.connect = connect;
 	}
 

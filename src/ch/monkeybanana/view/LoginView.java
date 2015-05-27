@@ -37,7 +37,7 @@ public class LoginView extends JFrame {
 	protected JLabel usernameLabel = new JLabel("Username");
 	protected JLabel passwordLabel = new JLabel("Passwort");
 	protected JLabel titelLabel = new JLabel("MonkeyBanana Login");
-	private final JLabel versionLabel = new JLabel("1.1b");
+	private final JLabel versionLabel = new JLabel("1.2b");
 	private final JLabel lblNewLabel = new JLabel("Version:");
 
 	public LoginView() {
