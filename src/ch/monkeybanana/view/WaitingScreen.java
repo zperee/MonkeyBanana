@@ -50,7 +50,7 @@ public class WaitingScreen extends JFrame implements ActionListener {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 260, 307);
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
 		setVisible(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

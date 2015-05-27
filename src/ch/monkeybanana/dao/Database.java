@@ -30,7 +30,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	protected Connection getCon() throws SQLException {
-		String filename = "data.csv"; //File mit allen Informationen
+		String filename = "resources/config/data.csv"; //File mit allen Informationen
 		File file = new File(filename);
 		
 		//Array indem alle Informationen gespeichert werden.
@@ -47,7 +47,7 @@ public class Database {
 			}
 			inputStream.close();
 		} catch(FileNotFoundException e){
-			System.out.println("File nicht gefunden");
+			System.out.println("File nicht gefunden: " + filename);
 		}
 		
 		//Setzt die Werte des Arrays in die Variablen

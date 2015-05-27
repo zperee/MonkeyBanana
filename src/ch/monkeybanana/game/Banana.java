@@ -33,7 +33,7 @@ public class Banana extends Obstacle implements Serializable {
 	 */
 	public Banana (int x, int y, int type, char direction, int scale, int owner) {
 		super(x, y, type, scale);
-		super.setImage(new ImageIcon("images/banana.png"));
+		super.setImage(new ImageIcon("resources/images/banana.png"));
 		this.setOwner(owner);
 		this.setDirection(direction);
 		

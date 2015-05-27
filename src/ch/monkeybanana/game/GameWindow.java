@@ -29,14 +29,6 @@ public class GameWindow extends JFrame {
 
 	public GameWindow(User u, int playerNr) {
 		this.setU(u);
-
-		/* Nur fuer Test ohne DB */
-//		try {
-//			if (u.getUsername().equals("SYSTEM")) {
-//			}
-//		} catch (NullPointerException e) {
-//			u.setUsername("Gast");
-//		}
 		
         try {
 			this.setEnt(new Gameboard(playerNr, u, this));
@@ -48,7 +40,7 @@ public class GameWindow extends JFrame {
         this.setSize(15 * 48 + 7,  18 * 48 - 19);
         this.setLocationRelativeTo(null);
         this.setTitle("MonkeyBanana - Game");
-    	this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));	
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
         this.setResizable(false);
 
         if (u.getUsername().equals("SYSTEM")) {

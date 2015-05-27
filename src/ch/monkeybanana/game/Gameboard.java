@@ -55,10 +55,11 @@ public class Gameboard extends JPanel implements ActionListener {
 	private int playerMaxBananas;
 	private boolean isModified, isRestarted;
 	private User user;
-//	private HashMap<String, AudioPlayer> sfx;
 	
 	private JFrame frame;
 	private AudioPlayer backgroundMusic;
+	
+	private int karte;
 	
 	private List<Integer> map = new ArrayList<Integer>();
 
@@ -75,14 +76,10 @@ public class Gameboard extends JPanel implements ActionListener {
 		setFocusable(true);
 		setDoubleBuffered(true);
 		
-		if(!(u.getUsername().equals("SYSTEM"))){
+		if(!u.getUsername().equals("SYSTEM")) {
 			backgroundMusic = new AudioPlayer("/audio/deep_forest.mp3");
-			backgroundMusic.playLoop();
+			backgroundMusic.playLoop(-15);
 		}
-		
-//		sfx = new HashMap <String, AudioPlayer>();
-//		sfx.put("banana_shot", new AudioPlayer("/audio/banana_shot.mp3"));
-//		sfx.put("banana_over", new AudioPlayer("/audio/banana_over.mp3"));
 		
 		this.setUser(u);
 		this.setFrame(frame);
@@ -183,7 +180,6 @@ public class Gameboard extends JPanel implements ActionListener {
 			else if (GameListener.isBananaThrown()) {
 				type = 2;
 				owner = this.getPlayerNr();
-//				sfx.get("banana_shot").play();
 
 				if (GameListener.isUp()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
@@ -284,26 +280,27 @@ public class Gameboard extends JPanel implements ActionListener {
 	 */
 	private void generateMap(int mapSize) {
 		String karte = "null";
+		int zahl = randomZahl(2);
 		
 		/*
 		 * Waehlt zufaellig eine Karte aus und sendet diese an den Server.
 		 * Spieler2 laedt diese dann vom Server.
 		 */
 		if (this.getPlayerNr() == 0) {
-			if (randomZahl(2) == 1) {
-				karte = "maps/Karte1.txt";
+			if (zahl == 1) {
+				karte = "resources/maps/Karte1.txt";
 				try {
 					Client.getInstance().getConnect().setKarte(karte);
 				} catch (RemoteException e) {
-					System.err.println("Karte 1 wurde ausgew�hlt. ERROR");
+					System.err.println("Karte 1 wurde ausgewaehlt. ERROR");
 					e.printStackTrace();
 				}
 			} else {
-				karte = "maps/Karte2.txt";
+				karte = "resources/maps/Karte2.txt";
 				try {
 					Client.getInstance().getConnect().setKarte(karte);
 				} catch (RemoteException e) {
-					System.err.println("Karte 2 wurde ausgew�hlt. ERROR");
+					System.err.println("Karte 2 wurde ausgewaehlt. ERROR");
 					e.printStackTrace();
 				}
 			}
@@ -311,10 +308,16 @@ public class Gameboard extends JPanel implements ActionListener {
 			while (karte.equals("null")) {
 				try {
 					karte = Client.getInstance().getConnect().getKarte();
-				} catch (RemoteException e) {
-					e.printStackTrace();
+				} catch (RemoteException | NullPointerException e) {
+					karte = "null";
 				}
 			}
+		}
+		
+		if (zahl == 1) {
+			this.setKarte(1);
+		} else {
+			this.setKarte(2);
 		}
 		
 		mapLoader(karte);
@@ -434,14 +437,14 @@ public class Gameboard extends JPanel implements ActionListener {
 		g.setColor(Color.GREEN);
 		
 		//Bananen Anzahl
-		Image banana_tree = Toolkit.getDefaultToolkit().getImage("images/banana_tree.png");
+		Image banana_tree = Toolkit.getDefaultToolkit().getImage("resources/images/banana_tree.png");
 		g.drawImage(banana_tree, 150, 55, this);
 		g.drawString(String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 190, 85);
 		
 		//Punktestand
-		Image player1 = Toolkit.getDefaultToolkit().getImage("images/monkeyBlue.png");
+		Image player1 = Toolkit.getDefaultToolkit().getImage("resources/images/monkeyBlue.png");
 		g.drawImage(player1, 480, 45, this);
-		Image player2 = Toolkit.getDefaultToolkit().getImage("images/monkeyRed.png");
+		Image player2 = Toolkit.getDefaultToolkit().getImage("resources/images/monkeyRed.png");
 		g.drawImage(player2, 380, 45, this);
 		
 		try {
@@ -615,11 +618,9 @@ public class Gameboard extends JPanel implements ActionListener {
 					Rectangle recBanana = b.bananaBounds();
 					if (playerNr == 0) {
 						recPlayer = p1.playerBounds();
-//						sfx.get("banana_over").play();
 					}
 					else {
 						recPlayer = p2.playerBounds();
-//						sfx.get("banana_over").play();
 					}
 
 					if (recPlayer.intersects(recBanana)) {
@@ -649,6 +650,8 @@ public class Gameboard extends JPanel implements ActionListener {
 		try {
 			if (!Client.getInstance().getConnect().isServerStatus()) {
 				timer.stop();
+				backgroundMusic.stop();
+				backgroundMusic.close();
 				this.getFrame().dispose();
 				JOptionPane.showMessageDialog(null, "Der Server wurde heruntergefahren.", "MonkeyBanana - Server Restarted", JOptionPane.INFORMATION_MESSAGE);
 				new HomeView(this.getUser());
@@ -656,7 +659,6 @@ public class Gameboard extends JPanel implements ActionListener {
 			else if (Client.getInstance().getConnect().getRundenzahl() != 5 
 					&& Client.getInstance().getConnect().getSlots() != 2
 					&& !Client.getInstance().getConnect().isServerReady()) {
-				Client.getInstance().getConnect().setSlots(0);
 				JOptionPane.showMessageDialog(null, "Du gewinnst da dein Gegner das Spiel verlassen hat.", "MonkeyBanana - Forfait", JOptionPane.INFORMATION_MESSAGE);
 				this.restartGame(true);
 			}
@@ -727,9 +729,9 @@ public class Gameboard extends JPanel implements ActionListener {
 				
 				if (this.getPlayerNr() == 0 || isForfait) {
 					if (winner) {
-						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, this.getUser().getUsername());
+						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, this.getKarte(), this.getUser().getUsername());
 					} else {
-						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, 1, Client.getInstance().getConnect().getPlayer(1));
+						MBController.getInstance().setResult(score[0], score[1], pl1, pl2, 1, this.getKarte(), Client.getInstance().getConnect().getPlayer(1));
 					}
 					Client.getInstance().getConnect().restartServer();
 				}
@@ -868,5 +870,13 @@ public class Gameboard extends JPanel implements ActionListener {
 
 	public void setMap(List<Integer> map) {
 		this.map = map;
+	}
+
+	public int getKarte() {
+		return karte;
+	}
+
+	public void setKarte(int karte) {
+		this.karte = karte;
 	}
 }

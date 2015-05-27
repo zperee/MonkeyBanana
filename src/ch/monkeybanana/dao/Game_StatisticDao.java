@@ -27,5 +27,5 @@ public interface Game_StatisticDao {
 	 * @param player {@link Player}
 	 * @throws SQLException
 	 */
-	public abstract int[] getResult(User user) throws SQLException;
+	public abstract double[] getResult(User user) throws SQLException;
 }

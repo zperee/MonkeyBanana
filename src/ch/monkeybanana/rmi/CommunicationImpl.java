@@ -13,9 +13,9 @@ import ch.monkeybanana.model.User;
 import ch.monkeybanana.view.ServerView;
 
 /**
- * Implementierte Methoden des Interfaces Validator fuer die 
+ * Implementierte Methoden des Interfaces Communication fuer die 
  * Kommunikation ziwschen den Clients mit dem Server
- * @author Dominic Pfister, Elia Perenzin ValidatorImpl.java Copyright
+ * @author Dominic Pfister, Elia Perenzin CommunicationImpl.java Copyright
  * Berufsbildungscenter MonkeyBanana 2015
  */
 public class CommunicationImpl extends UnicastRemoteObject implements Communication {
@@ -38,19 +38,18 @@ public class CommunicationImpl extends UnicastRemoteObject implements Communicat
 	private String playerName2;
 	
 	private String karte;
-	
 	private String version;
 	
 	private List<String> onlinePlayers = new ArrayList<String>();
 
 	/**
-	 * Konstrukor fuer ValidatorImpl
+	 * Konstrukor fuer CommunicationImpl
 	 * 
 	 * @author Elia Perenzin
 	 * @throws RemoteException
 	 */
 	public CommunicationImpl() throws RemoteException {
-		version = new String("1.2b");
+		version = new String("1.0");
 		
 		this.setPlayerName1("null");
 		this.setPlayerName2("null");
@@ -168,7 +167,7 @@ public class CommunicationImpl extends UnicastRemoteObject implements Communicat
 
 			}	
 			} catch (Exception e) {
-				System.err.println("Fehler 3  //ValidatorImpl 168");
+				System.err.println("Fehler 3  //CommunicationImpl 168");
 			}
 		
 		}

@@ -47,7 +47,7 @@ import ch.monkeybanana.model.User;
 
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 300);
-			this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
+			this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
@@ -130,7 +130,7 @@ import ch.monkeybanana.model.User;
 			namePlayer1.setBounds(0, 117, 89, 24);
 			panel_1.add(namePlayer1);
 			
-			JLabel lblNewLabel_2 = new JLabel(new ImageIcon("images/MonkeyRed.png"));
+			JLabel lblNewLabel_2 = new JLabel(new ImageIcon("resources/images/MonkeyRed.png"));
 			lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2.setBounds(10, 11, 69, 95);
 			panel_1.add(lblNewLabel_2);
@@ -145,7 +145,7 @@ import ch.monkeybanana.model.User;
 			namePlayer2.setBounds(0, 117, 89, 24);
 			panel_2.add(namePlayer2);
 			
-			JLabel label_3 = new JLabel(new ImageIcon("images/MonkeyBlue.png"));
+			JLabel label_3 = new JLabel(new ImageIcon("resources/images/MonkeyBlue.png"));
 			label_3.setHorizontalAlignment(SwingConstants.CENTER);
 			label_3.setBounds(10, 11, 69, 95);
 			panel_2.add(label_3);

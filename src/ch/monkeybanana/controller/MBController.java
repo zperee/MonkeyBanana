@@ -28,6 +28,7 @@ public class MBController {
 	/**
 	 * Konstruktor der Klasse MBController nur Privat aufrufbar, weil es eine
 	 * singelton Klasse ist.
+	 * @author Elia Perenzin
 	 */
 	private MBController() {
 	}
@@ -36,6 +37,7 @@ public class MBController {
 	 * Gibt die Instanz der Sigeltonklasse MBController zurueck. Diese Methode
 	 * muss immer aufgerufen werden, wenn man eine weitere Methode dieser Klasse
 	 * verwenden moechte.
+	 * @author Elia Perenzin
 	 * 
 	 * @return instance {@link MBController}
 	 */
@@ -62,12 +64,14 @@ public class MBController {
 	/**
 	 * TODO
 	 * 
+	 * @author Elia Perenzin
 	 * @param player1
 	 * @param player2
 	 * @param score1
 	 * @param score2
 	 * @param map
 	 * @param modus
+	 * @param winner
 	 */
 	public void setResult(int score1, int score2, String player1,
 			String player2, int map, int modus, String winner) {
@@ -79,7 +83,7 @@ public class MBController {
 		}
 	}
 
-	public int[] getResult(User user) {
+	public double[] getResult(User user) {
 		try {
 			return GAME_STATISTIC_DAO.getResult(user);
 		} catch (SQLException e) {
@@ -90,7 +94,7 @@ public class MBController {
 
 	/**
 	 * Hier wird das Login durchgefuehrt
-	 * 
+	 * @author Elia Perenzin
 	 * @param user
 	 *            {@link User}
 	 * @return user {@link User}

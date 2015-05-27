@@ -28,7 +28,7 @@ public class RegistrierenListener implements ActionListener, KeyListener{
 	 * @author Elia Perenzin
 	 * @param user, email, passwort1, passwort2
 	 */
-	public RegistrierenListener(JTextField user, JTextField email, JPasswordField passwort1, JPasswordField passwort2){
+	public RegistrierenListener(JTextField user, JTextField email, JPasswordField passwort1, JPasswordField passwort2) {
 		this.setUser(user);
 		this.setEmail(email);
 		this.setPasswort1(passwort1);

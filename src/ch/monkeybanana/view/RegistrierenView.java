@@ -1,16 +1,18 @@
 package ch.monkeybanana.view;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import ch.monkeybanana.listener.RegistrierenListener;
+import ch.monkeybanana.rmi.Client;
 
 /**
  * Dies ist unser GUI für die Registration
@@ -43,7 +45,7 @@ public class RegistrierenView extends JFrame {
 
 	public RegistrierenView() {
 		this.setTitle("MonkeyBanana - Registrieren");
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
 		this.setBounds(500, 400, 419, 238);
 		this.getContentPane().setLayout(null);
 		this.setResizable(false);
@@ -56,35 +58,45 @@ public class RegistrierenView extends JFrame {
 		this.getContentPane().add(usernameLabel);
 				
 		username.setColumns(10);
-		username.setBounds(181, 47, 176, 20);
+		username.setBounds(181, 47, 200, 20);
 		username.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
-		this.add(username);
+		getContentPane().add(username);
 		
 		emailLabel.setBounds(48, 70, 102, 24);
-		this.add(emailLabel);
+		getContentPane().add(emailLabel);
 		
-		email.setBounds(181, 72, 176, 20);
+		email.setBounds(181, 72, 200, 20);
 		email.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
-		this.add(email);
+		getContentPane().add(email);
 					
 		passwordLabel.setBounds(48, 96, 102, 24);
-		this.add(passwordLabel);
+		getContentPane().add(passwordLabel);
 		
-		password.setBounds(181, 98, 176, 20);
+		password.setBounds(181, 98, 200, 20);
 		password.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
-		this.add(password);
+		getContentPane().add(password);
 
 		passwordConfirmLabel.setBounds(48, 123, 123, 24);
-		this.add(passwordConfirmLabel);
+		getContentPane().add(passwordConfirmLabel);
 
-		passwordConfirm.setBounds(181, 125, 176, 20);
+		passwordConfirm.setBounds(181, 125, 200, 20);
 		passwordConfirm.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
-		this.add(passwordConfirm);
+		getContentPane().add(passwordConfirm);
 						
-		registrierenButton.setBounds(251, 154, 106, 23);
+		registrierenButton.setBounds(272, 160, 109, 23);
 		registrierenButton.addActionListener(new RegistrierenListener(username, email, password, passwordConfirm));
 		registrierenButton.addKeyListener(new RegistrierenListener(username, email, password, passwordConfirm));
-		this.add(registrierenButton);
+		getContentPane().add(registrierenButton);
+		
+		JButton zurueckBtn = new JButton("Zur\u00FCck");
+		zurueckBtn.setBounds(181, 160, 81, 23);
+		zurueckBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Client.setFrame(new LoginView());
+			}
+		});
+		getContentPane().add(zurueckBtn);
 		
 		this.setVisible(true);
 

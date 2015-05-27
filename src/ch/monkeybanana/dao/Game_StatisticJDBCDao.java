@@ -29,8 +29,8 @@ public class Game_StatisticJDBCDao extends Database implements
 		closeCon();
 	}
 
-	public int[] getResult(User user) throws SQLException {
-		int[] result = new int[2];
+	public double[] getResult(User user) throws SQLException {
+		double[] result = new double[2];
 
 		String sql = "SELECT COUNT(Winner_ID) AS Winner FROM game_statistic WHERE Winner_ID = ?;";
 		con = getCon();

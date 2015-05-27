@@ -45,7 +45,7 @@ public class HomeView extends JFrame {
 		setBounds(100, 100, 445, 472);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setTitle("MonkeyBanana - Menu");
@@ -67,19 +67,19 @@ public class HomeView extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		int[] result = MBController.getInstance().getResult(u);
+		double[] result = MBController.getInstance().getResult(u);
 		
 		JLabel lblSpielernameStatistik = new JLabel(u.getUsername() + ": Statistik");
 		lblSpielernameStatistik.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblSpielernameStatistik.setBounds(10, 11, 183, 14);
 		panel_1.add(lblSpielernameStatistik);
 		
-		JLabel lblGespielteSpiele = new JLabel("Gespielte Spiele: " + result[1]);
+		JLabel lblGespielteSpiele = new JLabel("Gespielte Spiele: " + (int) result[1]);
 		lblGespielteSpiele.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblGespielteSpiele.setBounds(10, 38, 129, 37);
 		panel_1.add(lblGespielteSpiele);
 		
-		JLabel lblGewonneneSpiele = new JLabel("Gewonnene Spiele: " + result[0]);
+		JLabel lblGewonneneSpiele = new JLabel("Gewonnene Spiele: " + (int) result[0]);
 		lblGewonneneSpiele.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblGewonneneSpiele.setBounds(149, 31, 141, 50);
 		panel_1.add(lblGewonneneSpiele);
@@ -87,7 +87,7 @@ public class HomeView extends JFrame {
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(10, 101, 280, 14);
 		
-		int winLose = 0;
+		double winLose = 0;
 		if(!(result[0] == 0) || !(result[1] == 0)) {
 			winLose = 100 / result[1] * result[0];
 			Color bColor = new Color(0x1FE813);
@@ -97,12 +97,19 @@ public class HomeView extends JFrame {
 		}
 		
 		progressBar.setBorder(null);
-		progressBar.setValue(winLose);
+		progressBar.setValue((int) winLose);
 		panel_1.add(progressBar);
 		
-		JLabel lblGewonnenverloren = new JLabel("Gewonnen/Verloren:");
-		lblGewonnenverloren.setBounds(10, 73, 126, 25);
+		JLabel lblGewonnenverloren = new JLabel("Gewonnen/Verloren: ");
+		lblGewonnenverloren.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblGewonnenverloren.setBounds(10, 73, 129, 25);
 		panel_1.add(lblGewonnenverloren);
+		
+		JLabel lblNewLabel_1 = new JLabel(Math.round(winLose) + "%");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setBounds(149, 73, 35, 25);
+		panel_1.add(lblNewLabel_1);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -179,7 +186,7 @@ public class HomeView extends JFrame {
 		verlassenBtn.setFocusable(false);
 		verlassenBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int confirmationPane = JOptionPane.showConfirmDialog(null, "M�chten Sie sich wirklich abmelden?", "MonkeyBanana - Abmelden", JOptionPane.YES_NO_OPTION);
+				int confirmationPane = JOptionPane.showConfirmDialog(null, "M\u00f6chten Sie sich wirklich abmelden?", "MonkeyBanana - Abmelden", JOptionPane.YES_NO_OPTION);
 		        if (confirmationPane == JOptionPane.YES_OPTION) {
 					try {
 						Client.getInstance().getConnect().removeOnlinePlayer(u.getUsername());

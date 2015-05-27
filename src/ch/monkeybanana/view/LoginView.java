@@ -37,12 +37,12 @@ public class LoginView extends JFrame {
 	protected JLabel usernameLabel = new JLabel("Username");
 	protected JLabel passwordLabel = new JLabel("Passwort");
 	protected JLabel titelLabel = new JLabel("MonkeyBanana Login");
-	private final JLabel versionLabel = new JLabel("1.2b");
+	private final JLabel versionLabel = new JLabel("1.0");
 	private final JLabel lblNewLabel = new JLabel("Version:");
 
 	public LoginView() {
 		this.setTitle("MonkeyBanana - Login");
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
 		this.setBounds(500, 400, 419, 238);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -68,11 +68,11 @@ public class LoginView extends JFrame {
 		getContentPane().add(password);
 
 		registrierenButton.setBounds(160, 120, 106, 23);
-		registrierenButton.addActionListener(new LoginListener(username, password, "registrieren"));
+		registrierenButton.addActionListener(new LoginListener(username, password, "registrieren", this));
 		getContentPane().add(registrierenButton);
 
 		loginbButton.setBounds(273, 120, 84, 23);
-		loginbButton.addActionListener(new LoginListener(username, password, "login"));
+		loginbButton.addActionListener(new LoginListener(username, password, "login", this));
 		loginbButton.addKeyListener(new LoginListener(username, password));
 		getContentPane().add(loginbButton);
 		versionLabel.setFont(new Font("Tahoma", Font.BOLD, 13));

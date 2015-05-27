@@ -60,7 +60,7 @@ public class Client {
 	 * Konstruktor der Klasse Client. 
 	 */
 	private Client() {
-		String filename = "Serverdata.csv"; // File mit allen Informationen
+		String filename = "resources/config/serverdata.csv"; // File mit allen Informationen
 		File file = new File(filename);
 		
 		//Array indem alle Informationen gespeichert werden.
@@ -77,7 +77,7 @@ public class Client {
 			}
 			inputStream.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("File wurde nicht gefunden.");
+			System.out.println("File wurde nicht gefunden: " + filename);
 		}
 
 		try {
@@ -211,7 +211,6 @@ public class Client {
 					}
 				}
 			} catch (HeadlessException | RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}

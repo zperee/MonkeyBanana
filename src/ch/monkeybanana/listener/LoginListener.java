@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -23,6 +25,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	private JTextField user = null;
 	private JPasswordField passwort = null;
 	private String button = null;
+	private JFrame frame = null;
 
 	/**
 	 * Konstruktor fuer LoginListner setzt den Username und das Passowrt in
@@ -30,10 +33,11 @@ public class LoginListener implements ActionListener, KeyListener{
 	 * @author Elia Perenzin
 	 * @param usernam, password, button
 	 */
-	public LoginListener(JTextField username, JPasswordField password, String button) {
+	public LoginListener(JTextField username, JPasswordField password, String button, JFrame frame) {
 		this.setUser(username);
 		this.setPasswort(password);
 		this.setButton(button);
+		this.setFrame(frame);
 	}
 	
 	public LoginListener(JTextField username, JPasswordField password) {
@@ -50,7 +54,7 @@ public class LoginListener implements ActionListener, KeyListener{
 	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
 		
-//		try {
+		try {
 			if (button.equals("login")) {
 				User loginUser = new User();
 	
@@ -59,23 +63,24 @@ public class LoginListener implements ActionListener, KeyListener{
 	
 				loginUser.setPasswort(passwort);
 				loginUser.setUsername(user);
-				loginUser.setVersion("1.2b");
+				loginUser.setVersion("1.0");
 	
 				Client.getInstance().login(loginUser);
 			} else if (button.equals("registrieren")) {
+				frame.dispose();
 				new RegistrierenView();
 			}
-//		} catch (Exception e1) {
-//			 JOptionPane.showMessageDialog(null,
-//					"Es konnte keine Verbindung zum Server hergestellt werden.", "Warnung!",
-//					JOptionPane.ERROR_MESSAGE);
-//			 System.exit(0);
-//		}
+		} catch (Exception e1) {
+			 JOptionPane.showMessageDialog(null,
+					"Es konnte keine Verbindung zum Server hergestellt werden.", "Warnung!",
+					JOptionPane.ERROR_MESSAGE);
+			 System.exit(0);
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void keyPressed(KeyEvent e) {
-//		try {
+		try {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				User loginUser = new User();
 	
@@ -84,16 +89,16 @@ public class LoginListener implements ActionListener, KeyListener{
 	
 				loginUser.setPasswort(passwort);
 				loginUser.setUsername(user);
-				loginUser.setVersion("1.2b");
+				loginUser.setVersion("1.0");
 	
 				Client.getInstance().login(loginUser);
 			}
-//		} catch (Exception e1) {
-//			JOptionPane.showMessageDialog(null,
-//					"Es konnte keine Verbindung zum Server hergestellt werden.", "Warnung!",
-//					JOptionPane.ERROR_MESSAGE);
-//			System.exit(0);
-//		}
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null,
+					"Es konnte keine Verbindung zum Server hergestellt werden.", "Warnung!",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 	}
 	
 	public void keyTyped(KeyEvent e) {
@@ -127,6 +132,14 @@ public class LoginListener implements ActionListener, KeyListener{
 
 	public void setPasswort(JPasswordField passwort) {
 		this.passwort = passwort;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 
 }
