@@ -56,7 +56,7 @@ public class Gameboard extends JPanel implements ActionListener {
 	private int playerMaxBananas;
 	private boolean isModified, isRestarted;
 	private User user;
-	private HashMap<String, AudioPlayer> sfx;
+//	private HashMap<String, AudioPlayer> sfx;
 	
 	private JFrame frame;
 	private AudioPlayer backgroundMusic;
@@ -81,9 +81,9 @@ public class Gameboard extends JPanel implements ActionListener {
 			backgroundMusic.playLoop();
 		}
 		
-		sfx = new HashMap <String, AudioPlayer>();
-		sfx.put("banana_shot", new AudioPlayer("/audio/banana_shot.mp3"));
-		sfx.put("banana_over", new AudioPlayer("/audio/banana_over.mp3"));
+//		sfx = new HashMap <String, AudioPlayer>();
+//		sfx.put("banana_shot", new AudioPlayer("/audio/banana_shot.mp3"));
+//		sfx.put("banana_over", new AudioPlayer("/audio/banana_over.mp3"));
 		
 		this.setUser(u);
 		this.setFrame(frame);
@@ -184,7 +184,7 @@ public class Gameboard extends JPanel implements ActionListener {
 			else if (GameListener.isBananaThrown()) {
 				type = 2;
 				owner = this.getPlayerNr();
-				sfx.get("banana_shot").play();
+//				sfx.get("banana_shot").play();
 
 				if (GameListener.isUp()) {
 					xPos = this.getPlayerArray().get(this.getPlayerNr()).getX()
@@ -296,7 +296,7 @@ public class Gameboard extends JPanel implements ActionListener {
 				try {
 					Client.getInstance().getConnect().setKarte(karte);
 				} catch (RemoteException e) {
-					System.err.println("Karte 1 wurde ausgewählt. ERROR");
+					System.err.println("Karte 1 wurde ausgewï¿½hlt. ERROR");
 					e.printStackTrace();
 				}
 			} else {
@@ -304,7 +304,7 @@ public class Gameboard extends JPanel implements ActionListener {
 				try {
 					Client.getInstance().getConnect().setKarte(karte);
 				} catch (RemoteException e) {
-					System.err.println("Karte 2 wurde ausgewählt. ERROR");
+					System.err.println("Karte 2 wurde ausgewï¿½hlt. ERROR");
 					e.printStackTrace();
 				}
 			}
@@ -616,11 +616,11 @@ public class Gameboard extends JPanel implements ActionListener {
 					Rectangle recBanana = b.bananaBounds();
 					if (playerNr == 0) {
 						recPlayer = p1.playerBounds();
-						sfx.get("banana_over").play();
+//						sfx.get("banana_over").play();
 					}
 					else {
 						recPlayer = p2.playerBounds();
-						sfx.get("banana_over").play();
+//						sfx.get("banana_over").play();
 					}
 
 					if (recPlayer.intersects(recBanana)) {

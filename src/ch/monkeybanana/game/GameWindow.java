@@ -1,4 +1,5 @@
 package ch.monkeybanana.game;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
@@ -47,6 +48,7 @@ public class GameWindow extends JFrame {
         this.setSize(15 * 48 + 7,  18 * 48 - 19);
         this.setLocationRelativeTo(null);
         this.setTitle("MonkeyBanana - Game");
+    	this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));	
         this.setResizable(false);
 
         if (u.getUsername().equals("SYSTEM")) {

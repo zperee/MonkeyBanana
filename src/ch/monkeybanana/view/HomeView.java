@@ -2,6 +2,7 @@ package ch.monkeybanana.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
@@ -44,6 +45,7 @@ public class HomeView extends JFrame {
 		setBounds(100, 100, 445, 472);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setTitle("MonkeyBanana - Menu");
@@ -177,7 +179,7 @@ public class HomeView extends JFrame {
 		verlassenBtn.setFocusable(false);
 		verlassenBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int confirmationPane = JOptionPane.showConfirmDialog(null, "Möchten Sie sich wirklich abmelden?", "MonkeyBanana - Abmelden", JOptionPane.YES_NO_OPTION);
+				int confirmationPane = JOptionPane.showConfirmDialog(null, "Mï¿½chten Sie sich wirklich abmelden?", "MonkeyBanana - Abmelden", JOptionPane.YES_NO_OPTION);
 		        if (confirmationPane == JOptionPane.YES_OPTION) {
 					try {
 						Client.getInstance().getConnect().removeOnlinePlayer(u.getUsername());

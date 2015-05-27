@@ -2,6 +2,7 @@ package ch.monkeybanana.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -46,6 +47,7 @@ import ch.monkeybanana.model.User;
 
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 300);
+			this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);

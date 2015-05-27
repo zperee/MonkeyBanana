@@ -2,6 +2,7 @@ package ch.monkeybanana.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -54,6 +55,7 @@ public class ServerView extends JFrame implements ActionListener {
 		setBounds(100, 100, 445, 480);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\monkeybanana_server.png"));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		

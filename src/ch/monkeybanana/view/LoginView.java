@@ -1,15 +1,16 @@
 package ch.monkeybanana.view;
 
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import ch.monkeybanana.listener.LoginListener;
-import javax.swing.SwingConstants;
 
 /**
  * Dies ist unser GUI fuer die Anmeldung
@@ -41,6 +42,7 @@ public class LoginView extends JFrame {
 
 	public LoginView() {
 		this.setTitle("MonkeyBanana - Login");
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
 		this.setBounds(500, 400, 419, 238);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);

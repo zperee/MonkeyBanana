@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -42,6 +43,7 @@ public class RegistrierenView extends JFrame {
 
 	public RegistrierenView() {
 		this.setTitle("MonkeyBanana - Registrieren");
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("images\\banana.png"));
 		this.setBounds(500, 400, 419, 238);
 		this.getContentPane().setLayout(null);
 		this.setResizable(false);

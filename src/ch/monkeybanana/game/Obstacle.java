@@ -231,31 +231,31 @@ public class Obstacle implements Serializable{
 				image =  new ImageIcon("images/water/deadEnd/top.png");
 				break;
 			case 61:
-				image =  new ImageIcon("images/water/stream/bottom_left.png");
+				image =  new ImageIcon("images/water/pond/bottom_left.png");
 				break;
 			case 62:
-				image =  new ImageIcon("images/water/stream/bottom_middle.png");
+				image =  new ImageIcon("images/water/pond/bottom_middle.png");
 				break;
 			case 63:
-				image =  new ImageIcon("images/water/stream/bottom_right.png");
+				image =  new ImageIcon("images/water/pond/bottom_right.png");
 				break;
 			case 64:
-				image =  new ImageIcon("images/water/stream/middle_left.png");
+				image =  new ImageIcon("images/water/pond/middle_left.png");
 				break;
 			case 65:
-				image =  new ImageIcon("images/water/stream/middle_middle.png");
+				image =  new ImageIcon("images/water/pond/middle_middle.png");
 				break;
 			case 66:
-				image =  new ImageIcon("images/water/stream/middle_right.png");
+				image =  new ImageIcon("images/water/pond/middle_right.png");
 				break;
 			case 67:
-				image =  new ImageIcon("images/water/stream/top_left.png");
+				image =  new ImageIcon("images/water/pond/top_left.png");
 				break;
 			case 68:
-				image =  new ImageIcon("images/water/stream/top_middle.png");
+				image =  new ImageIcon("images/water/pond/top_middle.png");
 				break;
 			case 69:
-				image =  new ImageIcon("images/water/stream/top_right.png");
+				image =  new ImageIcon("images/water/pond/top_right.png");
 				break;
 				
 			default:
