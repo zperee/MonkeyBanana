@@ -37,12 +37,12 @@ public class LoginView extends JFrame {
 	protected JLabel usernameLabel = new JLabel("Username");
 	protected JLabel passwordLabel = new JLabel("Passwort");
 	protected JLabel titelLabel = new JLabel("MonkeyBanana Login");
-	private final JLabel versionLabel = new JLabel("1.0");
+	private final JLabel versionLabel = new JLabel("1.1");
 	private final JLabel lblNewLabel = new JLabel("Version:");
 
 	public LoginView() {
 		this.setTitle("MonkeyBanana - Login");
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginView.class.getResource("/images/banana.png")));
 		this.setBounds(500, 400, 419, 238);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);

@@ -45,7 +45,7 @@ public class RegistrierenView extends JFrame {
 
 	public RegistrierenView() {
 		this.setTitle("MonkeyBanana - Registrieren");
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrierenView.class.getResource("/images/banana.png")));
 		this.setBounds(500, 400, 419, 238);
 		this.getContentPane().setLayout(null);
 		this.setResizable(false);

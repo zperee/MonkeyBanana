@@ -37,10 +37,10 @@ public class GameWindow extends JFrame {
 		}
        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(15 * 48 + 7,  18 * 48 - 19);
+        this.setSize(15 * 48 + 6,  18 * 48 - 21);
         this.setLocationRelativeTo(null);
         this.setTitle("MonkeyBanana - Game");
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(GameWindow.class.getResource("/images/banana.png")));
         this.setResizable(false);
 
         if (u.getUsername().equals("SYSTEM")) {

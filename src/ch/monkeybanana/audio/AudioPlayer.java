@@ -8,8 +8,7 @@ import javax.sound.sampled.FloatControl;
 
 /**
 * AudioPlayer Klasse zum Sounds Abspielen und Beenden
-* @author Chiramet Phong Penglerd, Miguel Jorge || ICT Berufsbildungs AG
-*                  Copyright Berufsbildungscenter 2015
+* @author Chiramet Phong Penglerd, Miguel Jorge
 */
 public class AudioPlayer {
        
@@ -19,20 +18,15 @@ public class AudioPlayer {
        /**
        * Konstruktor
        * @param s {@link String} Pfad wo die Datei gespeichert ist
+       * @author Chiramet Phong Penglerd
        */
        public AudioPlayer(String s) {
              
              try {        
                     AudioInputStream ais = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(s));
                     AudioFormat baseFormat = ais.getFormat();
-                    AudioFormat decodeFormat = new AudioFormat(
-                           AudioFormat.Encoding.PCM_SIGNED,
-                           baseFormat.getSampleRate(),
-                           16,
-                           baseFormat.getChannels(),
-                           baseFormat.getChannels() * 2,
-                           baseFormat.getSampleRate(),
-                           false
+                    AudioFormat decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,baseFormat.getSampleRate(),
+                    		16,baseFormat.getChannels(),baseFormat.getChannels() * 2,baseFormat.getSampleRate(),false
                     );
                     AudioInputStream dais = AudioSystem.getAudioInputStream(decodeFormat, ais);
                     clip = AudioSystem.getClip();
@@ -45,7 +39,8 @@ public class AudioPlayer {
        
        /**
        * Play Audio
-       * @param volumeAmount Lautstärke 
+       * @param volumeAmount Lautstärke
+       * @author Chiramet Phong Penglerd
         */
        public void play(float volumeAmount) {
              FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -59,7 +54,8 @@ public class AudioPlayer {
        
        /**
        * Play Audio in Loop
-       * @param volumeAmount Lautstärke 
+       * @param volumeAmount Lautstärke
+       * @author Chiramet Phong Penglerd
         */
        public void playLoop(float volumeAmount) {
              FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -73,6 +69,7 @@ public class AudioPlayer {
        
        /**
        * Stop Audio
+       * @author Chiramet Phong Penglerd
        */
        public void stop() {
              if(clip.isRunning()) clip.stop();
@@ -81,10 +78,10 @@ public class AudioPlayer {
        
        /**
        * Close Audio
+       * @author Chiramet Phong Penglerd
        */
        public void close() {
              stop();
              clip.close();
        }
-       
 }

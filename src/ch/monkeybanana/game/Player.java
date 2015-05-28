@@ -34,13 +34,13 @@ public class Player extends Obstacle {
 		
 		switch (type) {
 		case 1:
-			super.setImage(new ImageIcon("resources/images/monkeyRed.png"));
+			super.setImage(new ImageIcon(Player.class.getResource("/images/monkeyRed.png")));
 			break;
 		case 2:
-			super.setImage(new ImageIcon("resources/images/monkeyBlue.png"));
+			super.setImage(new ImageIcon(Player.class.getResource("/images/monkeyBlue.png")));
 			break;
 		default:
-			super.setImage(new ImageIcon("resources/images/pokemon.png"));
+			super.setImage(new ImageIcon(Player.class.getResource("/images/pokemon.png")));
 			break;
 		}
 		Image scaledImage = super.getImage().getImage(); // transform it 

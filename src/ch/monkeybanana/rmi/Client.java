@@ -52,15 +52,21 @@ public class Client {
 		Client.start();
 	}
 
+	/**
+	 * Erzeugt ein neues LoginView fuer
+	 * den Client.
+	 * @author Dominic Pfister
+	 */
 	public static void start() {
 		setFrame(new LoginView());
 	}
 	
 	/**
-	 * Konstruktor der Klasse Client. 
+	 * Konstruktor der Klasse Client.
+	 * @author Dominic Pfister, Elia Perenzin
 	 */
 	private Client() {
-		String filename = "resources/config/serverdata.csv"; // File mit allen Informationen
+		String filename = "serverdata.csv"; // File mit allen Informationen
 		File file = new File(filename);
 		
 		//Array indem alle Informationen gespeichert werden.
@@ -98,7 +104,7 @@ public class Client {
 	}
 
 	/**
-	 * Hier wird ueberprueft ob die eingaben des Users gueltig sind und wenn
+	 * Ueberprueft ob die eingaben des Users gueltig sind und wenn
 	 * dies zutrifft wird er in die DB eingetragen.
 	 * @author Elia Perenzin
 	 * @param newUser {@link User}
@@ -152,7 +158,7 @@ public class Client {
 	}
 
 	/**
-	 * Hier wird ueberprueft ob die die Kombination aus Username und Passwort
+	 * Ueberprueft ob die die Kombination aus Username und Passwort
 	 * uebereinstimmen.
 	 * beigelegt
 	 * @param user {@link User}

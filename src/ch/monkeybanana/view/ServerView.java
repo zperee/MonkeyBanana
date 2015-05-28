@@ -55,7 +55,7 @@ public class ServerView extends JFrame implements ActionListener {
 		setBounds(100, 100, 445, 480);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/monkeybanana_server.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(ServerView.class.getResource("/images/monkeybanana_server.png")));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -123,7 +123,7 @@ public class ServerView extends JFrame implements ActionListener {
 		srv1_pl2.setBounds(12, 40, 126, 16);
 		spielerPanelSrv1.add(srv1_pl2);
 		
-		restartSrv1 = new JButton(new ImageIcon("resources/images/restart.png"));
+		restartSrv1 = new JButton(new ImageIcon(ServerView.class.getResource("/images/restart.png")));
 		restartSrv1.setBorderPainted(false);
 		restartSrv1.setContentAreaFilled(false);
 		restartSrv1.setBounds(174, 113, 32, 32);
@@ -140,7 +140,7 @@ public class ServerView extends JFrame implements ActionListener {
 		});
 		server1Panel.add(restartSrv1);
 
-		shutdownSrv1 = new JButton(new ImageIcon("resources/images/shutdown.png"));
+		shutdownSrv1 = new JButton(new ImageIcon(ServerView.class.getResource("/images/shutdown.png")));
 		shutdownSrv1.setBorderPainted(false);
 		shutdownSrv1.setContentAreaFilled(false);
 		shutdownSrv1.setBounds(174, 42, 32, 32);
@@ -158,7 +158,7 @@ public class ServerView extends JFrame implements ActionListener {
 	    });
 		server1Panel.add(shutdownSrv1);
 		
-		startSrv1 = new JButton(new ImageIcon("resources/images/start.png"));
+		startSrv1 = new JButton(new ImageIcon(ServerView.class.getResource("/images/start.png")));
 		startSrv1.setBorderPainted(false);
 		startSrv1.setContentAreaFilled(false);
 		startSrv1.setEnabled(false);
@@ -251,14 +251,14 @@ public class ServerView extends JFrame implements ActionListener {
 		srv2_pl2.setBounds(12, 40, 126, 16);
 		spielerPanelSrv2.add(srv2_pl2);
 		
-		JButton restartSrv2 = new JButton(new ImageIcon("resources/images/restart.png"));
+		JButton restartSrv2 = new JButton(new ImageIcon(ServerView.class.getResource("/images/restart.png")));
 		restartSrv2.setBorderPainted(false);
 		restartSrv2.setContentAreaFilled(false);
 		restartSrv2.setBounds(174, 113, 32, 32);
 		restartSrv2.setEnabled(false);
 		server2Panel.add(restartSrv2);
 		
-		JButton startSrv2 = new JButton(new ImageIcon("resources/images/start.png"));
+		JButton startSrv2 = new JButton(new ImageIcon(ServerView.class.getResource("/images/start.png")));
 		startSrv2.setBorderPainted(false);
 		startSrv2.setContentAreaFilled(false);
 		startSrv2.setBounds(174, 79, 32, 32);
@@ -274,7 +274,7 @@ public class ServerView extends JFrame implements ActionListener {
 		label_6.setBounds(12, 124, 66, 21);
 		server2Panel.add(label_6);
 		
-		JButton shutdownSrv2 = new JButton(new ImageIcon("resources/images/shutdown.png"));
+		JButton shutdownSrv2 = new JButton(new ImageIcon(ServerView.class.getResource("/images/shutdown.png")));
 		shutdownSrv2.setBorderPainted(false);
 		shutdownSrv2.setContentAreaFilled(false);
 		shutdownSrv2.setEnabled(false);

@@ -49,7 +49,7 @@ public class CommunicationImpl extends UnicastRemoteObject implements Communicat
 	 * @throws RemoteException
 	 */
 	public CommunicationImpl() throws RemoteException {
-		version = new String("1.0");
+		version = new String("1.1");
 		
 		this.setPlayerName1("null");
 		this.setPlayerName2("null");

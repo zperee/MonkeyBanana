@@ -9,8 +9,6 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -259,17 +257,13 @@ public class Gameboard extends JPanel implements ActionListener {
 	/**
 	 * Laedt die Karte aus einem File in eine Integer ArrayList.
 	 * @author Dominic Pfister
-	 */
-	private void mapLoader(String file) {
-		Scanner s;
-		try {
-			s = new Scanner(new File(file));
-			while (s.hasNext()) {
-				int character = Integer.parseInt(s.next());
-				this.getMap().add(character);
-			}
-		} catch (FileNotFoundException e) {
-			System.err.println("Die Karte konnte nicht gefunden werden.");
+	 */	
+	private void mapLoader(String path) {
+		@SuppressWarnings("resource")
+		Scanner s = new Scanner(getClass().getResourceAsStream(path));
+		while (s.hasNext()) {
+			int character = Integer.parseInt(s.next());
+			this.getMap().add(character);
 		}
 	}
 	
@@ -288,29 +282,30 @@ public class Gameboard extends JPanel implements ActionListener {
 		 */
 		if (this.getPlayerNr() == 0) {
 			if (zahl == 1) {
-				karte = "resources/maps/Karte1.txt";
+				karte = "/maps/Karte1.txt";
 				try {
 					Client.getInstance().getConnect().setKarte(karte);
 				} catch (RemoteException e) {
 					System.err.println("Karte 1 wurde ausgewaehlt. ERROR");
-					e.printStackTrace();
 				}
 			} else {
-				karte = "resources/maps/Karte2.txt";
+				karte = "/maps/Karte2.txt";
 				try {
 					Client.getInstance().getConnect().setKarte(karte);
 				} catch (RemoteException e) {
 					System.err.println("Karte 2 wurde ausgewaehlt. ERROR");
-					e.printStackTrace();
 				}
 			}
 		} else {
-			while (karte.equals("null")) {
-				try {
-					karte = Client.getInstance().getConnect().getKarte();
-				} catch (RemoteException | NullPointerException e) {
-					karte = "null";
+			try  {
+				while (karte.equals("null")) {
+					try {
+						karte = Client.getInstance().getConnect().getKarte();
+					} catch (RemoteException e) {
+					}
 				}
+			} catch (NullPointerException e1) {
+				karte = "null";
 			}
 		}
 		
@@ -437,14 +432,14 @@ public class Gameboard extends JPanel implements ActionListener {
 		g.setColor(Color.GREEN);
 		
 		//Bananen Anzahl
-		Image banana_tree = Toolkit.getDefaultToolkit().getImage("resources/images/banana_tree.png");
+		Image banana_tree = Toolkit.getDefaultToolkit().getImage(Obstacle.class.getResource("/images/banana_tree.png"));
 		g.drawImage(banana_tree, 150, 55, this);
 		g.drawString(String.valueOf(this.getPlayerArray().get(this.getPlayerNr()).getTotalBanana()), 190, 85);
 		
 		//Punktestand
-		Image player1 = Toolkit.getDefaultToolkit().getImage("resources/images/monkeyBlue.png");
+		Image player1 = Toolkit.getDefaultToolkit().getImage(Obstacle.class.getResource("/images/monkeyBlue.png"));
 		g.drawImage(player1, 480, 45, this);
-		Image player2 = Toolkit.getDefaultToolkit().getImage("resources/images/monkeyRed.png");
+		Image player2 = Toolkit.getDefaultToolkit().getImage(Obstacle.class.getResource("/images/monkeyRed.png"));
 		g.drawImage(player2, 380, 45, this);
 		
 		try {

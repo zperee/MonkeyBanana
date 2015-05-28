@@ -2,11 +2,13 @@ package ch.monkeybanana.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,11 +47,16 @@ public class HomeView extends JFrame {
 		setBounds(100, 100, 445, 472);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/images/banana.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(HomeView.class.getResource("/images/banana.png")));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setTitle("MonkeyBanana - Menu");
 		this.setU(u);
+		
+		ImageIcon banner = new ImageIcon(HomeView.class.getResource("/images/banner.gif"));
+		Image scaledImage = banner.getImage(); // Wandelt Bild um
+		scaledImage = scaledImage.getScaledInstance(414, 125,  java.awt.Image.SCALE_FAST); //Bild wird skaliert 
+		banner = new ImageIcon(scaledImage);  // Wandelt Bild zurück in new ImageIcon um
 		
 		slotsTimer = new Timer(100, freeSlotListener);
 		slotsTimer.start();
@@ -57,9 +64,15 @@ public class HomeView extends JFrame {
 		this.setSpielerTime(new Timer(100, onlineListener));
 		this.getSpielerTime().start();
 
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 414, 125);
-		contentPane.add(panel);
+		JPanel bannerPnl = new JPanel();
+		bannerPnl.setBorder(null);
+		bannerPnl.setBounds(10, 11, 414, 125);
+		contentPane.add(bannerPnl);
+		bannerPnl.setLayout(null);
+		
+		JLabel bannerLbl = new JLabel(banner);
+		bannerLbl.setBounds(0, 0, 414, 125);
+		bannerPnl.add(bannerLbl);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -181,7 +194,7 @@ public class HomeView extends JFrame {
 		onlineSpieler.setBounds(10, 46, 83, 164);
 		panel_3.add(onlineSpieler);
 	
-		JButton verlassenBtn = new JButton("Verlassen");
+		JButton verlassenBtn = new JButton("Abmelden");
 		verlassenBtn.setBounds(320, 388, 104, 23);
 		verlassenBtn.setFocusable(false);
 		verlassenBtn.addActionListener(new ActionListener() {

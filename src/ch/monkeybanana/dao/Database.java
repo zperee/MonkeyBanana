@@ -1,13 +1,10 @@
 package ch.monkeybanana.dao;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import ch.monkeybanana.util.CryptUtils;
 
@@ -30,36 +27,35 @@ public class Database {
 	 * @throws SQLException
 	 */
 	protected Connection getCon() throws SQLException {
-		String filename = "resources/config/data.csv"; //File mit allen Informationen
-		File file = new File(filename);
+//		String filename = "resources/config/data.csv"; //File mit allen Informationen
+//		File file = new File(filename);
 		
 		//Array indem alle Informationen gespeichert werden.
-		String [] database = new String[3];
+//		String [] database = new String[3];
 		
 		//Liest alle Informationen aus dem CSV File und speichert sie in eine Liste
-		try{
-			Scanner inputStream = new Scanner(file);
-			int i = 0;
-			while (inputStream.hasNext()){
-				String data = inputStream.next();
-				database[i] = data;
-				i++;
-			}
-			inputStream.close();
-		} catch(FileNotFoundException e){
-			System.out.println("File nicht gefunden: " + filename);
-		}
+//		try{
+//			Scanner inputStream = new Scanner(file);
+//			int i = 0;
+//			while (inputStream.hasNext()){
+//				String data = inputStream.next();
+//				database[i] = data;
+//				i++;
+//			}
+//			inputStream.close();
+//		} catch(FileNotFoundException e){
+//			System.out.println("File nicht gefunden: " + filename);
+//		}
 		
 		//Setzt die Werte des Arrays in die Variablen
-		String db = database[0];
-		String user = database[1];
+		String db = "jdbc:mysql://192.168.3.173:3306/monkeybanana";
+		String user = "monkeybanana";
 		
 		//Passwort wird entschlüsselt
-		String pw = CryptUtils.base64decode(database[2]);
+		String pw = CryptUtils.base64decode("YjdFeVBoODdTSHM1ZDZwTA==");
 
 		//Connection wird gesetzt
-		setCon(DriverManager.getConnection(
-				db, user, pw));
+		setCon(DriverManager.getConnection(db, user, pw));
 		return con;
 	}
 	
