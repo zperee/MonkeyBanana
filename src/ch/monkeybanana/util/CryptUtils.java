@@ -23,9 +23,8 @@ public class CryptUtils {
 	/**
 	 * Hier wird das Passwort des Users verschlüsselt
 	 * @author Elia Perenzin
-	 * @param String mit Passwort unverschluesselt
+	 * @param passwort {@link String} mit Passwort unverschluesselt
 	 * @return String mit Passwort verschluesselt
-	 * @throws Exception
 	 */
 	public static String base64encode (String passwort) {
 		try{
@@ -40,9 +39,8 @@ public class CryptUtils {
 	/**
 	 * Hier wird das Passwort des User zurueck verschluesselt
 	 * @author Elia Perenzin
-	 * @param String mit Passwort verschluesselt
+	 * @param  passwort {@link String} mit Passwort verschluesselt
 	 * @return String mit Passwort unverschluesselt
-	 * @throws Exception
 	 */
 	public static String base64decode (String passwort) {
 		try{

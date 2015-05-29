@@ -12,9 +12,6 @@ import ch.monkeybanana.rmi.Client;
 /**
  * Hauptklasse fuer den Spiel Client. Erzeugt das JFrame und
  * ein neues Spielbrett
- * 
- * @param u {@link User}
- * @param playerNr {@link int}
  * @author Dominic Pfister, Elia Perenzin
  * GameClient.java
  * Copyright Berufsbildungscenter MonkeyBanana 2015

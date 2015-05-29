@@ -24,7 +24,7 @@ public interface Game_StatisticDao {
 	/**
 	 * Hier werden die Resultate eines Players aus der DB
 	 * gelesen. 
-	 * @param player {@link Player}
+	 * @param user {@link User}
 	 * @throws SQLException
 	 */
 	public abstract double[] getResult(User user) throws SQLException;

@@ -162,7 +162,6 @@ public class Client {
 	 * uebereinstimmen.
 	 * beigelegt
 	 * @param user {@link User}
-	 * @return login Boolean
 	 * @author Elia Perenzin
 	 */
 	public void login(User user) {

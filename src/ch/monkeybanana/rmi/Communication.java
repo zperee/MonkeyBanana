@@ -25,7 +25,7 @@ public interface Communication extends Remote {
 	
 	/**
 	 * Abstrakte Methode fuer das Login auf dem Server
-	 * @param user {@link User}
+	 * @param username {@link String}
 	 * @throws RemoteException
 	 * @author Elia Perenzin
 	 */
@@ -33,7 +33,7 @@ public interface Communication extends Remote {
 	
 	/**
 	 * Abstrakte Methode um alle User aus der DB zulesen
-	 * @return List <{@link User}>
+	 * @return List {@link User}
 	 * @throws RemoteException
 	 * @author Elia Perenzin
 	 */
@@ -42,7 +42,6 @@ public interface Communication extends Remote {
 	/**
 	 * Abstrakte Methode um auf dem Server die LogOut Nachricht
 	 * beim Verlassen des Spieles anzuzeigen.
-	 * @param user {@link User}
 	 * @throws RemoteException
 	 * @author Dominic Pfister
 	 */
@@ -126,7 +125,7 @@ public interface Communication extends Remote {
 	
 	/**
 	 * Abstrakte Setter Methode fuer isHit.
-	 * @return {@link boolean}
+	 * @param isHit
 	 * @throws RemoteException
 	 * @author Dominic Pfister
 	 */
@@ -253,7 +252,6 @@ public interface Communication extends Remote {
 	/**
 	 * Abstrakte Getter Methode fuer den Boolean serverStatus.
 	 * @author Dominic Pfister, Elia Perenzin
-	 * @param ready
 	 * @throws RemoteException
 	 */
 	public abstract boolean isServerStatus() throws RemoteException;

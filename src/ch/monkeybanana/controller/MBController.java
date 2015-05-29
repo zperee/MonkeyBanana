@@ -95,8 +95,8 @@ public class MBController {
 	/**
 	 * Hier wird das Login durchgefuehrt
 	 * @author Elia Perenzin
-	 * @param user
-	 *            {@link User}
+	 * @param username
+	 *            {@link String}
 	 * @return user {@link User}
 	 */
 	public User login(String username) {

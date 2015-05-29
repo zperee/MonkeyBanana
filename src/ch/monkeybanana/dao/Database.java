@@ -66,7 +66,6 @@ public class Database {
 	
 	/**
 	 * Methode fuer schliessung der DB Verbindung
-	 * @throws SQLException
 	 */
 	protected void closeCon() {
 		try {

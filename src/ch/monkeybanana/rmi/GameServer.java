@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import javax.swing.JOptionPane;
+
 /**
  * Dies ist die Klasse des Gameservers.
  * @author Dominic Pfister, Elia Perenzin GameServer.java Copyright
@@ -19,7 +21,9 @@ public class GameServer {
 			reg.rebind("validator", aValidator);
 
 		} catch (RemoteException e) {
-			System.err.println("Server konnte nicht gestartert werden");
+			JOptionPane.showMessageDialog(null,
+					"Server konnte nicht gestartet werden!",
+					"Warnung!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

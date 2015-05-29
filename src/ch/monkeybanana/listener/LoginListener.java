@@ -31,7 +31,10 @@ public class LoginListener implements ActionListener, KeyListener{
 	 * Konstruktor fuer LoginListner setzt den Username und das Passowrt in
 	 * Instanzvariablen + kann noch der Button hinzugefuegt werden
 	 * @author Elia Perenzin
-	 * @param usernam, password, button
+	 * @param username {@link JTextField} 
+	 * @param password {@link JPasswordField}
+	 * @param button {@link String}
+	 * @param frame {@link JFrame}
 	 */
 	public LoginListener(JTextField username, JPasswordField password, String button, JFrame frame) {
 		this.setUser(username);

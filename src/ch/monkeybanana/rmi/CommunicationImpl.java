@@ -79,8 +79,7 @@ public class CommunicationImpl extends UnicastRemoteObject implements Communicat
 	 * Methode fuer das Login auf dem Server
 	 * 
 	 * @author Elia Perenzin
-	 * @param newUser
-	 *            {@link User}
+	 * @param username {@link String}
 	 * @throws RemoteException
 	 */
 	@Override
@@ -93,7 +92,7 @@ public class CommunicationImpl extends UnicastRemoteObject implements Communicat
 	 * Methode um alle User aus der DB zulesen
 	 * 
 	 * @author Elia Perenzin
-	 * @return List<{@link User}>
+	 * @return List{@link User}
 	 * @throws RemoteException
 	 */
 	public synchronized List<String> getAllUser() throws RemoteException {
